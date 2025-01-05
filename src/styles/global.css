@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--foreground-rgb: 255, 255, 255;
+	--background-start-rgb: 0, 84, 159;
+	--background-end-rgb: 0, 60, 125;
+}
+
+body {
+	color: rgb(var(--foreground-rgb));
+	background: linear-gradient(
+		to bottom,
+		rgb(var(--background-start-rgb)),
+		rgb(var(--background-end-rgb))
+	);
+}
+
+@layer base {
+	body {
+		@apply font-sans;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-title;
+	}
+}
+
+@layer components {
+	.btn {
+		@apply px-4 py-2 rounded-lg transition-colors duration-200;
+	}
+
+	.btn-primary {
+		@apply bg-n64-red text-white hover:bg-n64-red-dark;
+	}
+
+	.btn-secondary {
+		@apply bg-n64-yellow text-n64-blue hover:bg-n64-yellow-dark;
+	}
+}
+
+/* N64-inspired pixelated border */
+.n64-border {
+	box-shadow:
+		-3px -3px 0 1px #ffffff,
+		3px 3px 0 1px #7f7f7f;
+}
+
+/* Retro-style text shadow */
+.retro-text-shadow {
+	text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+}
