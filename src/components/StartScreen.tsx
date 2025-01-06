@@ -11,43 +11,82 @@ export default function StartScreen({ onStart }: StartScreenProps) {
 
 	useEffect(() => {
 		const tl = gsap.timeline({ repeat: -1 })
-		tl.to('.press-start', { opacity: 0, duration: 0.5, ease: 'power2.inOut' })
-		tl.to('.press-start', { opacity: 1, duration: 0.5, ease: 'power2.inOut' })
+		tl.to('.press-start', {
+			opacity: 0.2,
+			duration: 0.8,
+			ease: 'steps(1)',
+			yoyo: true,
+			repeat: -1
+		})
 
-		gsap.from('.title', { y: -50, opacity: 0, duration: 1, ease: 'bounce.out' })
-	}, [])
+		gsap.from('.title', {
+			scale: 0,
+			rotation: 720,
+			duration: 1.5,
+			ease: 'elastic.out(1, 0.3)',
+			delay: 0.5
+		})
 
-	const handleKeyDown = (e: KeyboardEvent) => {
-		if (e.key === 'Enter' || e.key === ' ') {
-			handleStart()
-		}
-	}
-
-	useEffect(() => {
-		window.addEventListener('keydown', handleKeyDown)
-		return () => window.removeEventListener('keydown', handleKeyDown)
+		// Floating fruits background animation
+		gsap.to('.floating-fruit', {
+			y: 'random(-20, 20)',
+			x: 'random(-20, 20)',
+			rotation: 'random(-15, 15)',
+			duration: 'random(2, 4)',
+			ease: 'sine.inOut',
+			repeat: -1,
+			yoyo: true,
+			stagger: {
+				amount: 2,
+				from: 'random'
+			}
+		})
 	}, [])
 
 	const handleStart = async () => {
 		setIsPressed(true)
-		await soundManager.setVolume(1)
+		gsap.to('.title', {
+			scale: 1.2,
+			duration: 0.2,
+			yoyo: true,
+			repeat: 1
+		})
 		await soundManager.play('select')
 		onStart()
 	}
 
 	return (
-		<div className='flex flex-col items-center justify-center h-screen bg-n64-blue relative overflow-hidden'>
-			<div className='absolute inset-0 z-0'>
-				{/* Add rotating fruits/vegetables background here */}
+		<div className='flex flex-col items-center justify-center h-screen bg-black relative overflow-hidden'>
+			{/* Floating fruits background */}
+			<div className='absolute inset-0 opacity-20'>
+				{Array.from({ length: 20 }).map((_, i) => (
+					<div
+						key={i}
+						className='floating-fruit absolute w-16 h-16 text-4xl'
+						style={{
+							left: `${Math.random() * 100}%`,
+							top: `${Math.random() * 100}%`
+						}}>
+						{['🍎', '🍌', '🥕', '🥦', '🍅'][Math.floor(Math.random() * 5)]}
+					</div>
+				))}
 			</div>
-			<h1 className='title text-6xl font-bold mb-8 text-n64-yellow z-10 font-title'>NUTRI•QUEST</h1>
-			<button
-				className={`text-2xl bg-n64-red px-8 py-4 rounded-lg focus:outline-none focus:ring-4 focus:ring-n64-yellow transition-all duration-200 press-start z-10 font-pixel ${
-					isPressed ? 'transform scale-95' : ''
-				}`}
-				onClick={handleStart}>
-				PRESS START
-			</button>
+
+			<div className='relative z-10 text-center'>
+				<h1 className='title text-7xl font-bold mb-12 text-n64-yellow z-10 font-title tracking-wider'>
+					NUTRI•QUEST
+				</h1>
+				<div className='press-start-wrapper mt-16'>
+					<button
+						className={`text-3xl bg-transparent border-4 border-n64-yellow px-12 py-6 rounded-lg 
+						focus:outline-none transition-all duration-200 press-start z-10 font-pixel
+						text-n64-yellow hover:bg-n64-yellow hover:text-black
+						${isPressed ? 'transform scale-95' : ''}`}
+						onClick={handleStart}>
+						PRESS START
+					</button>
+				</div>
+			</div>
 		</div>
 	)
 }

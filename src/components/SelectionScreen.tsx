@@ -14,17 +14,27 @@ export default function SelectionScreen({ produce, onSelect }: SelectionScreenPr
 	useEffect(() => {
 		gsap.from('.produce-item', {
 			opacity: 0,
-			y: 50,
-			stagger: 0.1,
+			scale: 0,
+			rotation: 720,
 			duration: 0.5,
-			ease: 'power2.out'
+			stagger: {
+				grid: [2, 4],
+				from: 'center',
+				amount: 1
+			},
+			ease: 'back.out(1.7)'
 		})
 	}, [])
 
 	const handleHover = async (item: ProduceItem) => {
 		setHoveredItem(item)
 		await soundManager.play('hover')
-		gsap.to(`#item-${item.id}`, { scale: 1.1, duration: 0.3, ease: 'power2.out' })
+		gsap.to(`#item-${item.id}`, {
+			scale: 1.1,
+			duration: 0.3,
+			ease: 'power2.out',
+			boxShadow: '0 0 20px rgba(255, 255, 0, 0.5)'
+		})
 	}
 
 	const handleHoverExit = (item: ProduceItem) => {
@@ -38,30 +48,31 @@ export default function SelectionScreen({ produce, onSelect }: SelectionScreenPr
 	}
 
 	return (
-		<div className='min-h-screen bg-n64-blue p-8'>
-			<h1 className='text-4xl font-bold mb-8 text-n64-yellow text-center font-title'>
-				NUTRI•QUEST: SELECT A PRODUCE
+		<div className='min-h-screen bg-black p-8'>
+			<h1 className='text-5xl font-bold mb-12 text-n64-yellow text-center font-title tracking-wider retro-text-shadow'>
+				SELECT YOUR PRODUCE
 			</h1>
-			<div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
+			<div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto'>
 				{produce.map((item) => (
 					<div
 						key={item.id}
 						id={`item-${item.id}`}
-						className='produce-item bg-n64-gray rounded-lg overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg transform hover:-translate-y-1'
+						className='produce-item relative bg-gradient-to-br from-n64-blue-dark to-black 
+						rounded-lg overflow-hidden cursor-pointer transition-all duration-300
+						transform hover:-translate-y-2 n64-border'
 						onMouseEnter={() => handleHover(item)}
 						onMouseLeave={() => handleHoverExit(item)}
 						onClick={() => handleSelect(item)}>
-						<div className='p-4'>
-							<h2 className='text-2xl font-bold mb-2 text-n64-yellow uppercase'>{item.name}</h2>
+						<div className='p-6 text-center'>
+							<h2 className='text-3xl font-bold mb-4 text-n64-yellow uppercase retro-text-shadow'>
+								{item.name}
+							</h2>
 							{hoveredItem === item && (
-								<div className='text-sm text-white'>
-									<p>Vitamin C: {item.modern.vitaminC}mg</p>
-									{/* ... other stats */}
+								<div className='text-sm text-white space-y-2 animate-fadeIn'>
+									<p className='text-n64-yellow'>Vitamin C: {item.modern.vitaminC}mg</p>
+									<div className='mt-2 text-xs text-n64-gray-light'>Press A to Select</div>
 								</div>
 							)}
-						</div>
-						<div className='bg-n64-blue-dark p-2 text-white text-center uppercase'>
-							Click to compare
 						</div>
 					</div>
 				))}
