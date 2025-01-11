@@ -1,54 +1,46 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { gsap } from 'gsap'
+import Logo from './Logo'
+import { navigate } from 'astro:transitions/client'
 
 const LoadingScreen = () => {
-	const [showLogo, setShowLogo] = useState(false)
-	const [showText, setShowText] = useState(false)
-
 	useEffect(() => {
 		const tl = gsap.timeline()
 
-		// Initial pause
-		tl.to({}, { duration: 0.5 })
-			// Fade in logo and text simultaneously
-			.add(() => {
-				setShowLogo(true)
-				setShowText(true)
+		tl.from('.boot-text', {
+			opacity: 0,
+			y: 20,
+			duration: 0.5,
+			delay: 1,
+			stagger: 0.2
+		})
+			.to({}, { duration: 0.5 })
+			.from('.splash-logo', {
+				opacity: 0,
+				transform: 'translate3d(-12.5%,0,0)',
+				duration: 0.5,
+				ease: 'power1.out'
 			})
-			.from('.n64-logo', {
-				scale: 0,
-				rotation: 720,
-				duration: 1.5,
+			.to('.boot-text, .splash-logo', {
+				opacity: 0,
+				duration: 0.5,
+				delay: 2,
 				ease: 'power2.out'
 			})
-			.from(
-				'.boot-text',
-				{
-					opacity: 0,
-					y: 20,
-					duration: 0.5,
-					stagger: 0.2
-				},
-				'-=1.5'
-			)
+			.then(async () => await navigate('/start'))
 	}, [])
 
 	return (
 		<div className='flex flex-col items-center justify-center h-screen bg-black text-white'>
-			{showLogo && (
-				<div className='n64-logo mb-8'>
-					<svg width='200' height='200' viewBox='0 0 100 100' className='text-n64-red fill-current'>
-						<path d='M50 0L100 25V75L50 100L0 75V25L50 0ZM50 10L90 30V70L50 90L10 70V30L50 10Z' />
-					</svg>
-				</div>
-			)}
-			{showText && (
-				<div className='text-center'>
-					<div className='boot-text text-2xl mb-4 font-pixel'>NUTRI•QUEST</div>
-					<div className='boot-text text-sm font-pixel'>© 2024 DAVIS REGENERATIVE</div>
-					<div className='boot-text text-sm font-pixel'>LICENSED BY DR AI</div>
-				</div>
-			)}
+			<div className='splash-logo mb-4'>
+				<Logo />
+			</div>
+
+			<div className='text-center'>
+				<div className='boot-text text-2xl mb-2 font-pixel'>NUTRI•QUEST</div>
+				<div className='boot-text text-sm font-pixel'>© 2024 DAVIS REGENERATIVE</div>
+				<div className='boot-text text-sm font-pixel'>LICENSED BY WJD3</div>
+			</div>
 		</div>
 	)
 }

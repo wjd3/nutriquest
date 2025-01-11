@@ -1,5 +1,5 @@
 ---
-import '../styles/global.css'
+import '../styles/main.css'
 import { ClientRouter } from 'astro:transitions'
 
 const fontUrl =
@@ -27,7 +27,9 @@ const fontUrl =
 
 		<title>NUTRI•QUEST</title>
 	</head>
-	<body>
-		<slot />
+	<body class='crt'>
+		<main>
+			<slot />
+		</main>
 	</body>
 </html>

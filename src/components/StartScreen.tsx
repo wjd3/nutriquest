@@ -2,11 +2,7 @@ import { useState, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { soundManager } from '../services/SoundManager'
 
-interface StartScreenProps {
-	onStart: () => void
-}
-
-export default function StartScreen({ onStart }: StartScreenProps) {
+export default function StartScreen() {
 	const [isPressed, setIsPressed] = useState(false)
 
 	useEffect(() => {
@@ -52,7 +48,6 @@ export default function StartScreen({ onStart }: StartScreenProps) {
 			repeat: 1
 		})
 		await soundManager.play('select')
-		onStart()
 	}
 
 	return (
