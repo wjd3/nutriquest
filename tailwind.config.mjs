@@ -4,18 +4,24 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				'n64-blue': '#00549F',
-				'n64-red': '#E60012',
-				'n64-yellow': '#FFC300',
-				'n64-gray': '#4A4A4A',
-				'n64-blue-dark': '#003C7D',
-				'n64-red-dark': '#B8000E',
-				'n64-yellow-dark': '#D6A100'
+				woodsmoke: {
+					50: '#f6f6f6',
+					100: '#e7e7e7',
+					200: '#d1d1d1',
+					300: '#b0b0b0',
+					400: '#888888',
+					500: '#6d6d6d',
+					600: '#5d5d5d',
+					700: '#4f4f4f',
+					800: '#454545',
+					900: '#3d3d3d',
+					950: '#1c1c1c'
+				}
 			},
 			fontFamily: {
-				sans: ['var(--font-chakra-petch)', 'sans-serif'],
-				title: ['var(--font-russo-one)', 'sans-serif'],
-				pixel: ['var(--font-press-start-2p)', 'monospace']
+				sans: ['Chakra Petch', 'sans-serif'],
+				title: ['Russo One', 'sans-serif'],
+				pixel: ['Press Start 2P', 'monospace']
 			}
 		}
 	},

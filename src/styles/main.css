@@ -1,0 +1,9 @@
+@import './crt.css';
+
+::selection {
+	@apply bg-woodsmoke-900 text-white;
+}
+
+body {
+	@apply bg-black;
+}
