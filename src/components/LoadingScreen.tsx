@@ -1,12 +1,21 @@
-import { useEffect } from 'react'
 import { motion, useAnimate } from 'motion/react'
-import Logo from './Logo'
+import Logo from '@/components/Logo'
 import { navigate } from 'astro:transitions/client'
+import { $isLoaded, $isStarted } from '@/store'
+import { useEffect } from 'react'
 
 const LoadingScreen = () => {
 	const [scope, animate] = useAnimate()
 
 	useEffect(() => {
+		if ($isLoaded.get()) {
+			if (!$isStarted.get()) {
+				;(async () => await navigate('/start'))()
+			} else {
+				;(async () => await navigate('/select'))()
+			}
+		}
+
 		const sequence = async () => {
 			// Initial boot screen animation
 			await animate(
@@ -60,6 +69,9 @@ const LoadingScreen = () => {
 					ease: 'easeOut'
 				}
 			)
+
+			// Set app as loaded
+			$isLoaded.set(true)
 
 			// Navigate to start screen
 			await navigate('/start')

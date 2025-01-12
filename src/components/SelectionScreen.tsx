@@ -1,3 +1,3 @@
 export default function SelectScreen() {
-	return <main></main>
+	return <main className='screen'></main>
 }
