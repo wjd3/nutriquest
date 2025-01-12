@@ -94,7 +94,7 @@ const LoadingScreen = () => {
 						NUTRI•QUEST
 					</motion.div>
 					<motion.div className='boot boot-text text-sm font-pixel' initial={{ opacity: 0 }}>
-						© 2024 WJD3
+						© {new Date().getFullYear()} WJD3
 					</motion.div>
 					<motion.div className='boot boot-text text-sm font-pixel' initial={{ opacity: 0 }}>
 						LICENSED BY DAVIS REGENERATIVE

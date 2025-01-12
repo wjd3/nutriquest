@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import StartScreen from '../components/StartScreen'
+import MainLayout from '@/layouts/MainLayout.astro'
+import StartScreen from '@/components/StartScreen'
 ---
 
-<Layout>
+<MainLayout class='bg-woodsmoke-950'>
 	<StartScreen client:only />
-</Layout>
+</MainLayout>
