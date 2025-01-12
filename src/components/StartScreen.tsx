@@ -1,87 +1,88 @@
-import { useState, useEffect } from 'react'
-import { gsap } from 'gsap'
-import { soundManager } from '../services/SoundManager'
+import { useState, useRef, useEffect } from 'react'
+import { motion, useAnimate } from 'motion/react'
+import { soundManager } from '@/services/SoundManager'
+import { navigate } from 'astro:transitions/client'
 
 export default function StartScreen() {
-	const [isPressed, setIsPressed] = useState(false)
+	const [isStarting, setIsStarting] = useState(false)
 
+	const [scope, animate] = useAnimate()
+	const startButtonRef = useRef<HTMLButtonElement>(null)
 	useEffect(() => {
-		const tl = gsap.timeline({ repeat: -1 })
-		tl.to('.press-start', {
-			opacity: 0.2,
-			duration: 0.8,
-			ease: 'steps(1)',
-			yoyo: true,
-			repeat: -1
-		})
-
-		gsap.from('.title', {
-			scale: 0,
-			rotation: 720,
-			duration: 1.5,
-			ease: 'elastic.out(1, 0.3)',
-			delay: 0.5
-		})
-
-		// Floating fruits background animation
-		gsap.to('.floating-fruit', {
-			y: 'random(-20, 20)',
-			x: 'random(-20, 20)',
-			rotation: 'random(-15, 15)',
-			duration: 'random(2, 4)',
-			ease: 'sine.inOut',
-			repeat: -1,
-			yoyo: true,
-			stagger: {
-				amount: 2,
-				from: 'random'
+		const handleKeyPress = (event: KeyboardEvent) => {
+			if (event.key === 'Enter' && !isStarting && startButtonRef.current) {
+				startButtonRef.current.focus()
+				startButtonRef.current.click()
 			}
-		})
+		}
+
+		document.addEventListener('keydown', handleKeyPress)
+		return () => {
+			document.removeEventListener('keydown', handleKeyPress)
+		}
 	}, [])
 
 	const handleStart = async () => {
-		setIsPressed(true)
-		gsap.to('.title', {
-			scale: 1.2,
-			duration: 0.2,
-			yoyo: true,
-			repeat: 1
-		})
-		await soundManager.play('select')
+		if (!isStarting) {
+			setIsStarting(true)
+
+			await soundManager.play('select')
+
+			await animate(
+				scope.current,
+				{
+					opacity: 0
+				},
+				{
+					duration: 0.5,
+					ease: 'easeOut'
+				}
+			)
+
+			await navigate('/select')
+		}
 	}
 
 	return (
-		<div className='flex flex-col items-center justify-center h-screen bg-black relative overflow-hidden'>
-			{/* Floating fruits background */}
-			<div className='absolute inset-0 opacity-20'>
-				{Array.from({ length: 20 }).map((_, i) => (
-					<div
-						key={i}
-						className='floating-fruit absolute w-16 h-16 text-4xl'
-						style={{
-							left: `${Math.random() * 100}%`,
-							top: `${Math.random() * 100}%`
-						}}>
-						{['🍎', '🍌', '🥕', '🥦', '🍅'][Math.floor(Math.random() * 5)]}
+		<main className='h-screen w-full bg-woodsmoke-950 flex flex-col items-center justify-center overflow-hidden'>
+			{/* Main content */}
+			<div ref={scope} className='relative flex flex-col items-center gap-8'>
+				{/* Title section */}
+				<div className='flex flex-col items-center'>
+					<h1 className='text-6xl md:text-8xl font-bold text-white tracking-wider mb-2'>
+						NUTRI•QUEST
+					</h1>
+					<div className='text-zinc-400 text-sm tracking-[0.2em] font-mono'>
+						NUTRIENT DATABASE SYSTEM v1.0
 					</div>
-				))}
-			</div>
+				</div>
 
-			<div className='relative z-10 text-center'>
-				<h1 className='title text-7xl font-bold mb-12 text-n64-yellow z-10 font-title tracking-wider'>
-					NUTRI•QUEST
-				</h1>
-				<div className='press-start-wrapper mt-16'>
+				{/* Start button */}
+				<motion.div
+					animate={{ opacity: [1, 0.2, 1] }}
+					transition={{
+						duration: 1.6,
+						repeat: Infinity,
+						ease: 'easeInOut'
+					}}>
 					<button
-						className={`text-3xl bg-transparent border-4 border-n64-yellow px-12 py-6 rounded-lg 
-						focus:outline-none transition-all duration-200 press-start z-10 font-pixel
-						text-n64-yellow hover:bg-n64-yellow hover:text-black
-						${isPressed ? 'transform scale-95' : ''}`}
+						ref={startButtonRef}
+						className='focus:outline-none text-white border-white/20 focus:bg-white/10 hover:bg-white/10 tracking-widest text-lg px-8'
 						onClick={handleStart}>
 						PRESS START
 					</button>
-				</div>
+				</motion.div>
+
+				{/* Copyright notice */}
+				<motion.div
+					className='text-center gap-1 fixed bottom-4 left-1/2 -translate-x-1/2'
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ delay: 1, duration: 1 }}>
+					<div className='text-zinc-600 text-xs font-mono'>© 2024 WJD3</div>
+					<div className='text-zinc-600 text-xs font-mono'>LICENSED BY DAVIS REGENERATIVE</div>
+				</motion.div>
 			</div>
-		</div>
+		</main>
 	)
 }
