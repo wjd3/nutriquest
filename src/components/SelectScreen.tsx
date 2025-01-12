@@ -1,7 +1,20 @@
 import { $isLoaded, $isStarted } from '@/store'
 import { navigate } from 'astro:transitions/client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { motion } from 'motion/react'
 import Screen from '@/components/Screen'
+import Item from './Item'
+
+const produce = [
+	{ name: 'Apple', path: '/models/apple.fbx' },
+	{ name: 'Grapes', path: '/models/grapes-green.fbx' },
+	{ name: 'Carrot', path: '/models/carrot.fbx' },
+	{ name: 'Orange', path: '/models/orange.fbx' },
+	{ name: 'Pear', path: '/models/pear.fbx' },
+	{ name: 'Tomato', path: '/models/tomato.fbx' },
+	{ name: 'Pepper', path: '/models/pepper.fbx' },
+	{ name: 'Watermelon', path: '/models/watermelon.fbx' }
+]
 
 export default function SelectScreen() {
 	useEffect(() => {
@@ -12,5 +25,53 @@ export default function SelectScreen() {
 		}
 	}, [$isStarted.get(), $isLoaded.get()])
 
-	return <Screen>{$isLoaded.get() && $isStarted.get() && <div>Select Screen</div>}</Screen>
+	const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+
+	return (
+		<Screen className='flex flex-col items-center justify-center p-8'>
+			<motion.h1
+				className='font-pixel text-3xl mb-8 text-white'
+				initial={{ opacity: 0, y: -20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5 }}>
+				SELECT YOUR PRODUCE
+			</motion.h1>
+
+			<motion.div
+				className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8'
+				initial={{ opacity: 0, scale: 0.95 }}
+				animate={{ opacity: 1, scale: 1 }}
+				transition={{ duration: 0.5, delay: 0.2 }}>
+				{produce.map((item, index) => (
+					<button
+						key={item.name}
+						onClick={() => setSelectedIndex(index)}
+						className='focus:outline-none transform transition-transform hover:scale-105'>
+						<Item modelPath={item.path} name={item.name} isSelected={selectedIndex === index} />
+					</button>
+				))}
+			</motion.div>
+
+			<motion.div
+				className='flex justify-center gap-4'
+				initial={{ opacity: 0, y: 20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5, delay: 0.4 }}>
+				<button
+					className='px-6 py-3 bg-woodsmoke-950 text-white font-pixel border border-fern-400 hover:bg-fern-400 hover:text-black transition-colors duration-300'
+					onClick={() => setSelectedIndex(Math.floor(Math.random() * produce.length))}>
+					RANDOM
+				</button>
+				<button
+					className={`px-6 py-3 font-pixel border ${
+						selectedIndex === null
+							? 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'
+							: 'bg-woodsmoke-950 text-white border-fern-400 hover:bg-fern-400 hover:text-black'
+					} transition-colors duration-300`}
+					disabled={selectedIndex === null}>
+					ACCEPT
+				</button>
+			</motion.div>
+		</Screen>
+	)
 }
