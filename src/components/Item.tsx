@@ -101,15 +101,16 @@ const Item = ({ item, isSelected }: ItemProps) => {
 				loadModelWithTexture(fbx) // Apply texture
 				group.add(fbx)
 
-				fbx.position.set(modelRotationOffset, 0, 0)
+				if (modelRotation) {
+					fbx.position.set(0, modelRotationOffset, 0)
+					group.rotation.z = modelRotation
+				} else {
+					fbx.position.set(modelRotationOffset, 0, 0)
+				}
 
 				modelRef.current = group
 				group.scale.set(0.1, 0.1, 0.1)
 				group.position.y -= modelPositionY
-
-				if (modelRotation) {
-					group.rotation.z = modelRotation
-				}
 
 				scene.add(group)
 			})

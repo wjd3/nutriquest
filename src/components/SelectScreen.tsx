@@ -124,6 +124,7 @@ export default function SelectScreen() {
 							key={item.name || index}
 							onClick={async () => {
 								if (index != selectedIndex) {
+									await soundManager.play('toggle')
 									setSelectedIndex(index)
 								}
 							}}

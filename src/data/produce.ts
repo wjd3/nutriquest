@@ -69,11 +69,14 @@ export const produce: ProduceItem[] = [
 		cameraZoom: 22
 	},
 	{
-		name: 'Pumpkin',
-		modelPath: '/models/pumpkin.fbx',
-		modelPositionY: 6,
+		name: 'Carrot',
+		modelPath: '/models/carrot.fbx',
+		texturePath: '/textures/carrot.jpg',
+		modelPositionY: -3.5,
 		cameraPositionY: 2,
-		cameraZoom: 20
+		cameraZoom: 31,
+		modelRotation: -1.6,
+		modelRotationOffset: -55
 	},
 	{
 		name: 'Strawberry',
