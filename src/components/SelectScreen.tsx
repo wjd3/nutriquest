@@ -3,27 +3,17 @@ import { navigate } from 'astro:transitions/client'
 import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import Screen from '@/components/Screen'
-import Item from './Item'
-
-const produce = [
-	{ name: 'Apple', path: '/models/apple.fbx' },
-	{ name: 'Grapes', path: '/models/grapes-green.fbx' },
-	{ name: 'Carrot', path: '/models/carrot.fbx' },
-	{ name: 'Orange', path: '/models/orange.fbx' },
-	{ name: 'Pear', path: '/models/pear.fbx' },
-	{ name: 'Tomato', path: '/models/tomato.fbx' },
-	{ name: 'Pepper', path: '/models/pepper.fbx' },
-	{ name: 'Watermelon', path: '/models/watermelon.fbx' }
-]
+import Item from '@/components/Item'
+import { produce } from '@/data/produce'
 
 export default function SelectScreen() {
-	useEffect(() => {
-		if (!$isLoaded.get()) {
-			;(async () => await navigate('/'))()
-		} else if (!$isStarted.get()) {
-			;(async () => await navigate('/start'))()
-		}
-	}, [$isStarted.get(), $isLoaded.get()])
+	// useEffect(() => {
+	// 	if (!$isLoaded.get()) {
+	// 		;(async () => await navigate('/'))()
+	// 	} else if (!$isStarted.get()) {
+	// 		;(async () => await navigate('/start'))()
+	// 	}
+	// }, [$isStarted.get(), $isLoaded.get()])
 
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
@@ -42,14 +32,16 @@ export default function SelectScreen() {
 				initial={{ opacity: 0, scale: 0.95 }}
 				animate={{ opacity: 1, scale: 1 }}
 				transition={{ duration: 0.5, delay: 0.2 }}>
-				{produce.map((item, index) => (
-					<button
-						key={item.name}
-						onClick={() => setSelectedIndex(index)}
-						className='focus:outline-none transform transition-transform hover:scale-105'>
-						<Item modelPath={item.path} name={item.name} isSelected={selectedIndex === index} />
-					</button>
-				))}
+				{produce
+					.sort((a, b) => a.name.localeCompare(b.name))
+					.map((item, index) => (
+						<button
+							key={item.name || index}
+							onClick={() => setSelectedIndex(index)}
+							className='focus:outline-none transform transition-transform hover:scale-105'>
+							<Item item={item} isSelected={selectedIndex === index} />
+						</button>
+					))}
 			</motion.div>
 
 			<motion.div

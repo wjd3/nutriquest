@@ -4,20 +4,41 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { animate } from 'motion'
 
 interface ItemProps {
-	modelPath: string
-	name: string
+	item: {
+		modelPath: string
+		texturePath: string // Add this new prop for texture path
+		name: string
+		modelPositionY: number
+		cameraPositionY: number
+		cameraZoom: number
+		modelRotationSpeed?: number
+		modelRotation?: number
+		modelRotationOffset?: number
+	}
 	isSelected: boolean
 }
 
-// Type for mesh objects in Three.js
 interface ThreeMesh extends THREE.Object3D {
 	isMesh?: boolean
 	material?: THREE.Material & {
 		emissive?: THREE.Color
+		map?: THREE.Texture // Add this for texture mapping
 	}
 }
 
-const Item = ({ modelPath, name, isSelected }: ItemProps) => {
+const Item = ({ item, isSelected }: ItemProps) => {
+	const {
+		modelPath,
+		texturePath, // Add this
+		name,
+		modelPositionY,
+		cameraZoom,
+		modelRotationSpeed,
+		modelRotation,
+		cameraPositionY,
+		modelRotationOffset
+	} = item
+
 	const mountRef = useRef<HTMLDivElement>(null)
 	const sceneRef = useRef<THREE.Scene | null>(null)
 	const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
@@ -43,7 +64,9 @@ const Item = ({ modelPath, name, isSelected }: ItemProps) => {
 			0.1,
 			1000
 		)
-		camera.position.z = 5
+		camera.position.z = cameraZoom
+		camera.position.y = cameraPositionY
+		camera.lookAt(0, 0, 0)
 		cameraRef.current = camera
 
 		// Set up renderer
@@ -53,19 +76,72 @@ const Item = ({ modelPath, name, isSelected }: ItemProps) => {
 		mountRef?.current?.appendChild(renderer.domElement)
 		rendererRef.current = renderer
 
+		// Create texture loader
+		const textureLoader = new THREE.TextureLoader()
+		const texture = textureLoader.load(texturePath)
+
 		// Load model
 		const loader = new FBXLoader()
-		loader.load(modelPath, (fbx: THREE.Group) => {
-			modelRef.current = fbx
-			fbx.scale.set(0.1, 0.1, 0.1) // Adjust scale as needed
-			scene.add(fbx)
-		})
+
+		const loadModelWithTexture = (fbx: THREE.Group) => {
+			// Apply texture to all mesh materials in the model
+			fbx.traverse((child: ThreeMesh) => {
+				if (child.isMesh && child.material) {
+					// If the material is an array, apply texture to all materials
+					if (Array.isArray(child.material)) {
+						child.material.forEach((mat) => {
+							mat.map = texture
+							mat.needsUpdate = true
+						})
+					} else {
+						// Single material
+						child.material.map = texture
+						child.material.needsUpdate = true
+					}
+				}
+			})
+
+			return fbx
+		}
+
+		if (modelRotationOffset != null) {
+			loader.load(modelPath, (fbx: THREE.Group) => {
+				const group = new THREE.Group()
+				loadModelWithTexture(fbx) // Apply texture
+				group.add(fbx)
+
+				fbx.position.set(modelRotationOffset, 0, 0)
+
+				modelRef.current = group
+				group.scale.set(0.1, 0.1, 0.1)
+				group.position.y -= modelPositionY
+
+				if (modelRotation) {
+					group.rotation.z = modelRotation
+				}
+
+				scene.add(group)
+			})
+		} else {
+			loader.load(modelPath, (fbx: THREE.Group) => {
+				loadModelWithTexture(fbx) // Apply texture
+				modelRef.current = fbx
+				fbx.scale.set(0.1, 0.1, 0.1)
+				fbx.position.y -= modelPositionY
+
+				if (modelRotation) {
+					fbx.rotation.z = modelRotation
+				}
+
+				scene.add(fbx)
+			})
+		}
 
 		// Animation loop
 		const animate = () => {
 			requestAnimationFrame(animate)
 			if (modelRef.current) {
-				modelRef.current.rotation.y += 0.01 // Gentle rotation
+				modelRef.current.rotation.y += modelRotationSpeed != null ? modelRotationSpeed : 0.0065
 			}
 			renderer.render(scene, camera)
 		}
@@ -78,7 +154,7 @@ const Item = ({ modelPath, name, isSelected }: ItemProps) => {
 			}
 			renderer.dispose()
 		}
-	}, [modelPath])
+	}, [modelPath, texturePath]) // Add texturePath to dependencies
 
 	// Handle selection effects
 	useEffect(() => {
@@ -87,10 +163,9 @@ const Item = ({ modelPath, name, isSelected }: ItemProps) => {
 		const model = modelRef.current
 
 		if (isSelected) {
-			// Scale up and add glow effect when selected
 			animate(
 				[
-					[model.scale, { x: 0.13, y: 0.13, z: 0.13 }],
+					[model.scale, { x: 0.11, y: 0.11, z: 0.11 }],
 					['.item-name', { backgroundColor: '#68b06c' }]
 				],
 				{
@@ -101,11 +176,10 @@ const Item = ({ modelPath, name, isSelected }: ItemProps) => {
 
 			model.traverse((child: ThreeMesh) => {
 				if (child.isMesh && child.material?.emissive) {
-					child.material.emissive = new THREE.Color(0.2, 0.5, 0.2) // Green glow
+					child.material.emissive = new THREE.Color(0.2, 0.5, 0.2)
 				}
 			})
 		} else {
-			// Reset scale and remove glow
 			animate(
 				[
 					[model.scale, { x: 0.1, y: 0.1, z: 0.1 }],
