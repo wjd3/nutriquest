@@ -56,6 +56,7 @@ export const produce: ProduceItem[] = [
 	{
 		name: 'Pear',
 		modelPath: '/models/pear.fbx',
+		texturePath: '/textures/pear.jpg',
 		modelPositionY: 10,
 		cameraPositionY: 2,
 		cameraZoom: 24

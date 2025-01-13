@@ -18,12 +18,14 @@ export default function StartScreen() {
 		}
 
 		const handleKeyPress = (event: KeyboardEvent) => {
-			if (event.key === 'Enter' && startButtonRef?.current) {
-				if (!isStarting) {
-					startButtonRef.current.focus()
-				}
+			if (startButtonRef?.current) {
+				if (event.key === 'Enter' || event.key === ' ') {
+					if (!isStarting) {
+						startButtonRef.current.focus()
+					}
 
-				startButtonRef.current.click()
+					startButtonRef.current.click()
+				}
 			}
 		}
 
