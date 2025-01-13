@@ -24,6 +24,7 @@ class SoundManager {
 		if (!this.context) throw new Error('AudioContext not initialized')
 
 		const soundEffects = [
+			{ name: 'start', file: 'start.mp3' },
 			{ name: 'select', file: 'select.mp3' },
 			{ name: 'hover', file: 'hover.mp3' },
 			{ name: 'back', file: 'back.mp3' },

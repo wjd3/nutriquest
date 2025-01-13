@@ -1,12 +1,21 @@
-import { useEffect } from 'react'
 import { motion, useAnimate } from 'motion/react'
-import Logo from './Logo'
+import Logo from '@/components/Logo'
 import { navigate } from 'astro:transitions/client'
+import { $isLoaded, $isStarted } from '@/store'
+import { useEffect } from 'react'
 
 const LoadingScreen = () => {
 	const [scope, animate] = useAnimate()
 
 	useEffect(() => {
+		if ($isLoaded.get()) {
+			if (!$isStarted.get()) {
+				;(async () => await navigate('/start'))()
+			} else {
+				;(async () => await navigate('/select'))()
+			}
+		}
+
 		const sequence = async () => {
 			// Initial boot screen animation
 			await animate(
@@ -61,6 +70,9 @@ const LoadingScreen = () => {
 				}
 			)
 
+			// Set app as loaded
+			$isLoaded.set(true)
+
 			// Navigate to start screen
 			await navigate('/start')
 		}
@@ -82,7 +94,7 @@ const LoadingScreen = () => {
 						NUTRI•QUEST
 					</motion.div>
 					<motion.div className='boot boot-text text-sm font-pixel' initial={{ opacity: 0 }}>
-						© 2024 WJD3
+						© {new Date().getFullYear()} WJD3
 					</motion.div>
 					<motion.div className='boot boot-text text-sm font-pixel' initial={{ opacity: 0 }}>
 						LICENSED BY DAVIS REGENERATIVE

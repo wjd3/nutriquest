@@ -1,9 +1,12 @@
 @import './crt.css';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 ::selection {
 	@apply bg-woodsmoke-900 text-white;
 }
-
-body {
-	@apply bg-black;
+::-moz-selection {
+	@apply bg-woodsmoke-900 text-white;
 }

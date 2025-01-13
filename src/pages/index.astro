@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import LoadingScreen from '../components/LoadingScreen'
+import MainLayout from '@/layouts/MainLayout.astro'
+import LoadingScreen from '@/components/LoadingScreen'
 ---
 
-<Layout>
+<MainLayout class='bg-black'>
 	<LoadingScreen client:only />
-</Layout>
+</MainLayout>

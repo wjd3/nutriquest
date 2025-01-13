@@ -1,8 +1,14 @@
-export const produce = [
+import type { ProduceItem } from '@/types'
+
+export const produce: ProduceItem[] = [
 	{
-		id: 1,
 		name: 'Apple',
-		modelPath: 'apple.glb',
+		modelPath: '/models/apple.fbx',
+		texturePath: '/textures/apple.jpg',
+		modelPositionY: 3.75,
+		cameraPositionY: 2,
+		cameraZoom: 11,
+		modelRotationOffset: -6,
 		historical: {
 			vitaminA: 30,
 			vitaminC: 40,
@@ -23,27 +29,60 @@ export const produce = [
 			'Apples have been cultivated for thousands of years. Historical varieties were often smaller and less sweet than modern cultivars. The development of modern apple varieties has focused on increasing size, sweetness, and disease resistance.'
 	},
 	{
-		id: 2,
+		name: 'Grapes',
+		modelPath: '/models/grapes-green.fbx',
+		texturePath: '/textures/grapes-green.jpg',
+		modelPositionY: 7.5,
+		cameraPositionY: 3,
+		cameraZoom: 21.5,
+		modelRotationOffset: 10
+	},
+	{
+		name: 'Eggplant',
+		modelPath: '/models/eggplant.fbx',
+		texturePath: '/textures/eggplant.jpg',
+		modelPositionY: 10,
+		cameraPositionY: 3,
+		cameraZoom: 24
+	},
+	{
+		name: 'Orange',
+		modelPath: '/models/orange.fbx',
+		modelPositionY: 6,
+		cameraPositionY: 2,
+		cameraZoom: 18.5,
+		modelRotationOffset: -20
+	},
+	{
+		name: 'Pear',
+		modelPath: '/models/pear.fbx',
+		texturePath: '/textures/pear.jpg',
+		modelPositionY: 10,
+		cameraPositionY: 2,
+		cameraZoom: 24
+	},
+	{
 		name: 'Tomato',
-		modelPath: 'tomato.glb',
-		historical: {
-			vitaminA: 40,
-			vitaminC: 50,
-			vitaminK: 30,
-			iron: 15,
-			calcium: 20,
-			potassium: 60
-		},
-		modern: {
-			vitaminA: 45,
-			vitaminC: 70,
-			vitaminK: 35,
-			iron: 18,
-			calcium: 25,
-			potassium: 80
-		},
-		historicalContext:
-			'Tomatoes were first domesticated in Mexico around 7,000 years ago. Historical tomatoes were much smaller and often yellow or green. Modern breeding has led to larger, redder tomatoes with increased lycopene content.'
+		modelPath: '/models/tomato.fbx',
+		modelPositionY: 6.5,
+		cameraPositionY: 2,
+		cameraZoom: 22
+	},
+	{
+		name: 'Carrot',
+		modelPath: '/models/carrot.fbx',
+		texturePath: '/textures/carrot.jpg',
+		modelPositionY: -3.5,
+		cameraPositionY: 2,
+		cameraZoom: 31,
+		modelRotation: -1.6,
+		modelRotationOffset: -55
+	},
+	{
+		name: 'Strawberry',
+		modelPath: '/models/strawberry.fbx',
+		modelPositionY: 7,
+		cameraPositionY: 2,
+		cameraZoom: 45
 	}
-	// Add more produce items as needed
 ]
