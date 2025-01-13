@@ -4,11 +4,6 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { animate } from 'motion'
 import type { ProduceItem } from '@/types'
 
-interface ItemProps {
-	item: ProduceItem
-	isSelected: boolean
-}
-
 interface ThreeMesh extends THREE.Object3D {
 	isMesh?: boolean
 	material?: THREE.Material & {
@@ -17,7 +12,12 @@ interface ThreeMesh extends THREE.Object3D {
 	}
 }
 
-const Item = ({ item, isSelected }: ItemProps) => {
+interface SelectItemProps {
+	item: ProduceItem
+	isSelected: boolean
+}
+
+const SelectItem = ({ item, isSelected }: SelectItemProps) => {
 	const {
 		modelPath,
 		texturePath, // Add this
@@ -192,4 +192,4 @@ const Item = ({ item, isSelected }: ItemProps) => {
 	)
 }
 
-export default Item
+export default SelectItem

@@ -26,8 +26,6 @@ class SoundManager {
 		const soundEffects = [
 			{ name: 'start', file: 'start.mp3' },
 			{ name: 'select', file: 'select.mp3' },
-			{ name: 'hover', file: 'hover.mp3' },
-			{ name: 'back', file: 'back.mp3' },
 			{ name: 'toggle', file: 'toggle.mp3' }
 		]
 

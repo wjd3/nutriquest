@@ -3,7 +3,7 @@ import { navigate } from 'astro:transitions/client'
 import { useEffect, useState, useRef, useMemo } from 'react'
 import { motion } from 'motion/react'
 import Screen from '@/components/Screen'
-import Item from '@/components/Item'
+import SelectItem from '@/components/SelectItem'
 import { produce } from '@/data/produce'
 import { soundManager } from '@/services/SoundManager'
 
@@ -16,13 +16,13 @@ export default function SelectScreen() {
 		[$isLoaded.get(), $isStarted.get()]
 	)
 
-	useEffect(() => {
-		if (!$isLoaded.get()) {
-			;(async () => await navigate('/'))()
-		} else if (!$isStarted.get()) {
-			;(async () => await navigate('/start'))()
-		}
-	}, [$isLoaded.get(), $isStarted.get()])
+	// useEffect(() => {
+	// 	if (!$isLoaded.get()) {
+	// 		;(async () => await navigate('/'))()
+	// 	} else if (!$isStarted.get()) {
+	// 		;(async () => await navigate('/start'))()
+	// 	}
+	// }, [$isLoaded.get(), $isStarted.get()])
 
 	useEffect(() => {
 		const updateItemsPerRow = () => {
@@ -118,9 +118,9 @@ export default function SelectScreen() {
 
 	return (
 		<Screen className='flex flex-col items-center justify-center p-8'>
-			{isReady && (
+			{true && (
+				// {isReady && (
 				<>
-					{' '}
 					<motion.h1
 						className='font-pixel text-3xl mb-8 text-white'
 						initial={{ opacity: 0, y: -20 }}
@@ -147,7 +147,7 @@ export default function SelectScreen() {
 									className={`focus:outline-none transform transition-transform hover:scale-105 ${
 										selectedIndex === index ? 'ring-2 ring-woodsmoke-400' : ''
 									}`}>
-									<Item item={item} isSelected={selectedIndex === index} />
+									<SelectItem item={item} isSelected={selectedIndex === index} />
 								</button>
 							))}
 					</motion.div>
