@@ -5,6 +5,7 @@ import { motion } from 'motion/react'
 import Screen from '@/components/Screen'
 import Item from '@/components/Item'
 import { produce } from '@/data/produce'
+import { soundManager } from '@/services/SoundManager'
 
 export default function SelectScreen() {
 	// useEffect(() => {
@@ -37,7 +38,10 @@ export default function SelectScreen() {
 					.map((item, index) => (
 						<button
 							key={item.name || index}
-							onClick={() => setSelectedIndex(index)}
+							onClick={async () => {
+								await soundManager.play('toggle')
+								setSelectedIndex(index)
+							}}
 							className='focus:outline-none transform transition-transform hover:scale-105'>
 							<Item item={item} isSelected={selectedIndex === index} />
 						</button>
@@ -50,11 +54,14 @@ export default function SelectScreen() {
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5, delay: 0.4 }}>
 				<button
-					className='px-6 py-3 bg-woodsmoke-950 text-white font-pixel border border-fern-400 hover:bg-fern-400 hover:text-black transition-colors duration-300'
-					onClick={() => setSelectedIndex(Math.floor(Math.random() * produce.length))}>
-					RANDOM
-				</button>
-				<button
+					onClick={async () => {
+						if (selectedIndex != null) {
+							await soundManager.play('select')
+							await navigate(
+								`/stats/${produce[selectedIndex].name.toLowerCase().replace(/\s+/g, '-')}`
+							)
+						}
+					}}
 					className={`px-6 py-3 font-pixel border ${
 						selectedIndex === null
 							? 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'

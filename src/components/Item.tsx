@@ -2,19 +2,10 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { animate } from 'motion'
+import type { ProduceItem } from '@/types'
 
 interface ItemProps {
-	item: {
-		modelPath: string
-		texturePath: string // Add this new prop for texture path
-		name: string
-		modelPositionY: number
-		cameraPositionY: number
-		cameraZoom: number
-		modelRotationSpeed?: number
-		modelRotation?: number
-		modelRotationOffset?: number
-	}
+	item: ProduceItem
 	isSelected: boolean
 }
 
@@ -78,7 +69,7 @@ const Item = ({ item, isSelected }: ItemProps) => {
 
 		// Create texture loader
 		const textureLoader = new THREE.TextureLoader()
-		const texture = textureLoader.load(texturePath)
+		const texture = textureLoader.load(texturePath || '')
 
 		// Load model
 		const loader = new FBXLoader()
@@ -163,21 +154,9 @@ const Item = ({ item, isSelected }: ItemProps) => {
 		const model = modelRef.current
 
 		if (isSelected) {
-			animate(
-				[
-					[model.scale, { x: 0.11, y: 0.11, z: 0.11 }],
-					['.item-name', { backgroundColor: '#68b06c' }]
-				],
-				{
-					duration: 0.3,
-					easing: 'ease-out'
-				}
-			)
-
-			model.traverse((child: ThreeMesh) => {
-				if (child.isMesh && child.material?.emissive) {
-					child.material.emissive = new THREE.Color(0.2, 0.5, 0.2)
-				}
+			animate([[model.scale, { x: 0.11, y: 0.11, z: 0.11 }]], {
+				duration: 0.3,
+				easing: 'ease-out'
 			})
 		} else {
 			animate(
@@ -190,12 +169,6 @@ const Item = ({ item, isSelected }: ItemProps) => {
 					easing: 'ease-out'
 				}
 			)
-
-			model.traverse((child: ThreeMesh) => {
-				if (child.isMesh && child.material?.emissive) {
-					child.material.emissive = new THREE.Color(0, 0, 0)
-				}
-			})
 		}
 	}, [isSelected])
 
@@ -205,8 +178,8 @@ const Item = ({ item, isSelected }: ItemProps) => {
 				ref={mountRef}
 				className={`w-48 h-48 ${
 					isSelected
-						? 'border-2 border-fern-400 bg-black/20'
-						: 'border border-woodsmoke-950 bg-black/10'
+						? 'border-2 border-woodsmoke-700 bg-black/20'
+						: 'border border-woodsmoke-800 bg-black/10'
 				} transition-colors duration-300`}
 			/>
 			<div className='absolute bottom-2 left-0 right-0 text-center'>

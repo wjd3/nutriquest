@@ -1,0 +1,22 @@
+---
+import StatsScreen from '@/components/StatsScreen'
+import MainLayout from '@/layouts/MainLayout.astro'
+import { produce } from '@/data/produce'
+import type { ProduceItem } from '@/types'
+
+export async function getStaticPaths() {
+	return produce.map((item) => ({
+		params: { item: item.name.toLowerCase().replace(/\s+/g, '-') },
+		props: { item }
+	}))
+}
+
+interface Props {
+	item: ProduceItem
+}
+const { item } = Astro.props
+---
+
+<MainLayout class='bg-woodsmoke-950'>
+	<StatsScreen client:only item={item} />
+</MainLayout>

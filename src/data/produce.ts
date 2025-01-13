@@ -1,19 +1,6 @@
-interface Item {
-	modelPath: string
-	texturePath?: string
-	name: string
-	modelPositionY: number
-	cameraPositionY: number
-	cameraZoom: number
-	modelRotationSpeed?: number
-	modelRotation?: number
-	modelRotationOffset?: number
-	historical?: Record<string, number>
-	modern?: Record<string, number>
-	historicalContext?: string
-}
+import type { ProduceItem } from '@/types'
 
-export const produce: Item[] = [
+export const produce: ProduceItem[] = [
 	{
 		name: 'Apple',
 		modelPath: '/models/apple.fbx',
@@ -53,6 +40,7 @@ export const produce: Item[] = [
 	{
 		name: 'Eggplant',
 		modelPath: '/models/eggplant.fbx',
+		texturePath: '/textures/eggplant.jpg',
 		modelPositionY: 10,
 		cameraPositionY: 3,
 		cameraZoom: 24

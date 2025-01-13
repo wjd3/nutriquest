@@ -1,8 +1,14 @@
 export interface ProduceItem {
-	id: number
-	name: string
 	modelPath: string
-	historical: {
+	texturePath?: string
+	name: string
+	modelPositionY: number
+	cameraPositionY: number
+	cameraZoom: number
+	modelRotationSpeed?: number
+	modelRotation?: number
+	modelRotationOffset?: number
+	historical?: {
 		vitaminA: number
 		vitaminC: number
 		vitaminK: number
@@ -10,7 +16,7 @@ export interface ProduceItem {
 		calcium: number
 		potassium: number
 	}
-	modern: {
+	modern?: {
 		vitaminA: number
 		vitaminC: number
 		vitaminK: number
@@ -18,5 +24,5 @@ export interface ProduceItem {
 		calcium: number
 		potassium: number
 	}
-	historicalContext: string
+	historicalContext?: string
 }

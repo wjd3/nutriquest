@@ -34,7 +34,7 @@ export default function StartScreen() {
 	const handleStart = async () => {
 		setIsStarting(true)
 
-		await soundManager.play('select')
+		await soundManager.play('start')
 
 		await animate(
 			scope.current,
