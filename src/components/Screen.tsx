@@ -1,7 +1,7 @@
-import React from 'react'
+import type { HTMLProps, ReactNode } from 'react'
 
-interface ScreenProps extends React.HTMLProps<HTMLDivElement> {
-	children: React.ReactNode
+interface ScreenProps extends HTMLProps<HTMLDivElement> {
+	children: ReactNode
 }
 
 export default function Screen({ children, ...divProps }: ScreenProps) {

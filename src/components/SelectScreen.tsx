@@ -2,15 +2,15 @@ import { navigateTo } from '@/utils/navigate'
 import { useEffect, useState, useRef } from 'react'
 import { motion } from 'motion/react'
 import Screen from '@/components/Screen'
-import SelectItem from '@/components/SelectItem'
+import ProduceItem from '@/components/ProduceItem'
 import { produce } from '@/data/produce'
 import { soundManager } from '@/services/SoundManager'
 
 export default function SelectScreen() {
 	const [isNavigating, setIsNavigating] = useState(false)
 
-	const [selectedIndex, setSelectedIndex] = useState<number | null>(0) // Start with first item selected
-	const [itemsPerRow, setItemsPerRow] = useState<number>(4) // Default to 4 items per row
+	const [selectedIndex, setSelectedIndex] = useState<number | null>(null) // Start with no items selected
+	const [itemsPerRow, setItemsPerRow] = useState<number>(2) // Default to 2 items per row (mobile)
 
 	useEffect(() => {
 		const updateItemsPerRow = () => {
@@ -33,7 +33,7 @@ export default function SelectScreen() {
 	// Handle keyboard navigation
 	useEffect(() => {
 		const handleKeyDown = async (e: globalThis.KeyboardEvent) => {
-			if (selectedIndex === null) return
+			if (selectedIndex == null) return
 
 			let newIndex = selectedIndex
 			const totalItems = produce.length
@@ -97,9 +97,7 @@ export default function SelectScreen() {
 		// Add event listener
 		document.addEventListener('keydown', handleKeyDown)
 		// Cleanup
-		return () => {
-			document.removeEventListener('keydown', handleKeyDown)
-		}
+		return () => document.removeEventListener('keydown', handleKeyDown)
 	}, [selectedIndex, itemsPerRow])
 
 	return (
@@ -108,29 +106,28 @@ export default function SelectScreen() {
 				className='font-pixel text-3xl mb-8 text-white'
 				initial={{ opacity: 0, y: -20 }}
 				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.5 }}>
+				transition={{ duration: 0.5, delay: 0.2 }}>
 				SELECT YOUR PRODUCE
 			</motion.h1>
 			<motion.div
 				className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8'
 				initial={{ opacity: 0, scale: 0.95 }}
 				animate={{ opacity: 1, scale: 1 }}
-				transition={{ duration: 0.5, delay: 0.2 }}>
+				transition={{ duration: 0.5, delay: 0.4 }}>
 				{produce
 					.sort((a, b) => a.name.localeCompare(b.name))
 					.map((item, index) => (
 						<button
 							key={item.name || index}
 							onClick={async () => {
-								if (index != selectedIndex) {
-									await soundManager.play('toggle')
-									setSelectedIndex(index)
-								}
+								await soundManager.play('toggle')
+
+								setSelectedIndex(index !== selectedIndex ? index : null)
 							}}
 							className={`focus:outline-none transform transition-transform hover:scale-105 ${
 								selectedIndex === index ? 'ring-2 ring-woodsmoke-400' : ''
 							}`}>
-							<SelectItem item={item} isSelected={selectedIndex === index} />
+							<ProduceItem variant='select' item={item} isSelected={selectedIndex === index} />
 						</button>
 					))}
 			</motion.div>
@@ -138,7 +135,7 @@ export default function SelectScreen() {
 				className='flex justify-center gap-4'
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.5, delay: 0.4 }}>
+				transition={{ duration: 0.5, delay: 0.6 }}>
 				<button
 					onClick={async () => {
 						if (selectedIndex != null) {

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
+import { animate } from 'motion'
 import type { ProduceItem } from '@/types'
 
 interface ThreeMesh extends THREE.Object3D {
@@ -11,14 +12,17 @@ interface ThreeMesh extends THREE.Object3D {
 	}
 }
 
-interface StatsItemProps {
+interface ItemProps {
 	item: ProduceItem
+	variant: 'select' | 'stats'
+	isSelected?: boolean // Optional since it's only needed for select variant
 }
 
-const StatsItem = ({ item }: StatsItemProps) => {
+const Item = ({ item, variant, isSelected = false }: ItemProps) => {
 	const {
 		modelPath,
 		texturePath,
+		name,
 		modelPositionY,
 		cameraZoom,
 		modelRotationSpeed,
@@ -88,6 +92,8 @@ const StatsItem = ({ item }: StatsItemProps) => {
 			return fbx
 		}
 
+		const initialScale = variant === 'select' ? 0.1 : 0.15
+
 		if (modelRotationOffset != null) {
 			loader.load(modelPath, (fbx: THREE.Group) => {
 				const group = new THREE.Group()
@@ -102,7 +108,7 @@ const StatsItem = ({ item }: StatsItemProps) => {
 				}
 
 				modelRef.current = group
-				group.scale.set(0.15, 0.15, 0.15) // Larger scale for stats view
+				group.scale.set(initialScale, initialScale, initialScale)
 				group.position.y -= modelPositionY
 
 				scene.add(group)
@@ -111,7 +117,7 @@ const StatsItem = ({ item }: StatsItemProps) => {
 			loader.load(modelPath, (fbx: THREE.Group) => {
 				loadModelWithTexture(fbx)
 				modelRef.current = fbx
-				fbx.scale.set(0.15, 0.15, 0.15) // Larger scale for stats view
+				fbx.scale.set(initialScale, initialScale, initialScale)
 				fbx.position.y -= modelPositionY
 
 				if (modelRotation) {
@@ -139,7 +145,52 @@ const StatsItem = ({ item }: StatsItemProps) => {
 			}
 			renderer.dispose()
 		}
-	}, [modelPath, texturePath])
+	}, [modelPath, texturePath, variant])
+
+	// Handle selection effects for select variant
+	useEffect(() => {
+		if (variant !== 'select' || !modelRef.current) return
+
+		const model = modelRef.current
+
+		if (isSelected) {
+			animate([[model.scale, { x: 0.11, y: 0.11, z: 0.11 }]], {
+				duration: 0.3,
+				easing: 'ease-out'
+			})
+		} else {
+			animate(
+				[
+					[model.scale, { x: 0.1, y: 0.1, z: 0.1 }],
+					['.item-name', { backgroundColor: '#1c1c1c' }]
+				],
+				{
+					duration: 0.3,
+					easing: 'ease-out'
+				}
+			)
+		}
+	}, [isSelected, variant])
+
+	if (variant === 'select') {
+		return (
+			<div className='relative'>
+				<div
+					ref={mountRef}
+					className={`w-48 h-48 ${
+						isSelected
+							? 'border-2 border-woodsmoke-700 bg-black/20'
+							: 'border border-woodsmoke-800 bg-black/10'
+					} transition-colors duration-300`}
+				/>
+				<div className='absolute bottom-2 left-0 right-0 text-center'>
+					<span className='item-name font-pixel text-sm bg-woodsmoke-950 text-white px-3 py-1'>
+						{name}
+					</span>
+				</div>
+			</div>
+		)
+	}
 
 	return (
 		<div className='w-full h-full'>
@@ -148,4 +199,4 @@ const StatsItem = ({ item }: StatsItemProps) => {
 	)
 }
 
-export default StatsItem
+export default Item

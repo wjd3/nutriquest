@@ -1,14 +1,13 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'motion/react'
-import { $isLoaded, $isStarted } from '@/store'
 import Screen from '@/components/Screen'
-import StatsItem from '@/components/StatsItem'
+import ProduceItem from '@/components/ProduceItem'
 import { soundManager } from '@/services/SoundManager'
 import { navigateTo } from '@/utils/navigate'
-import type { ProduceItem } from '@/types'
+import type { ProduceItem as ProduceItemType } from '@/types'
 
 interface Props {
-	item: ProduceItem
+	item: ProduceItemType
 }
 
 const toTitleCase = (str: string): string => {
@@ -156,7 +155,7 @@ export default function StatsScreen({ item }: Props) {
 						<div className='col-span-3 flex flex-col gap-8'>
 							{/* 3D Model */}
 							<div className='bg-black/20 border border-woodsmoke-800 h-[400px]'>
-								<StatsItem item={item} />
+								<ProduceItem variant='stats' item={item} />
 							</div>
 
 							{/* Time Period Toggle */}
