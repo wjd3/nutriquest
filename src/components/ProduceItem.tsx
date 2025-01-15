@@ -42,12 +42,15 @@ const Item = ({ item, variant, isSelected = false }: ItemProps) => {
 		const scene = new THREE.Scene()
 		sceneRef.current = scene
 
-		// Add lighting
-		const ambientLight = new THREE.AmbientLight(0x404040)
-		const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
-		directionalLight.position.set(0, 1, 1)
+		// Add lighting with more saturated colors
+		const ambientLight = new THREE.AmbientLight(0x909090, 1.4) // Brighter and slightly more saturated ambient
+		const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.6) // Increased intensity
+		const directionalLight2 = new THREE.DirectionalLight(0xffffee, 0.4) // Slightly warm secondary light
+		directionalLight1.position.set(1, 1, 1)
+		directionalLight2.position.set(-1, 0.5, -1)
 		scene.add(ambientLight)
-		scene.add(directionalLight)
+		scene.add(directionalLight1)
+		scene.add(directionalLight2)
 
 		// Set up camera
 		const camera = new THREE.PerspectiveCamera(
@@ -179,12 +182,12 @@ const Item = ({ item, variant, isSelected = false }: ItemProps) => {
 					ref={mountRef}
 					className={`w-48 h-48 ${
 						isSelected
-							? 'border-2 border-woodsmoke-700 bg-black/20'
-							: 'border border-woodsmoke-800 bg-black/10'
+							? 'border-2 border-woodsmoke-600 bg-black/25'
+							: 'border border-woodsmoke-700 bg-black/15'
 					} transition-colors duration-300`}
 				/>
 				<div className='absolute bottom-2 left-0 right-0 text-center'>
-					<span className='item-name font-pixel text-sm bg-woodsmoke-950 text-white px-3 py-1'>
+					<span className='item-name font-pixel text-sm bg-woodsmoke-900 text-white px-3 py-1'>
 						{name}
 					</span>
 				</div>
@@ -194,7 +197,7 @@ const Item = ({ item, variant, isSelected = false }: ItemProps) => {
 
 	return (
 		<div className='w-full h-full'>
-			<div ref={mountRef} className='w-full h-full bg-black/20 border border-woodsmoke-800' />
+			<div ref={mountRef} className='w-full h-full bg-black/25 border border-woodsmoke-700' />
 		</div>
 	)
 }

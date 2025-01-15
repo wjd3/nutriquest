@@ -48,6 +48,7 @@ export const produce: ProduceItem[] = [
 	{
 		name: 'Orange',
 		modelPath: '/models/orange.fbx',
+		texturePath: '/textures/orange.jpg',
 		modelPositionY: 6,
 		cameraPositionY: 2,
 		cameraZoom: 18.5,
@@ -64,6 +65,7 @@ export const produce: ProduceItem[] = [
 	{
 		name: 'Tomato',
 		modelPath: '/models/tomato.fbx',
+		texturePath: '/textures/tomato.jpg',
 		modelPositionY: 6.5,
 		cameraPositionY: 2,
 		cameraZoom: 22
@@ -81,6 +83,7 @@ export const produce: ProduceItem[] = [
 	{
 		name: 'Strawberry',
 		modelPath: '/models/strawberry.fbx',
+		texturePath: '/textures/strawberry.jpg',
 		modelPositionY: 7,
 		cameraPositionY: 2,
 		cameraZoom: 45
