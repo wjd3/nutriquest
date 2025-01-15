@@ -1,6 +1,5 @@
-import { $isLoaded, $isStarted } from '@/store'
-import { navigate } from 'astro:transitions/client'
-import { useEffect, useState, useRef, useMemo } from 'react'
+import { navigateTo } from '@/utils/navigate'
+import { useEffect, useState, useRef } from 'react'
 import { motion } from 'motion/react'
 import Screen from '@/components/Screen'
 import SelectItem from '@/components/SelectItem'
@@ -8,21 +7,10 @@ import { produce } from '@/data/produce'
 import { soundManager } from '@/services/SoundManager'
 
 export default function SelectScreen() {
+	const [isNavigating, setIsNavigating] = useState(false)
+
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(0) // Start with first item selected
 	const [itemsPerRow, setItemsPerRow] = useState<number>(4) // Default to 4 items per row
-
-	const isReady = useMemo(
-		() => $isLoaded.get() && $isStarted.get(),
-		[$isLoaded.get(), $isStarted.get()]
-	)
-
-	// useEffect(() => {
-	// 	if (!$isLoaded.get()) {
-	// 		;(async () => await navigate('/'))()
-	// 	} else if (!$isStarted.get()) {
-	// 		;(async () => await navigate('/start'))()
-	// 	}
-	// }, [$isLoaded.get(), $isStarted.get()])
 
 	useEffect(() => {
 		const updateItemsPerRow = () => {
@@ -37,9 +25,7 @@ export default function SelectScreen() {
 		updateItemsPerRow() // Set initial value
 
 		window.addEventListener('resize', updateItemsPerRow) // Update on resize
-		return () => {
-			window.removeEventListener('resize', updateItemsPerRow) // Cleanup listener
-		}
+		return () => window.removeEventListener('resize', updateItemsPerRow) // Cleanup listener
 	}, [])
 
 	const acceptButtonRef = useRef<HTMLButtonElement>(null)
@@ -118,65 +104,69 @@ export default function SelectScreen() {
 
 	return (
 		<Screen className='flex flex-col items-center justify-center p-8'>
-			{true && (
-				// {isReady && (
-				<>
-					<motion.h1
-						className='font-pixel text-3xl mb-8 text-white'
-						initial={{ opacity: 0, y: -20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.5 }}>
-						SELECT YOUR PRODUCE
-					</motion.h1>
-					<motion.div
-						className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8'
-						initial={{ opacity: 0, scale: 0.95 }}
-						animate={{ opacity: 1, scale: 1 }}
-						transition={{ duration: 0.5, delay: 0.2 }}>
-						{produce
-							.sort((a, b) => a.name.localeCompare(b.name))
-							.map((item, index) => (
-								<button
-									key={item.name || index}
-									onClick={async () => {
-										if (index != selectedIndex) {
-											await soundManager.play('toggle')
-											setSelectedIndex(index)
-										}
-									}}
-									className={`focus:outline-none transform transition-transform hover:scale-105 ${
-										selectedIndex === index ? 'ring-2 ring-woodsmoke-400' : ''
-									}`}>
-									<SelectItem item={item} isSelected={selectedIndex === index} />
-								</button>
-							))}
-					</motion.div>
-					<motion.div
-						className='flex justify-center gap-4'
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.5, delay: 0.4 }}>
+			<motion.h1
+				className='font-pixel text-3xl mb-8 text-white'
+				initial={{ opacity: 0, y: -20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5 }}>
+				SELECT YOUR PRODUCE
+			</motion.h1>
+			<motion.div
+				className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8'
+				initial={{ opacity: 0, scale: 0.95 }}
+				animate={{ opacity: 1, scale: 1 }}
+				transition={{ duration: 0.5, delay: 0.2 }}>
+				{produce
+					.sort((a, b) => a.name.localeCompare(b.name))
+					.map((item, index) => (
 						<button
+							key={item.name || index}
 							onClick={async () => {
-								if (selectedIndex != null) {
-									await soundManager.play('select')
-									await navigate(
-										`/stats/${produce[selectedIndex].name.toLowerCase().replace(/\s+/g, '-')}`
-									)
+								if (index != selectedIndex) {
+									await soundManager.play('toggle')
+									setSelectedIndex(index)
 								}
 							}}
-							ref={acceptButtonRef}
-							className={`px-6 py-3 font-pixel border ${
-								selectedIndex == null
-									? 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'
-									: 'bg-woodsmoke-950 text-white border-woodsmoke-400 hover:bg-woodsmoke-400 hover:text-black focus:outline-none focus:bg-woodsmoke-400 focus:text-black'
-							} transition-colors duration-300`}
-							disabled={selectedIndex == null}>
-							ACCEPT
+							className={`focus:outline-none transform transition-transform hover:scale-105 ${
+								selectedIndex === index ? 'ring-2 ring-woodsmoke-400' : ''
+							}`}>
+							<SelectItem item={item} isSelected={selectedIndex === index} />
 						</button>
-					</motion.div>
-				</>
-			)}
+					))}
+			</motion.div>
+			<motion.div
+				className='flex justify-center gap-4'
+				initial={{ opacity: 0, y: 20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5, delay: 0.4 }}>
+				<button
+					onClick={async () => {
+						if (selectedIndex != null) {
+							setIsNavigating(true)
+
+							await soundManager.play(
+								'select',
+								async () =>
+									await navigateTo(
+										`/stats/${produce[selectedIndex].name.toLowerCase().replace(/\s+/g, '-')}`
+									)
+							)
+						}
+					}}
+					ref={acceptButtonRef}
+					className={`px-6 py-3 font-pixel border ${
+						selectedIndex == null
+							? 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'
+							: `border-woodsmoke-400 focus:outline-none ${
+									!isNavigating
+										? 'bg-woodsmoke-950 text-white hover:bg-woodsmoke-400 hover:text-black focus:bg-woodsmoke-400 focus:text-black'
+										: 'bg-woodsmoke-400 text-black'
+								}`
+					} transition-colors duration-300`}
+					disabled={isNavigating || selectedIndex == null}>
+					ACCEPT
+				</button>
+			</motion.div>
 		</Screen>
 	)
 }

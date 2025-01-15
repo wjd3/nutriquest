@@ -41,7 +41,7 @@ class SoundManager {
 		}
 	}
 
-	async play(soundName: string) {
+	async play(soundName: string, onEnded?: () => Promise<void> | void) {
 		await this.initialize()
 		if (!this.context || !this.gainNode) return
 
@@ -51,6 +51,12 @@ class SoundManager {
 			source.buffer = sound
 			source.connect(this.gainNode)
 			source.start(0)
+
+			if (onEnded) {
+				source.onended = async () => {
+					await onEnded()
+				}
+			}
 		} else {
 			console.warn(`Sound ${soundName} not found`)
 		}

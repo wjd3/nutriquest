@@ -1,14 +1,30 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { motion } from 'motion/react'
-import { navigate } from 'astro:transitions/client'
 import { $isLoaded, $isStarted } from '@/store'
 import Screen from '@/components/Screen'
-import SelectItem from '@/components/SelectItem'
-import type { ProduceItem } from '@/types'
+import StatsItem from '@/components/StatsItem'
 import { soundManager } from '@/services/SoundManager'
+import { navigateTo } from '@/utils/navigate'
+import type { ProduceItem } from '@/types'
 
 interface Props {
 	item: ProduceItem
+}
+
+const toTitleCase = (str: string): string => {
+	// First, handle kebab-case and snake_case by replacing separators with spaces
+	const withSpaces = str.replace(/[-_]/g, ' ')
+
+	// Handle camelCase by adding spaces before capital letters
+	const separated = withSpaces.replace(/([A-Z])/g, ' $1')
+
+	// Split into words, capitalize first letter of each word, and join
+	return separated
+		.toLowerCase()
+		.split(' ')
+		.filter((word) => word.length > 0) // Remove empty strings
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(' ')
 }
 
 // Circular progress component
@@ -63,29 +79,18 @@ function StatsView({
 	type: 'superficial' | 'essential'
 }) {
 	return (
-		<div className='grid grid-cols-2 md:grid-cols-3 gap-8 p-6'>
+		<div className='grid grid-cols-2 gap-8 p-6'>
 			{Object.entries(data).map(([key, value]) => (
-				<CircularProgress key={key} value={value} label={key} />
+				<CircularProgress key={key} value={value} label={toTitleCase(key)} />
 			))}
 		</div>
 	)
 }
 
 export default function StatsScreen({ item }: Props) {
-	const [timeframe, setTimeframe] = useState<'historical' | 'modern'>('modern')
+	const [isNavigating, setIsNavigating] = useState(false)
 
-	const isReady = useMemo(
-		() => $isLoaded.get() && $isStarted.get(),
-		[$isLoaded.get(), $isStarted.get()]
-	)
-
-	// useEffect(() => {
-	// 	if (!$isLoaded.get()) {
-	// 		;(async () => await navigate('/'))()
-	// 	} else if (!$isStarted.get()) {
-	// 		;(async () => await navigate('/start'))()
-	// 	}
-	// }, [$isLoaded.get(), $isStarted.get()])
+	const [timeframe, setTimeframe] = useState<'historical' | 'modern'>('historical')
 
 	const superficialData = {
 		size: 65,
@@ -100,36 +105,62 @@ export default function StatsScreen({ item }: Props) {
 				<>
 					{/* Header */}
 					<motion.div
-						className='mb-8'
+						className='mb-8 grid grid-cols-3'
 						initial={{ opacity: 0, y: -20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5 }}>
-						<h1 className='font-pixel text-3xl text-white'>{item.name}</h1>
+						{/* Back Button */}
+						<motion.div
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ duration: 0.5, delay: 0.7 }}>
+							<button
+								disabled={isNavigating}
+								onClick={async () => {
+									setIsNavigating(true)
+
+									await soundManager.play('select', async () => await navigateTo('/select'))
+								}}
+								className={`font-pixel px-6 py-3 border border-woodsmoke-400 transition-colors duration-300 focus:outline-none ${
+									!isNavigating
+										? 'hover:bg-woodsmoke-400 hover:text-black focus:bg-woodsmoke-400 focus:text-black'
+										: 'bg-woodsmoke-400 text-black'
+								}`}>
+								BACK
+							</button>
+						</motion.div>
+
+						<div className='flex items-center justify-center'>
+							<h1 className='h-fit font-pixel text-3xl text-white text-center'>{item.name}</h1>
+						</div>
 					</motion.div>
 
 					{/* Main content */}
 					<motion.div
-						className='flex flex-col lg:flex-row gap-8'
+						className='grid grid-cols-5 gap-8'
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.5, delay: 0.2 }}>
-						{/* 3D Model Section */}
-						<div className='lg:w-1/3'>
-							<div className='bg-black/20 border border-woodsmoke-800 p-4 h-[400px] flex items-center justify-center'>
-								<div className='w-64 h-64'>
-									<SelectItem item={item} isSelected={true} />
-								</div>
-							</div>
-						</div>
+						{/* Superficial Stats */}
+						<motion.div
+							className='bg-black/20 border border-woodsmoke-800'
+							initial={{ opacity: 0, x: -20 }}
+							animate={{ opacity: 1, x: 0 }}
+							transition={{ duration: 0.5, delay: 0.4 }}>
+							<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
+								Superficial
+							</h2>
+							<StatsView data={superficialData} type='superficial' />
+						</motion.div>
 
-						{/* Stats Section */}
-						<div className='lg:w-2/3 flex flex-col gap-8'>
+						<div className='col-span-3 flex flex-col gap-8'>
+							{/* 3D Model */}
+							<div className='bg-black/20 border border-woodsmoke-800 h-[400px]'>
+								<StatsItem item={item} />
+							</div>
+
 							{/* Time Period Toggle */}
-							<motion.div
-								className='bg-black/20 border border-woodsmoke-800 p-4'
-								initial={{ opacity: 0, x: 20 }}
-								animate={{ opacity: 1, x: 0 }}
-								transition={{ duration: 0.5, delay: 0.3 }}>
+							<div className='bg-black/20 border border-woodsmoke-800 p-4'>
 								<div className='flex gap-4 justify-center'>
 									<button
 										onClick={async () => {
@@ -154,63 +185,31 @@ export default function StatsScreen({ item }: Props) {
 										MODERN
 									</button>
 								</div>
-							</motion.div>
-
-							{/* Superficial Stats */}
-							<motion.div
-								className='bg-black/20 border border-woodsmoke-800'
-								initial={{ opacity: 0, x: 20 }}
-								animate={{ opacity: 1, x: 0 }}
-								transition={{ duration: 0.5, delay: 0.4 }}>
-								<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
-									Superficial
-								</h2>
-								<StatsView data={superficialData} type='superficial' />
-							</motion.div>
-
-							{/* Essential Stats */}
-							<motion.div
-								className='bg-black/20 border border-woodsmoke-800'
-								initial={{ opacity: 0, x: 20 }}
-								animate={{ opacity: 1, x: 0 }}
-								transition={{ duration: 0.5, delay: 0.5 }}>
-								<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
-									Essential
-								</h2>
-								<StatsView
-									data={item[timeframe]?.vitaminA ? item[timeframe]! : {}}
-									type='essential'
-								/>
-							</motion.div>
+							</div>
 
 							{/* Historical Context */}
-							<motion.div
-								className='bg-black/20 border border-woodsmoke-800 p-6'
-								initial={{ opacity: 0, x: 20 }}
-								animate={{ opacity: 1, x: 0 }}
-								transition={{ duration: 0.5, delay: 0.6 }}>
+							<div className='bg-black/20 border border-woodsmoke-800 p-6'>
 								<p className='text-woodsmoke-300 font-mono text-sm leading-relaxed'>
 									{item.historicalContext ||
 										'Text about the change in nutrition in food as a result of industrial farming...'}
 								</p>
-							</motion.div>
+							</div>
 						</div>
-					</motion.div>
 
-					{/* Back Button */}
-					<motion.div
-						className='mt-8'
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ duration: 0.5, delay: 0.7 }}>
-						<button
-							onClick={async () => {
-								await soundManager.play('select')
-								await navigate('/select')
-							}}
-							className='font-pixel px-6 py-3 border border-woodsmoke-400 hover:bg-woodsmoke-400 hover:text-black transition-colors duration-300'>
-							BACK
-						</button>
+						{/* Essential Stats */}
+						<motion.div
+							className='bg-black/20 border border-woodsmoke-800'
+							initial={{ opacity: 0, x: 20 }}
+							animate={{ opacity: 1, x: 0 }}
+							transition={{ duration: 0.5, delay: 0.5 }}>
+							<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
+								Essential
+							</h2>
+							<StatsView
+								data={item[timeframe]?.vitaminA ? item[timeframe]! : {}}
+								type='essential'
+							/>
+						</motion.div>
 					</motion.div>
 				</>
 			)}

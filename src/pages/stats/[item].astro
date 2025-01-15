@@ -1,5 +1,5 @@
 ---
-import StatsScreen from '@/components/StatsScreen'
+import StatsScreen from '@/components/StatsScreen.tsx'
 import MainLayout from '@/layouts/MainLayout.astro'
 import { produce } from '@/data/produce'
 import type { ProduceItem } from '@/types'
@@ -18,5 +18,5 @@ const { item } = Astro.props
 ---
 
 <MainLayout class='bg-woodsmoke-950'>
-	<StatsScreen client:only item={item} />
+	<StatsScreen client:only {item} />
 </MainLayout>
