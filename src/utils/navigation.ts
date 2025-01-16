@@ -1,6 +1,6 @@
 import { $isLoaded, $isStarted } from '@/store'
 
-export const navigateTo = async (path: string): Promise<void> => {
+const navigateTo = async (path: string): Promise<void> => {
 	try {
 		// Validate path
 		if (!path.startsWith('/')) {
@@ -19,7 +19,7 @@ export const navigateTo = async (path: string): Promise<void> => {
 	}
 }
 
-export const redirectFrom = async (page: 'loading' | 'start' | 'select' | 'stats') => {
+const redirectFrom = async (page: 'loading' | 'start' | 'select' | 'stats') => {
 	const isLoaded = $isLoaded.get()
 	const isStarted = $isStarted.get()
 
@@ -58,3 +58,5 @@ export const redirectFrom = async (page: 'loading' | 'start' | 'select' | 'stats
 			return
 	}
 }
+
+export { navigateTo, redirectFrom }

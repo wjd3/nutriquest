@@ -1,4 +1,4 @@
-import { navigateTo } from '@/utils/navigate'
+import { navigateTo } from '@/utils'
 import { useEffect, useState, useRef } from 'react'
 import { motion } from 'motion/react'
 import Screen from '@/components/Screen'

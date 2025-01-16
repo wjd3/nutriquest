@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, useAnimate } from 'motion/react'
 import { soundManager } from '@/services/SoundManager'
 import Screen from '@/components/Screen'
-import { navigateTo } from '@/utils/navigate'
+import { navigateTo } from '@/utils'
 
 export default function StartScreen() {
 	const [isStarting, setIsStarting] = useState(false)

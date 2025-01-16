@@ -30,8 +30,8 @@ export const produce: ProduceItem[] = [
 	},
 	{
 		name: 'Grapes',
-		modelPath: '/models/grapes-green.fbx',
-		texturePath: '/textures/grapes-green.jpg',
+		modelPath: '/models/grapes.fbx',
+		texturePath: '/textures/grapes.jpg',
 		modelPositionY: 7.5,
 		cameraPositionY: 3,
 		cameraZoom: 21.5,

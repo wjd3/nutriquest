@@ -1,7 +1,7 @@
 import { motion, useAnimate } from 'motion/react'
 import Logo from '@/components/Logo'
 import { useEffect } from 'react'
-import { navigateTo } from '@/utils/navigate'
+import { navigateTo } from '@/utils'
 
 const LoadingScreen = () => {
 	const [scope, animate] = useAnimate()

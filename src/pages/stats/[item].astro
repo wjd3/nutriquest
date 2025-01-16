@@ -14,7 +14,9 @@ export async function getStaticPaths() {
 interface Props {
 	item: ProduceItem
 }
+
 const { item } = Astro.props
+console.log(item)
 ---
 
 <MainLayout class='bg-woodsmoke-950'>

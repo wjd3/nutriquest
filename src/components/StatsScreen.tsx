@@ -3,27 +3,11 @@ import { motion } from 'motion/react'
 import Screen from '@/components/Screen'
 import ProduceItem from '@/components/ProduceItem'
 import { soundManager } from '@/services/SoundManager'
-import { navigateTo } from '@/utils/navigate'
+import { navigateTo, toTitleCase } from '@/utils'
 import type { ProduceItem as ProduceItemType } from '@/types'
 
 interface Props {
 	item: ProduceItemType
-}
-
-const toTitleCase = (str: string): string => {
-	// First, handle kebab-case and snake_case by replacing separators with spaces
-	const withSpaces = str.replace(/[-_]/g, ' ')
-
-	// Handle camelCase by adding spaces before capital letters
-	const separated = withSpaces.replace(/([A-Z])/g, ' $1')
-
-	// Split into words, capitalize first letter of each word, and join
-	return separated
-		.toLowerCase()
-		.split(' ')
-		.filter((word) => word.length > 0) // Remove empty strings
-		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-		.join(' ')
 }
 
 // Circular progress component
@@ -45,6 +29,7 @@ function CircularProgress({ value, label }: { value: number; label: string }) {
 						fill='none'
 						className='opacity-25'
 					/>
+
 					{/* Progress circle */}
 					<motion.circle
 						cx='48'
@@ -59,6 +44,7 @@ function CircularProgress({ value, label }: { value: number; label: string }) {
 						transition={{ duration: 1, ease: 'easeOut' }}
 					/>
 				</svg>
+
 				{/* Percentage text */}
 				<div className='absolute inset-0 flex items-center justify-center'>
 					<span className='font-pixel text-lg'>{value}%</span>
@@ -70,13 +56,7 @@ function CircularProgress({ value, label }: { value: number; label: string }) {
 }
 
 // Stats view component
-function StatsView({
-	data,
-	type
-}: {
-	data: Record<string, number>
-	type: 'superficial' | 'essential'
-}) {
+function StatsView({ data }: { data: Record<string, number>; type: 'superficial' | 'essential' }) {
 	return (
 		<div className='grid grid-cols-2 gap-8 p-6'>
 			{Object.entries(data).map(([key, value]) => (
