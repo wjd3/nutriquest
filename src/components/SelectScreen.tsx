@@ -118,13 +118,14 @@ export default function SelectScreen() {
 					.sort((a, b) => a.name.localeCompare(b.name))
 					.map((item, index) => (
 						<button
+							disabled={isNavigating}
 							key={item.name || index}
 							onClick={async () => {
 								await soundManager.play('toggle')
 
 								setSelectedIndex(index !== selectedIndex ? index : null)
 							}}
-							className={`focus:outline-none transform transition-transform hover:scale-105 ${
+							className={`focus:outline-none transform transition-transform ${!isNavigating ? 'hover:scale-105' : ''} ${
 								selectedIndex === index ? 'ring-2 ring-woodsmoke-400' : ''
 							}`}>
 							<ProduceItem variant='select' item={item} isSelected={selectedIndex === index} />

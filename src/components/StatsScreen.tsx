@@ -71,19 +71,14 @@ function CircularProgress({ value, label, unit, maxValue }: CircularProgressProp
 	)
 }
 
-function StatsView({
-	data
-}: {
-	data: ProduceEssentialStats | ProduceSuperficialStats
-	type: 'superficial' | 'essential'
-}) {
+function StatsView({ data }: { data: ProduceEssentialStats | ProduceSuperficialStats }) {
 	const getUnitAndMax = (key: string): { unit: string; max: number } => {
 		const units = {
 			// Superficial stats
 			size: { unit: 'in', max: 20 },
 			color: { unit: '%', max: 100 },
 			sugar: { unit: 'g', max: 30 },
-			seedCount: { unit: 'seeds', max: 20 },
+			seedCount: { unit: 'seeds', max: 300 },
 
 			// Essential stats
 			vitaminC: { unit: 'mg', max: 100 },
@@ -171,7 +166,7 @@ export default function StatsScreen({ item }: Props) {
 					<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
 						Superficial
 					</h2>
-					<StatsView data={item[timeframe].superficial} type='superficial' />
+					<StatsView data={item[timeframe]['superficial']} />
 				</motion.div>
 
 				<div className='col-span-3 flex flex-col gap-8'>
@@ -226,7 +221,7 @@ export default function StatsScreen({ item }: Props) {
 					<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
 						Essential
 					</h2>
-					<StatsView data={item[timeframe].essential} type='essential' />
+					<StatsView data={item[timeframe]['essential']} />
 				</motion.div>
 			</motion.div>
 		</Screen>

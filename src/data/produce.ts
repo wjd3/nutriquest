@@ -12,8 +12,8 @@ export const produce: ProduceItem[] = [
 			modelRotationOffset: -6
 		},
 		statsView: {
-			modelPositionY: 3.75,
-			cameraPositionY: 2,
+			modelPositionY: 7,
+			cameraPositionY: 3,
 			cameraZoom: 11,
 			modelRotationOffset: -6
 		},
@@ -63,9 +63,9 @@ export const produce: ProduceItem[] = [
 			modelRotationOffset: 10
 		},
 		statsView: {
-			modelPositionY: 7.5,
-			cameraPositionY: 3,
-			cameraZoom: 21.5,
+			modelPositionY: 15,
+			cameraPositionY: 4,
+			cameraZoom: 27,
 			modelRotationOffset: 10
 		},
 		historical: {
@@ -112,7 +112,11 @@ export const produce: ProduceItem[] = [
 			cameraPositionY: 3,
 			cameraZoom: 24
 		},
-		statsView: { modelPositionY: 10, cameraPositionY: 3, cameraZoom: 24 },
+		statsView: {
+			modelPositionY: 18.5,
+			cameraPositionY: 4,
+			cameraZoom: 30
+		},
 		historical: {
 			superficial: {
 				size: 11,
@@ -153,15 +157,15 @@ export const produce: ProduceItem[] = [
 		modelPath: '/models/orange.fbx',
 		texturePath: '/textures/orange.jpg',
 		selectView: {
-			modelPositionY: 8.5,
+			modelPositionY: 6,
 			cameraPositionY: 2,
 			cameraZoom: 18.5,
 			modelRotationOffset: -20
 		},
 		statsView: {
-			modelPositionY: 8.5,
-			cameraPositionY: 2,
-			cameraZoom: 18.5,
+			modelPositionY: 10,
+			cameraPositionY: 3,
+			cameraZoom: 23,
 			modelRotationOffset: -20
 		},
 		historical: {
@@ -209,9 +213,9 @@ export const produce: ProduceItem[] = [
 			cameraZoom: 24
 		},
 		statsView: {
-			modelPositionY: 10,
+			modelPositionY: 17,
 			cameraPositionY: 2,
-			cameraZoom: 24
+			cameraZoom: 32
 		},
 		historical: {
 			superficial: {
@@ -258,9 +262,9 @@ export const produce: ProduceItem[] = [
 			cameraZoom: 22
 		},
 		statsView: {
-			modelPositionY: 6.5,
-			cameraPositionY: 2,
-			cameraZoom: 22
+			modelPositionY: 12,
+			cameraPositionY: 3,
+			cameraZoom: 30
 		},
 		historical: {
 			superficial: {
@@ -309,9 +313,9 @@ export const produce: ProduceItem[] = [
 			modelRotationOffset: -55
 		},
 		statsView: {
-			modelPositionY: -3.5,
-			cameraPositionY: 2,
-			cameraZoom: 31,
+			modelPositionY: 2,
+			cameraPositionY: 3,
+			cameraZoom: 37,
 			modelRotation: -1.6,
 			modelRotationOffset: -55
 		},
@@ -360,9 +364,10 @@ export const produce: ProduceItem[] = [
 			cameraZoom: 45
 		},
 		statsView: {
-			modelPositionY: 7,
-			cameraPositionY: 2,
-			cameraZoom: 45
+			modelPositionY: 14,
+			cameraPositionY: 4,
+			cameraZoom: 50,
+			modelRotationOffset: 0
 		},
 		historical: {
 			superficial: {
