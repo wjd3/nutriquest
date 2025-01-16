@@ -33,11 +33,19 @@ export default function SelectScreen() {
 	// Handle keyboard navigation
 	useEffect(() => {
 		const handleKeyDown = async (e: globalThis.KeyboardEvent) => {
+			if (
+				selectedIndex == null &&
+				['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'].includes(e.key)
+			) {
+				await soundManager.play('toggle')
+				setSelectedIndex(0)
+				return
+			}
+
 			if (selectedIndex == null) return
 
 			let newIndex = selectedIndex
 			const totalItems = produce.length
-
 			switch (e.key) {
 				case 'ArrowRight':
 					if (selectedIndex === produce.length - 1) {

@@ -26,8 +26,6 @@ function CircularProgress({ value, label, unit, maxValue }: CircularProgressProp
 	const percentage = (value / maxValue) * 100
 	const strokeDashoffset = circumference - (percentage / 100) * circumference
 
-	console.log({ label })
-
 	return (
 		<div className='flex flex-col items-center'>
 			<div className='relative w-24 h-24'>
