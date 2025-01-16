@@ -1,7 +1,7 @@
 import { useEffect, useRef, useMemo } from 'react'
 import * as THREE from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
-import { animate } from 'motion'
+import { animate as motionAnimate } from 'motion'
 import type { ProduceItem } from '@/types'
 
 interface ThreeMesh extends THREE.Object3D {
@@ -15,10 +15,11 @@ interface ThreeMesh extends THREE.Object3D {
 interface ItemProps {
 	item: ProduceItem
 	variant: 'select' | 'stats'
-	isSelected?: boolean // Optional since it's only needed for select variant
+	isSelected?: boolean
+	timeframe?: 'historical' | 'modern'
 }
 
-const Item = ({ item, variant, isSelected = false }: ItemProps) => {
+const Item = ({ item, variant, isSelected = false, timeframe = 'historical' }: ItemProps) => {
 	const { modelPath, texturePath, name, statsView, selectView } = item
 
 	const {
@@ -45,9 +46,9 @@ const Item = ({ item, variant, isSelected = false }: ItemProps) => {
 		sceneRef.current = scene
 
 		// Add lighting with more saturated colors
-		const ambientLight = new THREE.AmbientLight(0x909090, 1.4) // Brighter and slightly more saturated ambient
-		const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.6) // Increased intensity
-		const directionalLight2 = new THREE.DirectionalLight(0xffffee, 0.4) // Slightly warm secondary light
+		const ambientLight = new THREE.AmbientLight(0xffffdd, 2.5) // Ambient light
+		const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1.5) // Direct light
+		const directionalLight2 = new THREE.DirectionalLight(0xffffee, 1) // Secondary light
 		directionalLight1.position.set(1, 1, 1)
 		directionalLight2.position.set(-1, 0.5, -1)
 		scene.add(ambientLight)
@@ -97,7 +98,11 @@ const Item = ({ item, variant, isSelected = false }: ItemProps) => {
 			return fbx
 		}
 
-		const initialScale = variant === 'select' ? 0.1 : 0.15
+		// Calculate initial scale based on historical vs modern size
+		const historicalSize = item.historical.superficial.size
+		const modernSize = item.modern.superficial.size
+		const baseScale = 0.15
+		const initialScale = variant === 'select' ? 0.1 : baseScale * (historicalSize / modernSize)
 
 		if (modelRotationOffset != null) {
 			loader.load(modelPath, (fbx: THREE.Group) => {
@@ -114,7 +119,10 @@ const Item = ({ item, variant, isSelected = false }: ItemProps) => {
 
 				modelRef.current = group
 				group.scale.set(initialScale, initialScale, initialScale)
-				group.position.y -= modelPositionY
+
+				// Adjust position based on scale to maintain centering
+				const yOffset = modelPositionY * (initialScale / baseScale)
+				group.position.y -= yOffset
 
 				scene.add(group)
 			})
@@ -123,7 +131,10 @@ const Item = ({ item, variant, isSelected = false }: ItemProps) => {
 				loadModelWithTexture(fbx)
 				modelRef.current = fbx
 				fbx.scale.set(initialScale, initialScale, initialScale)
-				fbx.position.y -= modelPositionY
+
+				// Adjust position based on scale to maintain centering
+				const yOffset = modelPositionY * (initialScale / baseScale)
+				fbx.position.y -= yOffset
 
 				if (modelRotation) {
 					fbx.rotation.z = modelRotation
@@ -159,23 +170,73 @@ const Item = ({ item, variant, isSelected = false }: ItemProps) => {
 		const model = modelRef.current
 
 		if (isSelected) {
-			animate([[model.scale, { x: 0.11, y: 0.11, z: 0.11 }]], {
-				duration: 0.3,
-				easing: 'ease-out'
-			})
-		} else {
-			animate(
-				[
-					[model.scale, { x: 0.1, y: 0.1, z: 0.1 }],
-					['.item-name', { backgroundColor: '#1c1c1c' }]
-				],
+			motionAnimate(
+				model.scale,
 				{
-					duration: 0.3,
-					easing: 'ease-out'
+					x: 0.11,
+					y: 0.11,
+					z: 0.11
+				},
+				{
+					duration: 0.5,
+					ease: 'easeOut'
+				}
+			)
+		} else {
+			motionAnimate(
+				model.scale,
+				{
+					x: 0.1,
+					y: 0.1,
+					z: 0.1
+				},
+				{
+					duration: 0.5,
+					ease: 'easeOut'
 				}
 			)
 		}
 	}, [isSelected, variant])
+
+	// Modify the timeframe effect to adjust position along with scale
+	useEffect(() => {
+		if (variant !== 'stats' || !modelRef.current) return
+
+		const historicalSize = item.historical.superficial.size
+		const modernSize = item.modern.superficial.size
+		const baseScale = 0.15
+
+		const targetScale =
+			timeframe === 'historical' ? baseScale * (historicalSize / modernSize) : baseScale
+
+		// Calculate position adjustment to maintain centering
+		const yOffset = modelPositionY * (targetScale / baseScale)
+
+		// Animate both scale and position
+		motionAnimate(
+			modelRef.current.scale,
+			{
+				x: targetScale,
+				y: targetScale,
+				z: targetScale
+			},
+			{
+				duration: 0.5,
+				ease: 'easeOut'
+			}
+		)
+
+		motionAnimate(
+			modelRef.current.position,
+			{
+				y: -yOffset
+			},
+			{
+				duration: 0.5,
+				ease: 'easeOut'
+			}
+		)
+	}, [timeframe, variant, item, modelPositionY])
 
 	if (variant === 'select') {
 		return (

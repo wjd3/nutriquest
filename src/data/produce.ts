@@ -19,34 +19,34 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 7.5,
+				size: 6.8,
 				color: 60,
 				sugar: 10,
 				seedCount: 8
 			},
 			essential: {
-				vitaminC: 8,
-				iron: 0.2,
-				calcium: 8,
-				potassium: 195,
-				magnesium: 9,
-				vitaminB6: 0.041
+				vitaminC: 9.6,
+				iron: 0.48,
+				calcium: 11.2,
+				potassium: 205,
+				magnesium: 11.8,
+				vitaminB6: 0.052
 			}
 		},
 		modern: {
 			superficial: {
-				size: 9.4,
+				size: 8.9,
 				color: 85,
 				sugar: 14,
 				seedCount: 8
 			},
 			essential: {
-				vitaminC: 6,
-				iron: 0.1,
-				calcium: 6,
-				potassium: 180,
-				magnesium: 5,
-				vitaminB6: 0.038
+				vitaminC: 5.4,
+				iron: 0.22,
+				calcium: 6.8,
+				potassium: 158,
+				magnesium: 6.9,
+				vitaminB6: 0.037
 			}
 		},
 		historicalContext:
@@ -70,34 +70,34 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 12,
+				size: 11.4,
 				color: 65,
 				sugar: 12,
 				seedCount: 4
 			},
 			essential: {
-				vitaminC: 5,
-				iron: 0.4,
-				calcium: 15,
-				potassium: 191,
-				magnesium: 10,
-				vitaminB6: 0.1
+				vitaminC: 6.8,
+				iron: 0.56,
+				calcium: 18.4,
+				potassium: 198,
+				magnesium: 12.4,
+				vitaminB6: 0.116
 			}
 		},
 		modern: {
 			superficial: {
-				size: 15.7,
+				size: 15.2,
 				color: 90,
 				sugar: 16,
 				seedCount: 0
 			},
 			essential: {
-				vitaminC: 3,
-				iron: 0.2,
-				calcium: 10,
-				potassium: 180,
-				magnesium: 6,
-				vitaminB6: 0.08
+				vitaminC: 3.2,
+				iron: 0.24,
+				calcium: 9.6,
+				potassium: 154,
+				magnesium: 7.2,
+				vitaminB6: 0.074
 			}
 		},
 		historicalContext:
@@ -119,34 +119,34 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 11,
+				size: 10.2,
 				color: 70,
 				sugar: 2,
 				seedCount: 300
 			},
 			essential: {
-				vitaminC: 5,
-				iron: 0.3,
-				calcium: 14,
-				potassium: 230,
-				magnesium: 15,
-				vitaminB6: 0.084
+				vitaminC: 6.8,
+				iron: 0.42,
+				calcium: 16.8,
+				potassium: 242,
+				magnesium: 17.6,
+				vitaminB6: 0.092
 			}
 		},
 		modern: {
 			superficial: {
-				size: 15.7,
+				size: 15.4,
 				color: 95,
 				sugar: 3,
 				seedCount: 250
 			},
 			essential: {
-				vitaminC: 3,
-				iron: 0.2,
-				calcium: 10,
-				potassium: 200,
-				magnesium: 9,
-				vitaminB6: 0.07
+				vitaminC: 3.4,
+				iron: 0.22,
+				calcium: 8.9,
+				potassium: 196,
+				magnesium: 8.8,
+				vitaminB6: 0.068
 			}
 		},
 		historicalContext:
@@ -170,34 +170,34 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 8.5,
+				size: 7.8,
 				color: 65,
 				sugar: 9,
 				seedCount: 12
 			},
 			essential: {
-				vitaminC: 70,
-				iron: 0.4,
-				calcium: 40,
-				potassium: 330,
-				magnesium: 16,
-				vitaminB6: 0.1
+				vitaminC: 82.4,
+				iron: 0.62,
+				calcium: 48.6,
+				potassium: 342,
+				magnesium: 18.8,
+				vitaminB6: 0.108
 			}
 		},
 		modern: {
 			superficial: {
-				size: 11.0,
+				size: 10.6,
 				color: 90,
 				sugar: 12,
 				seedCount: 6
 			},
 			essential: {
-				vitaminC: 50,
-				iron: 0.2,
-				calcium: 35,
-				potassium: 290,
-				magnesium: 10,
-				vitaminB6: 0.08
+				vitaminC: 48.6,
+				iron: 0.28,
+				calcium: 31.2,
+				potassium: 284,
+				magnesium: 9.4,
+				vitaminB6: 0.072
 			}
 		},
 		historicalContext:
@@ -219,33 +219,33 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 9,
+				size: 8.6,
 				color: 65,
 				sugar: 9,
 				seedCount: 10
 			},
 			essential: {
-				vitaminC: 7,
-				iron: 0.3,
-				calcium: 9,
-				potassium: 180,
-				magnesium: 12,
-				vitaminB6: 0.045
+				vitaminC: 8.4,
+				iron: 0.38,
+				calcium: 11.2,
+				potassium: 192,
+				magnesium: 14.2,
+				vitaminB6: 0.052
 			}
 		},
 		modern: {
 			superficial: {
-				size: 11.8,
+				size: 11.4,
 				color: 85,
 				sugar: 12,
 				seedCount: 8
 			},
 			essential: {
-				vitaminC: 5,
-				iron: 0.1,
-				calcium: 7,
-				potassium: 150,
-				magnesium: 8,
+				vitaminC: 4.8,
+				iron: 0.18,
+				calcium: 6.8,
+				potassium: 146,
+				magnesium: 7.6,
 				vitaminB6: 0.028
 			}
 		},
@@ -268,34 +268,34 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 6.3,
+				size: 5.8,
 				color: 65,
 				sugar: 3,
 				seedCount: 150
 			},
 			essential: {
-				vitaminC: 20,
-				iron: 0.5,
-				calcium: 11,
-				potassium: 290,
-				magnesium: 16,
-				vitaminB6: 0.13
+				vitaminC: 28.4,
+				iron: 0.68,
+				calcium: 14.8,
+				potassium: 302,
+				magnesium: 18.2,
+				vitaminB6: 0.142
 			}
 		},
 		modern: {
 			superficial: {
-				size: 9.4,
+				size: 8.9,
 				color: 90,
 				sugar: 5,
 				seedCount: 100
 			},
 			essential: {
-				vitaminC: 15,
-				iron: 0.3,
-				calcium: 8,
-				potassium: 250,
-				magnesium: 10,
-				vitaminB6: 0.08
+				vitaminC: 16.2,
+				iron: 0.32,
+				calcium: 7.8,
+				potassium: 246,
+				magnesium: 9.6,
+				vitaminB6: 0.084
 			}
 		},
 		historicalContext:
@@ -321,34 +321,34 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 4.7,
+				size: 4.2,
 				color: 60,
 				sugar: 3,
 				seedCount: 0
 			},
 			essential: {
-				vitaminC: 9,
-				iron: 0.3,
-				calcium: 33,
-				potassium: 320,
-				magnesium: 12,
-				vitaminB6: 0.15
+				vitaminC: 12.8,
+				iron: 0.46,
+				calcium: 38.4,
+				potassium: 328,
+				magnesium: 14.6,
+				vitaminB6: 0.168
 			}
 		},
 		modern: {
 			superficial: {
-				size: 7.1,
+				size: 6.8,
 				color: 95,
 				sugar: 5,
 				seedCount: 0
 			},
 			essential: {
-				vitaminC: 6,
-				iron: 0.2,
-				calcium: 25,
-				potassium: 270,
-				magnesium: 8,
-				vitaminB6: 0.1
+				vitaminC: 6.2,
+				iron: 0.24,
+				calcium: 24.2,
+				potassium: 264,
+				magnesium: 7.8,
+				vitaminB6: 0.096
 			}
 		},
 		historicalContext:
@@ -371,34 +371,34 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 2.8,
+				size: 2.4,
 				color: 70,
 				sugar: 4,
 				seedCount: 200
 			},
 			essential: {
-				vitaminC: 60,
-				iron: 0.4,
-				calcium: 16,
-				potassium: 160,
-				magnesium: 13,
-				vitaminB6: 0.05
+				vitaminC: 68.4,
+				iron: 0.52,
+				calcium: 19.2,
+				potassium: 172,
+				magnesium: 15.4,
+				vitaminB6: 0.058
 			}
 		},
 		modern: {
 			superficial: {
-				size: 4.7,
+				size: 4.2,
 				color: 90,
 				sugar: 7,
 				seedCount: 200
 			},
 			essential: {
-				vitaminC: 45,
-				iron: 0.2,
-				calcium: 10,
-				potassium: 140,
-				magnesium: 8,
-				vitaminB6: 0.03
+				vitaminC: 42.6,
+				iron: 0.26,
+				calcium: 11.4,
+				potassium: 138,
+				magnesium: 7.6,
+				vitaminB6: 0.032
 			}
 		},
 		historicalContext:

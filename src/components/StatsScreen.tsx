@@ -170,7 +170,7 @@ export default function StatsScreen({ item }: Props) {
 				<div className='col-span-3 flex flex-col gap-8'>
 					{/* 3D Model */}
 					<div className='bg-black/20 border border-woodsmoke-800 h-[400px]'>
-						<ProduceItem variant='stats' item={item} />
+						<ProduceItem variant='stats' item={item} timeframe={timeframe} />
 					</div>
 
 					{/* Time Period Toggle */}
@@ -185,7 +185,7 @@ export default function StatsScreen({ item }: Props) {
 								className={`font-pixel px-4 py-2 ${
 									timeframe === 'historical' ? 'bg-woodsmoke-400 text-black' : 'text-woodsmoke-400'
 								}`}>
-								HISTORICAL
+								PRE-INDUSTRIAL
 							</button>
 							<button
 								onClick={async () => {
@@ -196,7 +196,7 @@ export default function StatsScreen({ item }: Props) {
 								className={`font-pixel px-4 py-2 ${
 									timeframe === 'modern' ? 'bg-woodsmoke-400 text-black' : 'text-woodsmoke-400'
 								}`}>
-								MODERN
+								POST-INDUSTRIAL
 							</button>
 						</div>
 					</div>
