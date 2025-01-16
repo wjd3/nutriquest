@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
 import * as THREE from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { animate } from 'motion'
@@ -19,17 +19,19 @@ interface ItemProps {
 }
 
 const Item = ({ item, variant, isSelected = false }: ItemProps) => {
+	const { modelPath, texturePath, name, statsView, selectView } = item
+
 	const {
-		modelPath,
-		texturePath,
-		name,
 		modelPositionY,
 		cameraZoom,
 		modelRotationSpeed,
 		modelRotation,
 		cameraPositionY,
 		modelRotationOffset
-	} = item
+	} = useMemo(
+		() => (variant === 'select' ? selectView : statsView),
+		[variant, selectView, statsView]
+	)
 
 	const mountRef = useRef<HTMLDivElement>(null)
 	const sceneRef = useRef<THREE.Scene | null>(null)
@@ -180,11 +182,11 @@ const Item = ({ item, variant, isSelected = false }: ItemProps) => {
 			<div className='relative'>
 				<div
 					ref={mountRef}
-					className={`w-48 h-48 ${
+					className={`w-48 h-48 transition-colors duration-300 ${
 						isSelected
 							? 'border-2 border-woodsmoke-600 bg-black/25'
 							: 'border border-woodsmoke-700 bg-black/15'
-					} transition-colors duration-300`}
+					}`}
 				/>
 				<div className='absolute bottom-2 left-0 right-0 text-center'>
 					<span className='item-name font-pixel text-sm bg-woodsmoke-900 text-white px-3 py-1'>

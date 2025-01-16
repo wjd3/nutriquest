@@ -4,7 +4,11 @@ import Screen from '@/components/Screen'
 import ProduceItem from '@/components/ProduceItem'
 import { soundManager } from '@/services/SoundManager'
 import { navigateTo, toTitleCase } from '@/utils'
-import type { ProduceItem as ProduceItemType } from '@/types'
+import type {
+	ProduceItem as ProduceItemType,
+	ProduceSuperficialStats,
+	ProduceEssentialStats
+} from '@/types'
 
 interface Props {
 	item: ProduceItemType
@@ -56,12 +60,19 @@ function CircularProgress({ value, label }: { value: number; label: string }) {
 }
 
 // Stats view component
-function StatsView({ data }: { data: Record<string, number>; type: 'superficial' | 'essential' }) {
+function StatsView({
+	data
+}: {
+	data: ProduceEssentialStats | ProduceSuperficialStats
+	type: 'superficial' | 'essential'
+}) {
 	return (
 		<div className='grid grid-cols-2 gap-8 p-6'>
-			{Object.entries(data).map(([key, value]) => (
-				<CircularProgress key={key} value={value} label={toTitleCase(key)} />
-			))}
+			{Object.entries(data)
+				.sort((a, b) => a[0].localeCompare(b[0]))
+				.map(([key, value]) => (
+					<CircularProgress key={key} value={value} label={toTitleCase(key)} />
+				))}
 		</div>
 	)
 }
@@ -70,12 +81,6 @@ export default function StatsScreen({ item }: Props) {
 	const [isNavigating, setIsNavigating] = useState(false)
 
 	const [timeframe, setTimeframe] = useState<'historical' | 'modern'>('historical')
-
-	const superficialData = {
-		size: 65,
-		color: 72,
-		sugar: 19
-	}
 
 	return (
 		<Screen className='flex flex-col p-8'>
@@ -126,7 +131,7 @@ export default function StatsScreen({ item }: Props) {
 					<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
 						Superficial
 					</h2>
-					<StatsView data={superficialData} type='superficial' />
+					<StatsView data={item[timeframe].superficial} type='superficial' />
 				</motion.div>
 
 				<div className='col-span-3 flex flex-col gap-8'>
@@ -181,7 +186,7 @@ export default function StatsScreen({ item }: Props) {
 					<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
 						Essential
 					</h2>
-					<StatsView data={item[timeframe]?.vitaminA ? item[timeframe]! : {}} type='essential' />
+					<StatsView data={item[timeframe].essential} type='essential' />
 				</motion.div>
 			</motion.div>
 		</Screen>
