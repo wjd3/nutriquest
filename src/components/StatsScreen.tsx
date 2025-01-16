@@ -14,10 +14,19 @@ interface Props {
 	item: ProduceItemType
 }
 
-// Circular progress component
-function CircularProgress({ value, label }: { value: number; label: string }) {
-	const circumference = 2 * Math.PI * 40 // radius = 40
-	const strokeDashoffset = circumference - (value / 100) * circumference
+interface CircularProgressProps {
+	value: number
+	label: string
+	unit: string
+	maxValue: number
+}
+
+function CircularProgress({ value, label, unit, maxValue }: CircularProgressProps) {
+	const circumference = 2 * Math.PI * 40
+	const percentage = (value / maxValue) * 100
+	const strokeDashoffset = circumference - (percentage / 100) * circumference
+
+	console.log({ label })
 
 	return (
 		<div className='flex flex-col items-center'>
@@ -49,9 +58,12 @@ function CircularProgress({ value, label }: { value: number; label: string }) {
 					/>
 				</svg>
 
-				{/* Percentage text */}
-				<div className='absolute inset-0 flex items-center justify-center'>
-					<span className='font-pixel text-lg'>{value}%</span>
+				{/* Value with units */}
+				<div className='absolute inset-0 flex flex-col items-center justify-center'>
+					<span className='font-pixel text-lg'>
+						{value.toFixed(['Seed Count', 'Color'].includes(label) ? 0 : 1)}
+					</span>
+					<span className='font-pixel text-xs text-woodsmoke-400'>{unit}</span>
 				</div>
 			</div>
 			<span className='mt-2 text-woodsmoke-400 text-sm'>{label}</span>
@@ -59,20 +71,48 @@ function CircularProgress({ value, label }: { value: number; label: string }) {
 	)
 }
 
-// Stats view component
 function StatsView({
 	data
 }: {
 	data: ProduceEssentialStats | ProduceSuperficialStats
 	type: 'superficial' | 'essential'
 }) {
+	const getUnitAndMax = (key: string): { unit: string; max: number } => {
+		const units = {
+			// Superficial stats
+			size: { unit: 'in', max: 20 },
+			color: { unit: '%', max: 100 },
+			sugar: { unit: 'g', max: 30 },
+			seedCount: { unit: 'seeds', max: 20 },
+
+			// Essential stats
+			vitaminC: { unit: 'mg', max: 100 },
+			iron: { unit: 'mg', max: 5 },
+			calcium: { unit: 'mg', max: 50 },
+			potassium: { unit: 'mg', max: 500 },
+			magnesium: { unit: 'mg', max: 50 },
+			vitaminB6: { unit: 'mg', max: 2 }
+		}
+
+		return units[key as keyof typeof units] || { unit: '', max: 100 }
+	}
+
 	return (
 		<div className='grid grid-cols-2 gap-8 p-6'>
 			{Object.entries(data)
 				.sort((a, b) => a[0].localeCompare(b[0]))
-				.map(([key, value]) => (
-					<CircularProgress key={key} value={value} label={toTitleCase(key)} />
-				))}
+				.map(([key, value]) => {
+					const { unit, max } = getUnitAndMax(key)
+					return (
+						<CircularProgress
+							key={key}
+							value={value}
+							label={toTitleCase(key)}
+							unit={unit}
+							maxValue={max}
+						/>
+					)
+				})}
 		</div>
 	)
 }

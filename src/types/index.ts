@@ -8,19 +8,19 @@ interface ProduceView {
 }
 
 export interface ProduceSuperficialStats {
-	size: number
-	color: number
-	sugar: number
-	seedCount: number
+	size: number // inches (circumference)
+	color: number // percentage
+	sugar: number // grams
+	seedCount: number // count
 }
 
 export interface ProduceEssentialStats {
-	vitaminC: number
-	iron: number
-	calcium: number
-	potassium: number
-	vitaminB6: number
-	magnesium: number
+	vitaminC: number // mg
+	iron: number // mg
+	calcium: number // mg
+	potassium: number // mg
+	vitaminB6: number // mg
+	magnesium: number // mg
 }
 
 export interface ProduceStats {
