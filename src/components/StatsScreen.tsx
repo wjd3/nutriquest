@@ -99,119 +99,111 @@ export default function StatsScreen({ item }: Props) {
 
 	return (
 		<Screen className='flex flex-col p-8'>
-			{true && (
-				// {isReady && (
-				<>
-					{/* Header */}
-					<motion.div
-						className='mb-8 grid grid-cols-3'
-						initial={{ opacity: 0, y: -20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.5 }}>
-						{/* Back Button */}
-						<motion.div
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							transition={{ duration: 0.5, delay: 0.7 }}>
+			{/* Header */}
+			<motion.div
+				className='mb-8 grid grid-cols-3'
+				initial={{ opacity: 0, y: -20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5 }}>
+				{/* Back Button */}
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.5, delay: 0.7 }}>
+					<button
+						disabled={isNavigating}
+						onClick={async () => {
+							setIsNavigating(true)
+
+							await soundManager.play('select', async () => await navigateTo('/select'))
+						}}
+						className={`font-pixel px-6 py-3 border border-woodsmoke-400 transition-colors duration-300 focus:outline-none ${
+							!isNavigating
+								? 'hover:bg-woodsmoke-400 hover:text-black focus:bg-woodsmoke-400 focus:text-black'
+								: 'bg-woodsmoke-400 text-black'
+						}`}>
+						BACK
+					</button>
+				</motion.div>
+
+				<div className='flex items-center justify-center'>
+					<h1 className='h-fit font-pixel text-3xl text-white text-center'>{item.name}</h1>
+				</div>
+			</motion.div>
+
+			{/* Main content */}
+			<motion.div
+				className='grid grid-cols-5 gap-8'
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 0.5, delay: 0.2 }}>
+				{/* Superficial Stats */}
+				<motion.div
+					className='bg-black/20 border border-woodsmoke-800'
+					initial={{ opacity: 0, x: -20 }}
+					animate={{ opacity: 1, x: 0 }}
+					transition={{ duration: 0.5, delay: 0.4 }}>
+					<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
+						Superficial
+					</h2>
+					<StatsView data={superficialData} type='superficial' />
+				</motion.div>
+
+				<div className='col-span-3 flex flex-col gap-8'>
+					{/* 3D Model */}
+					<div className='bg-black/20 border border-woodsmoke-800 h-[400px]'>
+						<ProduceItem variant='stats' item={item} />
+					</div>
+
+					{/* Time Period Toggle */}
+					<div className='bg-black/20 border border-woodsmoke-800 p-4'>
+						<div className='flex gap-4 justify-center'>
 							<button
-								disabled={isNavigating}
 								onClick={async () => {
-									setIsNavigating(true)
+									await soundManager.play('toggle')
 
-									await soundManager.play('select', async () => await navigateTo('/select'))
+									setTimeframe('historical')
 								}}
-								className={`font-pixel px-6 py-3 border border-woodsmoke-400 transition-colors duration-300 focus:outline-none ${
-									!isNavigating
-										? 'hover:bg-woodsmoke-400 hover:text-black focus:bg-woodsmoke-400 focus:text-black'
-										: 'bg-woodsmoke-400 text-black'
+								className={`font-pixel px-4 py-2 ${
+									timeframe === 'historical' ? 'bg-woodsmoke-400 text-black' : 'text-woodsmoke-400'
 								}`}>
-								BACK
+								HISTORICAL
 							</button>
-						</motion.div>
+							<button
+								onClick={async () => {
+									await soundManager.play('toggle')
 
-						<div className='flex items-center justify-center'>
-							<h1 className='h-fit font-pixel text-3xl text-white text-center'>{item.name}</h1>
+									setTimeframe('modern')
+								}}
+								className={`font-pixel px-4 py-2 ${
+									timeframe === 'modern' ? 'bg-woodsmoke-400 text-black' : 'text-woodsmoke-400'
+								}`}>
+								MODERN
+							</button>
 						</div>
-					</motion.div>
+					</div>
 
-					{/* Main content */}
-					<motion.div
-						className='grid grid-cols-5 gap-8'
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ duration: 0.5, delay: 0.2 }}>
-						{/* Superficial Stats */}
-						<motion.div
-							className='bg-black/20 border border-woodsmoke-800'
-							initial={{ opacity: 0, x: -20 }}
-							animate={{ opacity: 1, x: 0 }}
-							transition={{ duration: 0.5, delay: 0.4 }}>
-							<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
-								Superficial
-							</h2>
-							<StatsView data={superficialData} type='superficial' />
-						</motion.div>
+					{/* Historical Context */}
+					<div className='bg-black/20 border border-woodsmoke-800 p-6'>
+						<p className='text-woodsmoke-300 font-mono text-sm leading-relaxed'>
+							{item.historicalContext ||
+								'Text about the change in nutrition in food as a result of industrial farming...'}
+						</p>
+					</div>
+				</div>
 
-						<div className='col-span-3 flex flex-col gap-8'>
-							{/* 3D Model */}
-							<div className='bg-black/20 border border-woodsmoke-800 h-[400px]'>
-								<ProduceItem variant='stats' item={item} />
-							</div>
-
-							{/* Time Period Toggle */}
-							<div className='bg-black/20 border border-woodsmoke-800 p-4'>
-								<div className='flex gap-4 justify-center'>
-									<button
-										onClick={async () => {
-											await soundManager.play('toggle')
-											setTimeframe('historical')
-										}}
-										className={`font-pixel px-4 py-2 ${
-											timeframe === 'historical'
-												? 'bg-woodsmoke-400 text-black'
-												: 'text-woodsmoke-400'
-										}`}>
-										HISTORICAL
-									</button>
-									<button
-										onClick={async () => {
-											await soundManager.play('toggle')
-											setTimeframe('modern')
-										}}
-										className={`font-pixel px-4 py-2 ${
-											timeframe === 'modern' ? 'bg-woodsmoke-400 text-black' : 'text-woodsmoke-400'
-										}`}>
-										MODERN
-									</button>
-								</div>
-							</div>
-
-							{/* Historical Context */}
-							<div className='bg-black/20 border border-woodsmoke-800 p-6'>
-								<p className='text-woodsmoke-300 font-mono text-sm leading-relaxed'>
-									{item.historicalContext ||
-										'Text about the change in nutrition in food as a result of industrial farming...'}
-								</p>
-							</div>
-						</div>
-
-						{/* Essential Stats */}
-						<motion.div
-							className='bg-black/20 border border-woodsmoke-800'
-							initial={{ opacity: 0, x: 20 }}
-							animate={{ opacity: 1, x: 0 }}
-							transition={{ duration: 0.5, delay: 0.5 }}>
-							<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
-								Essential
-							</h2>
-							<StatsView
-								data={item[timeframe]?.vitaminA ? item[timeframe]! : {}}
-								type='essential'
-							/>
-						</motion.div>
-					</motion.div>
-				</>
-			)}
+				{/* Essential Stats */}
+				<motion.div
+					className='bg-black/20 border border-woodsmoke-800'
+					initial={{ opacity: 0, x: 20 }}
+					animate={{ opacity: 1, x: 0 }}
+					transition={{ duration: 0.5, delay: 0.5 }}>
+					<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
+						Essential
+					</h2>
+					<StatsView data={item[timeframe]?.vitaminA ? item[timeframe]! : {}} type='essential' />
+				</motion.div>
+			</motion.div>
 		</Screen>
 	)
 }
