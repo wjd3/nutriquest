@@ -3,20 +3,10 @@ import type { ProduceItem } from '@/types'
 export const produce: ProduceItem[] = [
 	{
 		name: 'Apple',
-		modelPath: '/models/apple.fbx',
-		texturePath: '/textures/apple.jpg',
-		selectView: {
-			modelPositionY: 3.75,
-			cameraPositionY: 2,
-			cameraZoom: 11,
-			modelRotationOffset: -6
-		},
-		statsView: {
-			modelPositionY: 7,
-			cameraPositionY: 3,
-			cameraZoom: 11,
-			modelRotationOffset: -6
-		},
+		latinName: 'Malus domestica',
+		modelPath: '/models/apple.glb',
+		historicalColors: ['#C04A31', '#6B4C33', '#4B5D35'],
+		modernColors: ['#FF3B30', '#8B5E3C', '#2D8A3F'],
 		historical: {
 			superficial: {
 				size: 6.8,
@@ -54,20 +44,10 @@ export const produce: ProduceItem[] = [
 	},
 	{
 		name: 'Grapes',
-		modelPath: '/models/grapes.fbx',
-		texturePath: '/textures/grapes.jpg',
-		selectView: {
-			modelPositionY: 7.5,
-			cameraPositionY: 3,
-			cameraZoom: 21.5,
-			modelRotationOffset: 10
-		},
-		statsView: {
-			modelPositionY: 15,
-			cameraPositionY: 4,
-			cameraZoom: 27,
-			modelRotationOffset: 10
-		},
+		latinName: 'Vitis vinifera',
+		modelPath: '/models/grapes.glb',
+		historicalColors: ['#6B365C', '#445A34', '#5D4331'],
+		modernColors: ['#9E1B8C', '#39B52A', '#795640'],
 		historical: {
 			superficial: {
 				size: 11.4,
@@ -105,18 +85,10 @@ export const produce: ProduceItem[] = [
 	},
 	{
 		name: 'Eggplant',
-		modelPath: '/models/eggplant.fbx',
-		texturePath: '/textures/eggplant.jpg',
-		selectView: {
-			modelPositionY: 10,
-			cameraPositionY: 3,
-			cameraZoom: 24
-		},
-		statsView: {
-			modelPositionY: 18.5,
-			cameraPositionY: 4,
-			cameraZoom: 30
-		},
+		latinName: 'Solanum melongena',
+		modelPath: '/models/eggplant.glb',
+		historicalColors: ['#3D4A2F', '#4A3854'],
+		modernColors: ['#45B52F', '#6C2F8E'],
 		historical: {
 			superficial: {
 				size: 10.2,
@@ -154,20 +126,10 @@ export const produce: ProduceItem[] = [
 	},
 	{
 		name: 'Orange',
-		modelPath: '/models/orange.fbx',
-		texturePath: '/textures/orange.jpg',
-		selectView: {
-			modelPositionY: 6,
-			cameraPositionY: 2,
-			cameraZoom: 18.5,
-			modelRotationOffset: -20
-		},
-		statsView: {
-			modelPositionY: 10,
-			cameraPositionY: 3,
-			cameraZoom: 23,
-			modelRotationOffset: -20
-		},
+		latinName: 'Citrus sinensis',
+		modelPath: '/models/orange.glb',
+		historicalColors: ['#B85B24', '#3D4A2F', '#6B4C33'],
+		modernColors: ['#FF8C1A', '#45B52F', '#8B5E3C'],
 		historical: {
 			superficial: {
 				size: 7.8,
@@ -205,18 +167,10 @@ export const produce: ProduceItem[] = [
 	},
 	{
 		name: 'Pear',
-		modelPath: '/models/pear.fbx',
-		texturePath: '/textures/pear.jpg',
-		selectView: {
-			modelPositionY: 10,
-			cameraPositionY: 2,
-			cameraZoom: 24
-		},
-		statsView: {
-			modelPositionY: 17,
-			cameraPositionY: 2,
-			cameraZoom: 32
-		},
+		latinName: 'Pyrus communis',
+		modelPath: '/models/pear.glb',
+		historicalColors: ['#4D5A34', '#A89A45', '#614935'],
+		modernColors: ['#39B52A', '#D4E225', '#7C5B3D'],
 		historical: {
 			superficial: {
 				size: 8.6,
@@ -254,18 +208,10 @@ export const produce: ProduceItem[] = [
 	},
 	{
 		name: 'Tomato',
-		modelPath: '/models/tomato.fbx',
-		texturePath: '/textures/tomato.jpg',
-		selectView: {
-			modelPositionY: 6.5,
-			cameraPositionY: 2,
-			cameraZoom: 22
-		},
-		statsView: {
-			modelPositionY: 12,
-			cameraPositionY: 3,
-			cameraZoom: 30
-		},
+		latinName: 'Solanum lycopersicum',
+		modelPath: '/models/tomato.glb',
+		historicalColors: ['#A93F3F', '#4D5B35'],
+		modernColors: ['#FF3333', '#34A843'],
 		historical: {
 			superficial: {
 				size: 5.8,
@@ -303,22 +249,10 @@ export const produce: ProduceItem[] = [
 	},
 	{
 		name: 'Carrot',
-		modelPath: '/models/carrot.fbx',
-		texturePath: '/textures/carrot.jpg',
-		selectView: {
-			modelPositionY: -3.5,
-			cameraPositionY: 2,
-			cameraZoom: 31,
-			modelRotation: -1.6,
-			modelRotationOffset: -55
-		},
-		statsView: {
-			modelPositionY: 2,
-			cameraPositionY: 3,
-			cameraZoom: 37,
-			modelRotation: -1.6,
-			modelRotationOffset: -55
-		},
+		latinName: 'Daucus carota',
+		modelPath: '/models/carrot.glb',
+		historicalColors: ['#B86538', '#526B3A'],
+		modernColors: ['#FF8427', '#2EA846'],
 		historical: {
 			superficial: {
 				size: 4.2,
@@ -356,19 +290,10 @@ export const produce: ProduceItem[] = [
 	},
 	{
 		name: 'Strawberry',
-		modelPath: '/models/strawberry.fbx',
-		texturePath: '/textures/strawberry.jpg',
-		selectView: {
-			modelPositionY: 7,
-			cameraPositionY: 2,
-			cameraZoom: 45
-		},
-		statsView: {
-			modelPositionY: 14,
-			cameraPositionY: 4,
-			cameraZoom: 50,
-			modelRotationOffset: 0
-		},
+		latinName: 'Fragaria × ananassa',
+		modelPath: '/models/strawberry.glb',
+		historicalColors: ['#982C2C', '#4A5D36'],
+		modernColors: ['#FF1919', '#2D8A3F'],
 		historical: {
 			superficial: {
 				size: 2.4,

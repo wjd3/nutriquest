@@ -124,10 +124,10 @@ export default function SelectScreen() {
 				transition={{ duration: 0.5, delay: 0.4 }}>
 				{produce
 					.sort((a, b) => a.name.localeCompare(b.name))
-					.map((item, index) => (
+					.map((produceItem, index) => (
 						<button
 							disabled={isNavigating}
-							key={item.name || index}
+							key={produceItem.name || index}
 							onClick={async () => {
 								await soundManager.play('toggle')
 
@@ -136,7 +136,11 @@ export default function SelectScreen() {
 							className={`focus:outline-none transform transition-transform ${!isNavigating ? 'hover:scale-105' : ''} ${
 								selectedIndex === index ? 'ring-2 ring-woodsmoke-400' : ''
 							}`}>
-							<ProduceItem variant='select' item={item} isSelected={selectedIndex === index} />
+							<ProduceItem
+								variant='select'
+								produceItem={produceItem}
+								isSelected={selectedIndex === index}
+							/>
 						</button>
 					))}
 			</motion.div>

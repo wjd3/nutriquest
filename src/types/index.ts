@@ -1,12 +1,3 @@
-interface ProduceView {
-	modelPositionY: number
-	cameraPositionY: number
-	cameraZoom: number
-	modelRotationSpeed?: number
-	modelRotation?: number
-	modelRotationOffset?: number
-}
-
 export interface ProduceSuperficialStats {
 	size: number // inches (circumference)
 	color: number // percentage
@@ -30,10 +21,10 @@ export interface ProduceStats {
 
 export interface ProduceItem {
 	modelPath: string
-	texturePath: string
 	name: string
-	selectView: ProduceView
-	statsView: ProduceView
+	latinName: string
+	historicalColors: string[]
+	modernColors: string[]
 	historical: ProduceStats
 	modern: ProduceStats
 	historicalContext: string

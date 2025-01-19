@@ -11,7 +11,7 @@ import type {
 } from '@/types'
 
 interface Props {
-	item: ProduceItemType
+	produceItem: ProduceItemType
 }
 
 interface CircularProgressProps {
@@ -110,7 +110,9 @@ function StatsView({ data }: { data: ProduceEssentialStats | ProduceSuperficialS
 	)
 }
 
-export default function StatsScreen({ item }: Props) {
+export default function StatsScreen({ produceItem }: Props) {
+	const { name, historicalContext } = produceItem
+
 	const [isNavigating, setIsNavigating] = useState(false)
 
 	const [timeframe, setTimeframe] = useState<'historical' | 'modern'>('historical')
@@ -145,7 +147,7 @@ export default function StatsScreen({ item }: Props) {
 				</motion.div>
 
 				<div className='flex items-center justify-center'>
-					<h1 className='h-fit font-pixel text-3xl text-white text-center'>{item.name}</h1>
+					<h1 className='h-fit font-pixel text-3xl text-white text-center'>{name}</h1>
 				</div>
 			</motion.div>
 
@@ -164,13 +166,13 @@ export default function StatsScreen({ item }: Props) {
 					<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
 						Superficial
 					</h2>
-					<StatsView data={item[timeframe]['superficial']} />
+					<StatsView data={produceItem[timeframe]['superficial']} />
 				</motion.div>
 
 				<div className='col-span-3 flex flex-col gap-8'>
 					{/* 3D Model */}
 					<div className='bg-black/20 border border-woodsmoke-800 h-[400px]'>
-						<ProduceItem variant='stats' item={item} timeframe={timeframe} />
+						<ProduceItem variant='stats' produceItem={produceItem} timeframe={timeframe} />
 					</div>
 
 					{/* Time Period Toggle */}
@@ -204,7 +206,7 @@ export default function StatsScreen({ item }: Props) {
 					{/* Historical Context */}
 					<div className='bg-black/20 border border-woodsmoke-800 p-6'>
 						<p className='text-woodsmoke-300 font-mono text-sm leading-relaxed'>
-							{item.historicalContext ||
+							{historicalContext ||
 								'Text about the change in nutrition in food as a result of industrial farming...'}
 						</p>
 					</div>
@@ -219,7 +221,7 @@ export default function StatsScreen({ item }: Props) {
 					<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
 						Essential
 					</h2>
-					<StatsView data={item[timeframe]['essential']} />
+					<StatsView data={produceItem[timeframe]['essential']} />
 				</motion.div>
 			</motion.div>
 		</Screen>
