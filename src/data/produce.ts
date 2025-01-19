@@ -128,8 +128,8 @@ export const produce: ProduceItem[] = [
 		name: 'Orange',
 		latinName: 'Citrus sinensis',
 		modelPath: '/models/orange.glb',
-		historicalColors: ['#B85B24', '#3D4A2F', '#6B4C33'],
-		modernColors: ['#FF8C1A', '#45B52F', '#8B5E3C'],
+		historicalColors: ['#6B4C33', '#3D4A2F', '#B85B24'],
+		modernColors: ['#8B5E3C', '#45B52F', '#FF8C1A'],
 		historical: {
 			superficial: {
 				size: 7.8,
@@ -210,8 +210,8 @@ export const produce: ProduceItem[] = [
 		name: 'Tomato',
 		latinName: 'Solanum lycopersicum',
 		modelPath: '/models/tomato.glb',
-		historicalColors: ['#A93F3F', '#4D5B35'],
-		modernColors: ['#FF3333', '#34A843'],
+		historicalColors: ['#4D5B35', '#A93F3F'],
+		modernColors: ['#34A843', '#FF3333'],
 		historical: {
 			superficial: {
 				size: 5.8,
@@ -292,8 +292,8 @@ export const produce: ProduceItem[] = [
 		name: 'Strawberry',
 		latinName: 'Fragaria × ananassa',
 		modelPath: '/models/strawberry.glb',
-		historicalColors: ['#982C2C', '#4A5D36'],
-		modernColors: ['#FF1919', '#2D8A3F'],
+		historicalColors: ['#E8DCC7', '#982C2C', '#4A5D36'],
+		modernColors: ['#FFF2D6', '#FF1919', '#2D8A3F'],
 		historical: {
 			superficial: {
 				size: 2.4,

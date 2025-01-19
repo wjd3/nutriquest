@@ -164,7 +164,7 @@ export default function SelectScreen() {
 						}
 					}}
 					ref={acceptButtonRef}
-					className={`px-6 py-3 font-pixel border ${
+					className={`px-6 py-3 font-pixel border transition-colors duration-300 ${
 						selectedIndex == null
 							? 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'
 							: `border-woodsmoke-400 focus:outline-none ${
@@ -172,7 +172,7 @@ export default function SelectScreen() {
 										? 'bg-woodsmoke-950 text-white hover:bg-woodsmoke-400 hover:text-black focus:bg-woodsmoke-400 focus:text-black'
 										: 'bg-woodsmoke-400 text-black'
 								}`
-					} transition-colors duration-300`}
+					}`}
 					disabled={isNavigating || selectedIndex == null}>
 					ACCEPT
 				</button>

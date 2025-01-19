@@ -6,11 +6,15 @@ import { Mesh, DoubleSide, MeshStandardMaterial } from 'three'
 import type { ProduceItem as ProduceItemType } from '@/types'
 import type { Group } from 'three'
 
-interface ProduceItemProps {
+interface ProduceItemModelProps {
 	produceItem: ProduceItemType
-	variant: 'select' | 'stats'
 	isSelected?: boolean
 	timeframe?: 'historical' | 'modern'
+}
+type ProduceItemCanvasProps = ProduceItemModelProps
+
+interface ProduceItemProps extends ProduceItemCanvasProps {
+	variant: 'select' | 'stats'
 }
 
 const ProduceItemMesh = ({
@@ -45,10 +49,9 @@ const ProduceItemMesh = ({
 
 const ProduceItemModel = ({
 	produceItem,
-	variant,
 	isSelected = false,
 	timeframe = 'historical'
-}: ProduceItemProps) => {
+}: ProduceItemModelProps) => {
 	const { modelPath, historicalColors, modernColors } = produceItem
 
 	const pivotRef = useRef<Group>(null)
@@ -86,43 +89,71 @@ const ProduceItemModel = ({
 	)
 }
 
-const ProduceItem = ({ produceItem, variant, isSelected, timeframe }: ProduceItemProps) => {
+const ProduceItemCanvas = ({ produceItem, isSelected, timeframe }: ProduceItemCanvasProps) => {
 	return (
-		<div className='w-full h-full'>
-			<Canvas
-				camera={{
-					fov: 45,
-					near: 0.1,
-					far: 1000,
-					position: [0, 0.5, 4.25]
-				}}>
-				{/* Ambient light */}
-				<ambientLight intensity={2.5} color='#ffffff' />
-				{/* Key light */}
-				<directionalLight
-					position={[5, 10, 5]}
-					intensity={2}
-					color='#ffffff'
-					castShadow
-					shadow-mapSize={[1024, 1024]}
-					shadow-camera-far={50}
-					shadow-camera-left={-10}
-					shadow-camera-right={10}
-					shadow-camera-top={10}
-					shadow-camera-bottom={-10}
-				/>
-				{/* Fill light 1 */}
-				<directionalLight position={[0, -5, 0]} intensity={1.5} color='#ffffff' />
-				{/* Fill light 2 */}
-				<directionalLight position={[0, 2, 5]} intensity={2.5} color='#ffffff' />
+		<Canvas
+			camera={{
+				fov: 45,
+				near: 0.1,
+				far: 1000,
+				position: [0, 0.5, 4.25]
+			}}>
+			{/* Ambient light */}
+			<ambientLight intensity={2.5} color='#ffffff' />
+			{/* Key light */}
+			<directionalLight
+				position={[5, 10, 5]}
+				intensity={2}
+				color='#ffffff'
+				castShadow
+				shadow-mapSize={[1024, 1024]}
+				shadow-camera-far={50}
+				shadow-camera-left={-10}
+				shadow-camera-right={10}
+				shadow-camera-top={10}
+				shadow-camera-bottom={-10}
+			/>
+			{/* Fill light 1 */}
+			<directionalLight position={[0, -5, 0]} intensity={1.5} color='#ffffff' />
+			{/* Fill light 2 */}
+			<directionalLight position={[0, 2, 5]} intensity={2.5} color='#ffffff' />
 
-				<ProduceItemModel
-					produceItem={produceItem}
-					variant={variant}
-					isSelected={isSelected}
-					timeframe={timeframe}
-				/>
-			</Canvas>
+			<ProduceItemModel produceItem={produceItem} isSelected={isSelected} timeframe={timeframe} />
+		</Canvas>
+	)
+}
+
+const ProduceItem = ({ produceItem, variant, isSelected, timeframe }: ProduceItemProps) => {
+	const { name } = produceItem
+
+	if (variant === 'select') {
+		return (
+			<div className='relative'>
+				<div
+					className={`w-48 h-48 canvas-container transition-colors duration-300 ${
+						isSelected
+							? 'border-2 border-woodsmoke-600 bg-black/25'
+							: 'border border-woodsmoke-700 bg-black/15'
+					}`}>
+					<ProduceItemCanvas
+						produceItem={produceItem}
+						isSelected={isSelected}
+						timeframe={timeframe}
+					/>
+				</div>
+
+				<div className='absolute bottom-2 left-0 right-0 text-center'>
+					<span className='item-name font-pixel text-sm bg-woodsmoke-900 text-white px-3 py-1'>
+						{name}
+					</span>
+				</div>
+			</div>
+		)
+	}
+
+	return (
+		<div className='w-full h-full canvas-container bg-black/25 border border-woodsmoke-700'>
+			<ProduceItemCanvas produceItem={produceItem} isSelected={isSelected} timeframe={timeframe} />
 		</div>
 	)
 }
