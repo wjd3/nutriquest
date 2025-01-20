@@ -43,6 +43,88 @@ export const produce: ProduceItem[] = [
 			'Apples have been cultivated for thousands of years. Historical varieties were often smaller and less sweet than modern cultivars, but contained higher levels of nutrients. Traditional varieties showed more diversity in taste, color, and texture.'
 	},
 	{
+		name: 'Carrot',
+		latinName: 'Daucus carota',
+		modelPath: '/models/carrot.glb',
+		historicalColors: ['#B86538', '#526B3A'],
+		modernColors: ['#FF8427', '#2EA846'],
+		historical: {
+			superficial: {
+				size: 4.2,
+				color: 60,
+				sugar: 3,
+				seedCount: 0
+			},
+			essential: {
+				vitaminC: 12.8,
+				iron: 0.46,
+				calcium: 38.4,
+				potassium: 328,
+				magnesium: 14.6,
+				vitaminB6: 0.168
+			}
+		},
+		modern: {
+			superficial: {
+				size: 6.8,
+				color: 95,
+				sugar: 5,
+				seedCount: 0
+			},
+			essential: {
+				vitaminC: 6.2,
+				iron: 0.24,
+				calcium: 24.2,
+				potassium: 264,
+				magnesium: 7.8,
+				vitaminB6: 0.096
+			}
+		},
+		historicalContext:
+			'Original carrots were purple or white, and much smaller than modern varieties. While less sweet, they contained higher levels of minerals and antioxidants. The familiar orange carrot was developed in the Netherlands during the 17th century.'
+	},
+	{
+		name: 'Chili',
+		latinName: 'Capsicum annuum',
+		modelPath: '/models/chili.glb',
+		historicalColors: ['#3D4A2F', '#4A2F2F'],
+		modernColors: ['#45B52F', '#8B2121'],
+		historical: {
+			superficial: {
+				size: 3.2,
+				color: 75,
+				sugar: 1,
+				seedCount: 20
+			},
+			essential: {
+				vitaminC: 76.4,
+				iron: 0.54,
+				calcium: 14.2,
+				potassium: 256,
+				magnesium: 16.8,
+				vitaminB6: 0.248
+			}
+		},
+		modern: {
+			superficial: {
+				size: 5.6,
+				color: 95,
+				sugar: 2,
+				seedCount: 15
+			},
+			essential: {
+				vitaminC: 48.2,
+				iron: 0.32,
+				calcium: 8.6,
+				potassium: 198,
+				magnesium: 9.2,
+				vitaminB6: 0.156
+			}
+		},
+		historicalContext:
+			'Ancient chili varieties were smaller but significantly more potent in both heat and nutrient content. Traditional peppers showed greater diversity in shape and heat levels. Modern breeding has focused on size and visual appeal, sometimes reducing capsaicin content for wider market appeal.'
+	},
+	{
 		name: 'Grapes',
 		latinName: 'Vitis vinifera',
 		modelPath: '/models/grapes.glb',
@@ -82,47 +164,6 @@ export const produce: ProduceItem[] = [
 		},
 		historicalContext:
 			'Ancient grape varieties were smaller and often contained seeds. While less sweet than modern varieties, they were richer in minerals and antioxidants. Traditional cultivation methods produced more diverse varieties with complex flavor profiles.'
-	},
-	{
-		name: 'Eggplant',
-		latinName: 'Solanum melongena',
-		modelPath: '/models/eggplant.glb',
-		historicalColors: ['#3D4A2F', '#4A3854'],
-		modernColors: ['#45B52F', '#6C2F8E'],
-		historical: {
-			superficial: {
-				size: 10.2,
-				color: 70,
-				sugar: 2,
-				seedCount: 300
-			},
-			essential: {
-				vitaminC: 6.8,
-				iron: 0.42,
-				calcium: 16.8,
-				potassium: 242,
-				magnesium: 17.6,
-				vitaminB6: 0.092
-			}
-		},
-		modern: {
-			superficial: {
-				size: 15.4,
-				color: 95,
-				sugar: 3,
-				seedCount: 250
-			},
-			essential: {
-				vitaminC: 3.4,
-				iron: 0.22,
-				calcium: 8.9,
-				potassium: 196,
-				magnesium: 8.8,
-				vitaminB6: 0.068
-			}
-		},
-		historicalContext:
-			'Historical eggplant varieties showed greater diversity in size and shape. While containing more seeds, they were also richer in minerals and antioxidants. Traditional varieties had slightly bitter flavors that have been bred out of modern cultivars.'
 	},
 	{
 		name: 'Orange',
@@ -207,88 +248,6 @@ export const produce: ProduceItem[] = [
 			'Historical pear varieties were smaller and more diverse in shape and color. While containing more seeds and being less sweet, they had higher concentrations of minerals and fiber. Traditional varieties were known for their complex flavors and aromatic qualities.'
 	},
 	{
-		name: 'Tomato',
-		latinName: 'Solanum lycopersicum',
-		modelPath: '/models/tomato.glb',
-		historicalColors: ['#4D5B35', '#A93F3F'],
-		modernColors: ['#34A843', '#FF3333'],
-		historical: {
-			superficial: {
-				size: 5.8,
-				color: 65,
-				sugar: 3,
-				seedCount: 150
-			},
-			essential: {
-				vitaminC: 28.4,
-				iron: 0.68,
-				calcium: 14.8,
-				potassium: 302,
-				magnesium: 18.2,
-				vitaminB6: 0.142
-			}
-		},
-		modern: {
-			superficial: {
-				size: 8.9,
-				color: 90,
-				sugar: 5,
-				seedCount: 100
-			},
-			essential: {
-				vitaminC: 16.2,
-				iron: 0.32,
-				calcium: 7.8,
-				potassium: 246,
-				magnesium: 9.6,
-				vitaminB6: 0.084
-			}
-		},
-		historicalContext:
-			'Heritage tomato varieties were typically smaller but more flavorful, with higher nutrient content. They showed great diversity in color, from deep purple to yellow, and had more complex taste profiles. Modern breeding has focused on size, shelf life, and uniform ripening.'
-	},
-	{
-		name: 'Carrot',
-		latinName: 'Daucus carota',
-		modelPath: '/models/carrot.glb',
-		historicalColors: ['#B86538', '#526B3A'],
-		modernColors: ['#FF8427', '#2EA846'],
-		historical: {
-			superficial: {
-				size: 4.2,
-				color: 60,
-				sugar: 3,
-				seedCount: 0
-			},
-			essential: {
-				vitaminC: 12.8,
-				iron: 0.46,
-				calcium: 38.4,
-				potassium: 328,
-				magnesium: 14.6,
-				vitaminB6: 0.168
-			}
-		},
-		modern: {
-			superficial: {
-				size: 6.8,
-				color: 95,
-				sugar: 5,
-				seedCount: 0
-			},
-			essential: {
-				vitaminC: 6.2,
-				iron: 0.24,
-				calcium: 24.2,
-				potassium: 264,
-				magnesium: 7.8,
-				vitaminB6: 0.096
-			}
-		},
-		historicalContext:
-			'Original carrots were purple or white, and much smaller than modern varieties. While less sweet, they contained higher levels of minerals and antioxidants. The familiar orange carrot was developed in the Netherlands during the 17th century.'
-	},
-	{
 		name: 'Strawberry',
 		latinName: 'Fragaria × ananassa',
 		modelPath: '/models/strawberry.glb',
@@ -328,5 +287,46 @@ export const produce: ProduceItem[] = [
 		},
 		historicalContext:
 			'Wild strawberries were much smaller but more intensely flavored than modern varieties. They had higher concentrations of nutrients and aromatic compounds. Modern breeding has focused on size and visual appeal, often at the expense of flavor and nutrient content.'
+	},
+	{
+		name: 'Tomato',
+		latinName: 'Solanum lycopersicum',
+		modelPath: '/models/tomato.glb',
+		historicalColors: ['#4D5B35', '#A93F3F'],
+		modernColors: ['#34A843', '#FF3333'],
+		historical: {
+			superficial: {
+				size: 5.8,
+				color: 65,
+				sugar: 3,
+				seedCount: 150
+			},
+			essential: {
+				vitaminC: 28.4,
+				iron: 0.68,
+				calcium: 14.8,
+				potassium: 302,
+				magnesium: 18.2,
+				vitaminB6: 0.142
+			}
+		},
+		modern: {
+			superficial: {
+				size: 8.9,
+				color: 90,
+				sugar: 5,
+				seedCount: 100
+			},
+			essential: {
+				vitaminC: 16.2,
+				iron: 0.32,
+				calcium: 7.8,
+				potassium: 246,
+				magnesium: 9.6,
+				vitaminB6: 0.084
+			}
+		},
+		historicalContext:
+			'Heritage tomato varieties were typically smaller but more flavorful, with higher nutrient content. They showed great diversity in color, from deep purple to yellow, and had more complex taste profiles. Modern breeding has focused on size, shelf life, and uniform ripening.'
 	}
 ]

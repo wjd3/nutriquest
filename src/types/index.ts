@@ -19,12 +19,22 @@ export interface ProduceStats {
 	essential: ProduceEssentialStats
 }
 
+export interface ProduceView {
+	rotate?: {
+		x?: number
+		y?: number
+		z?: number
+	}
+}
+
 export interface ProduceItem {
 	modelPath: string
 	name: string
 	latinName: string
 	historicalColors: string[]
 	modernColors: string[]
+	statsView?: ProduceView
+	selectView?: ProduceView
 	historical: ProduceStats
 	modern: ProduceStats
 	historicalContext: string

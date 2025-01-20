@@ -52,7 +52,7 @@ function CircularProgress({ value, label, unit, maxValue }: CircularProgressProp
 						initial={{ strokeDashoffset: circumference }}
 						animate={{ strokeDashoffset }}
 						style={{ strokeDasharray: circumference }}
-						transition={{ duration: 1, ease: 'easeOut' }}
+						transition={{ duration: 0.4, ease: 'easeInOut' }}
 					/>
 				</svg>
 
@@ -179,6 +179,7 @@ export default function StatsScreen({ produceItem }: Props) {
 					<div className='bg-black/20 border border-woodsmoke-800 p-4'>
 						<div className='flex gap-4 justify-center'>
 							<button
+								disabled={timeframe === 'historical'}
 								onClick={async () => {
 									await soundManager.play('toggle')
 
@@ -190,6 +191,7 @@ export default function StatsScreen({ produceItem }: Props) {
 								PRE-INDUSTRIAL
 							</button>
 							<button
+								disabled={timeframe === 'modern'}
 								onClick={async () => {
 									await soundManager.play('toggle')
 

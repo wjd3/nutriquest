@@ -1,57 +1,64 @@
 import { useRef } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, type Euler } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 import { useSpring, animated } from '@react-spring/three'
-import { Mesh, DoubleSide, MeshStandardMaterial } from 'three'
-import type { ProduceItem as ProduceItemType } from '@/types'
-import type { Group } from 'three'
+import { Mesh, DoubleSide, type Group } from 'three'
+import type { ProduceItem as ProduceItemType, ProduceView } from '@/types'
 
-interface ProduceItemModelProps {
+type Variant = 'select' | 'stats'
+
+interface ProduceItemProps {
 	produceItem: ProduceItemType
 	isSelected?: boolean
 	timeframe?: 'historical' | 'modern'
-}
-type ProduceItemCanvasProps = ProduceItemModelProps
-
-interface ProduceItemProps extends ProduceItemCanvasProps {
-	variant: 'select' | 'stats'
+	variant: Variant
 }
 
 const ProduceItemMesh = ({
 	node,
-	historicalColor,
-	modernColor,
-	timeframe
+	colors,
+	timeframe,
+	views,
+	variant
 }: {
 	node: Mesh<any, any, any>
-	historicalColor: string
-	modernColor: string
+	colors: { historical: string; modern: string }
 	timeframe: string
+	variant: Variant
+	views: {
+		select: ProduceView | undefined
+		stats: ProduceView | undefined
+	}
 }) => {
 	const { color } = useSpring({
-		color: timeframe === 'modern' ? modernColor : historicalColor
+		color: timeframe === 'modern' ? colors.modern : colors.historical
 	})
 
+	const rotation = [
+		views[variant]?.rotate?.x || 0,
+		views[variant]?.rotate?.y || 0,
+		views[variant]?.rotate?.z || 0
+	] as Euler
+
 	return (
-		<animated.mesh
-			geometry={node.geometry}
-			material={
-				new MeshStandardMaterial({
-					...node.material,
-					side: DoubleSide
-				})
-			}
-			material-color={color}
-			position={[0, -0.5, 0]}
-		/>
+		<animated.mesh geometry={node.geometry} rotation={rotation} position={[0, -0.25, 0]}>
+			<animated.meshStandardMaterial
+				attach='material'
+				side={DoubleSide}
+				roughness={0.7}
+				metalness={0.1}
+				color={color}
+			/>
+		</animated.mesh>
 	)
 }
 
 const ProduceItemModel = ({
 	produceItem,
+	variant,
 	isSelected = false,
 	timeframe = 'historical'
-}: ProduceItemModelProps) => {
+}: ProduceItemProps) => {
 	const { modelPath, historicalColors, modernColors } = produceItem
 
 	const pivotRef = useRef<Group>(null)
@@ -62,25 +69,36 @@ const ProduceItemModel = ({
 		scale: timeframe === 'modern' || isSelected ? 1 : 0.75
 	})
 
+	// Rotate the model
 	useFrame((_, delta) => {
-		// Rotate the model slowly
 		if (pivotRef.current) {
 			const rotationSpeed = 0.25
 			pivotRef.current.rotation.y += delta * rotationSpeed
 		}
 	})
 
+	const views = {
+		select: produceItem.selectView,
+		stats: produceItem.statsView
+	}
+
 	return (
 		<animated.group ref={pivotRef} scale={scale} dispose={null}>
 			{Object.values(nodes)
 				.filter((node) => node instanceof Mesh)
 				.map((node, index) => {
+					const colors = {
+						historical: historicalColors[index],
+						modern: modernColors[index]
+					}
+
 					return (
 						<ProduceItemMesh
 							node={node}
-							historicalColor={historicalColors[index]}
-							modernColor={modernColors[index]}
+							colors={colors}
+							views={views}
 							timeframe={timeframe}
+							variant={variant}
 							key={node.uuid || index}
 						/>
 					)
@@ -89,43 +107,37 @@ const ProduceItemModel = ({
 	)
 }
 
-const ProduceItemCanvas = ({ produceItem, isSelected, timeframe }: ProduceItemCanvasProps) => {
+const ProduceItemCanvas = ({ produceItem, isSelected, timeframe, variant }: ProduceItemProps) => {
 	return (
 		<Canvas
 			camera={{
 				fov: 45,
 				near: 0.1,
 				far: 1000,
-				position: [0, 0.5, 4.25]
+				position: [0, 0.5, 4.5]
 			}}>
 			{/* Ambient light */}
-			<ambientLight intensity={2.5} color='#ffffff' />
-			{/* Key light */}
-			<directionalLight
-				position={[5, 10, 5]}
-				intensity={2}
-				color='#ffffff'
-				castShadow
-				shadow-mapSize={[1024, 1024]}
-				shadow-camera-far={50}
-				shadow-camera-left={-10}
-				shadow-camera-right={10}
-				shadow-camera-top={10}
-				shadow-camera-bottom={-10}
-			/>
-			{/* Fill light 1 */}
-			<directionalLight position={[0, -5, 0]} intensity={1.5} color='#ffffff' />
-			{/* Fill light 2 */}
-			<directionalLight position={[0, 2, 5]} intensity={2.5} color='#ffffff' />
+			<ambientLight intensity={1} />
 
-			<ProduceItemModel produceItem={produceItem} isSelected={isSelected} timeframe={timeframe} />
+			{/* Main directional light */}
+			<directionalLight position={[5, 5, 5]} intensity={1.5} castShadow>
+				<orthographicCamera attach='shadow-camera' args={[-10, 10, 10, -10]} />
+			</directionalLight>
+
+			{/* Fill light */}
+			<directionalLight position={[-5, -5, -5]} intensity={0.5} />
+
+			<ProduceItemModel
+				variant={variant}
+				produceItem={produceItem}
+				isSelected={isSelected}
+				timeframe={timeframe}
+			/>
 		</Canvas>
 	)
 }
 
 const ProduceItem = ({ produceItem, variant, isSelected, timeframe }: ProduceItemProps) => {
-	const { name } = produceItem
-
 	if (variant === 'select') {
 		return (
 			<div className='relative'>
@@ -136,6 +148,7 @@ const ProduceItem = ({ produceItem, variant, isSelected, timeframe }: ProduceIte
 							: 'border border-woodsmoke-700 bg-black/15'
 					}`}>
 					<ProduceItemCanvas
+						variant={variant}
 						produceItem={produceItem}
 						isSelected={isSelected}
 						timeframe={timeframe}
@@ -143,19 +156,26 @@ const ProduceItem = ({ produceItem, variant, isSelected, timeframe }: ProduceIte
 				</div>
 
 				<div className='absolute bottom-2 left-0 right-0 text-center'>
-					<span className='item-name font-pixel text-sm bg-woodsmoke-900 text-white px-3 py-1'>
-						{name}
+					<span className='font-pixel text-sm bg-woodsmoke-900 text-white px-3 py-1'>
+						{produceItem.name}
 					</span>
 				</div>
 			</div>
 		)
+	} else if (variant === 'stats') {
+		return (
+			<div className='w-full h-full canvas-container bg-black/25 border border-woodsmoke-700'>
+				<ProduceItemCanvas
+					variant={variant}
+					produceItem={produceItem}
+					isSelected={isSelected}
+					timeframe={timeframe}
+				/>
+			</div>
+		)
 	}
 
-	return (
-		<div className='w-full h-full canvas-container bg-black/25 border border-woodsmoke-700'>
-			<ProduceItemCanvas produceItem={produceItem} isSelected={isSelected} timeframe={timeframe} />
-		</div>
-	)
+	return null
 }
 
 export default ProduceItem
