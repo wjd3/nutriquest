@@ -1,178 +1,15 @@
-import { useState } from 'react'
-import { motion } from 'motion/react'
+import { useState, useRef } from 'react'
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'motion/react'
 import Screen from '@/components/Screen'
 import ProduceItem from '@/components/ProduceItem'
 import { soundManager } from '@/services/SoundManager'
-import { navigateTo, toTitleCase } from '@/utils'
+import { navigateTo } from '@/utils'
 import InfoModal from '@/components/InfoModal'
-import type {
-	ProduceItem as ProduceItemType,
-	ProduceSuperficialStats,
-	ProduceEssentialStats
-} from '@/types'
-
-type Timeframe = 'historical' | 'modern'
+import type { ProduceItem as ProduceItemType, Timeframe } from '@/types'
+import StatsView from './StatsView'
 
 interface StatsScreenProps {
 	produceItem: ProduceItemType
-}
-
-interface StatsViewProps {
-	data: ProduceEssentialStats | ProduceSuperficialStats
-	timeframe: Timeframe
-	produceItem: ProduceItemType
-}
-
-interface CircularProgressProps {
-	value: number
-	label: string
-	unit: string
-	maxValue: number
-	timeframe: Timeframe
-	index: number
-	isColor?: boolean
-	colors?: { historical: string; modern: string }
-}
-
-const CircularProgress = ({
-	value,
-	label,
-	unit,
-	maxValue,
-	isColor,
-	colors,
-	timeframe,
-	index
-}: CircularProgressProps) => {
-	const circumference = 2 * Math.PI * 40
-
-	if (isColor && colors) {
-		return (
-			<div className='flex flex-col items-center'>
-				<div className='relative w-24 h-24'>
-					<svg className='w-full h-full'>
-						{/* White circle border */}
-						<circle cx='48' cy='48' r='40' stroke='currentColor' strokeWidth='8' fill='none' />
-						{/* Colored circle for the produce color */}
-						<motion.circle
-							cx='48'
-							cy='48'
-							r='36'
-							animate={timeframe}
-							variants={{
-								historical: {
-									fill: colors.historical
-								},
-								modern: {
-									fill: colors.modern
-								}
-							}}
-						/>
-					</svg>
-				</div>
-				<span className='mt-2 text-woodsmoke-400 text-sm'>{label}</span>
-			</div>
-		)
-	}
-
-	const percentage = (value / maxValue) * 100
-	const strokeDashoffset = circumference - (percentage / 100) * circumference
-
-	return (
-		<div
-			className={`flex flex-col items-center ${index === 4 ? 'max-sm:col-start-auto max-xl:col-start-2' : index === 5 ? 'max-sm:col-start-auto max-xl:col-start-3' : ''}`}>
-			<div className='relative w-24 h-24'>
-				{/* Background circle */}
-				<svg className='w-full h-full -rotate-90'>
-					<circle
-						cx='48'
-						cy='48'
-						r='40'
-						stroke='#1c1c1c'
-						strokeWidth='8'
-						fill='none'
-						className='opacity-25'
-					/>
-
-					{/* Progress circle */}
-					<motion.circle
-						cx='48'
-						cy='48'
-						r='40'
-						stroke='currentColor'
-						strokeWidth='8'
-						fill='none'
-						initial={{ strokeDashoffset: circumference }}
-						animate={{ strokeDashoffset }}
-						style={{ strokeDasharray: circumference }}
-						transition={{ duration: 0.4, ease: 'easeInOut' }}
-					/>
-				</svg>
-
-				{/* Value with units */}
-				<div className='absolute inset-0 flex flex-col items-center justify-center'>
-					<span className='font-pixel text-lg'>
-						{value.toFixed(label === 'Seed Count' ? 0 : 1)}
-					</span>
-					<span className='font-pixel text-sm text-woodsmoke-400'>{unit}</span>
-				</div>
-			</div>
-			<span className='mt-2 text-woodsmoke-400 text-sm text-center'>{label}</span>
-		</div>
-	)
-}
-
-const StatsView = ({ data, timeframe, produceItem }: StatsViewProps) => {
-	const getUnitAndMax = (key: string): { unit: string; max: number } => {
-		const units = {
-			// Superficial stats
-			size: { unit: 'in', max: 20 },
-			color: { unit: '%', max: 100 },
-			sugar: { unit: 'g', max: 30 },
-			seedCount: { unit: 'seeds', max: 300 },
-
-			// Essential stats
-			vitaminC: { unit: 'mg', max: 100 },
-			iron: { unit: 'mg', max: 5 },
-			calcium: { unit: 'mg', max: 50 },
-			potassium: { unit: 'mg', max: 500 },
-			magnesium: { unit: 'mg', max: 50 },
-			vitaminB6: { unit: 'mg', max: 2 }
-		}
-
-		return units[key as keyof typeof units] || { unit: '', max: 100 }
-	}
-
-	return (
-		<div className='grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-2 gap-4 sm:gap-8 p-4 sm:p-6'>
-			{Object.entries(data)
-				.sort((a, b) => a[0].localeCompare(b[0]))
-				.map(([key, value], index) => {
-					const { unit, max } = getUnitAndMax(key)
-
-					const isColor = key === 'color'
-					const { historicalColors, modernColors, bodyColorIndex } = produceItem
-					const colors = {
-						historical: historicalColors[bodyColorIndex],
-						modern: modernColors[bodyColorIndex]
-					}
-
-					return (
-						<CircularProgress
-							key={key}
-							value={value}
-							label={toTitleCase(key)}
-							unit={unit}
-							maxValue={max}
-							timeframe={timeframe}
-							isColor={isColor}
-							colors={isColor ? colors : undefined}
-							index={index}
-						/>
-					)
-				})}
-		</div>
-	)
 }
 
 const StatsScreen = ({ produceItem }: StatsScreenProps) => {
@@ -181,6 +18,21 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 	const [isNavigating, setIsNavigating] = useState(false)
 	const [timeframe, setTimeframe] = useState<Timeframe>('historical')
 	const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
+	const [showFloatingToggle, setShowFloatingToggle] = useState(false)
+
+	// Create ref for the original toggle buttons
+	const toggleRef = useRef<HTMLDivElement>(null)
+
+	// Setup scroll tracking
+	const { scrollY } = useScroll()
+
+	// Watch scroll position to show/hide floating toggle
+	useMotionValueEvent(scrollY, 'change', () => {
+		if (!toggleRef.current) return
+
+		const toggleRect = toggleRef.current.getBoundingClientRect()
+		setShowFloatingToggle(toggleRect.bottom < 0)
+	})
 
 	return (
 		<Screen className='relative flex flex-col p-4 sm:p-6 md:p-8'>
@@ -265,8 +117,8 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 						<ProduceItem variant='stats' produceItem={produceItem} timeframe={timeframe} />
 					</div>
 
-					{/* Time Period Toggle */}
-					<div className='bg-black/20 border border-woodsmoke-800 p-3 sm:p-4'>
+					{/* Original Time Period Toggle */}
+					<div ref={toggleRef} className='bg-black/20 border border-woodsmoke-800 p-3 sm:p-4'>
 						<div className='flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center'>
 							<button
 								disabled={timeframe === 'historical'}
@@ -318,12 +170,50 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 				</motion.div>
 
 				{/* Historical Context */}
-				<div className='bg-black/20 border border-woodsmoke-800 p-4 sm:p-6 xl:hidden'>
+				<div className='bg-black/20 border border-woodsmoke-800 p-4 sm:p-6 xl:hidden sm:col-span-3 max-sm:mb-16'>
 					<p className='text-woodsmoke-300 font-mono text-sm leading-relaxed'>
 						{historicalContext}
 					</p>
 				</div>
 			</motion.div>
+
+			{/* Floating Time Period Toggle */}
+			<AnimatePresence>
+				{showFloatingToggle && (
+					<motion.div
+						initial={{ y: '100%', opacity: 0 }}
+						animate={{ y: '0%', opacity: 1 }}
+						exit={{ y: '100%', opacity: 0 }}
+						transition={{ duration: 0.3 }}
+						className='fixed bottom-0 left-0 right-0 bg-black/70 backdrop-blur border-t border-woodsmoke-800 p-3 sm:p-4'>
+						<div className='container mx-auto flex justify-center gap-2 sm:gap-4'>
+							<button
+								disabled={timeframe === 'historical'}
+								onClick={async () => {
+									await soundManager.play('toggle')
+									setTimeframe('historical')
+								}}
+								className={`transition-colors duration-300 font-pixel px-3 sm:px-4 py-2 text-sm sm:text-base focus:outline-none border border-transparent focus:border-woodsmoke-400 ${
+									timeframe === 'historical' ? 'bg-woodsmoke-400 text-black' : 'text-woodsmoke-400'
+								}`}>
+								PRE-INDUSTRIAL
+							</button>
+
+							<button
+								disabled={timeframe === 'modern'}
+								onClick={async () => {
+									await soundManager.play('toggle')
+									setTimeframe('modern')
+								}}
+								className={`transition-colors duration-300 font-pixel px-3 sm:px-4 py-2 text-sm sm:text-base focus:outline-none border border-transparent focus:border-woodsmoke-400 ${
+									timeframe === 'modern' ? 'bg-woodsmoke-400 text-black' : 'text-woodsmoke-400'
+								}`}>
+								POST-INDUSTRIAL
+							</button>
+						</div>
+					</motion.div>
+				)}
+			</AnimatePresence>
 
 			{/* Info Modal */}
 			<InfoModal isOpen={isInfoModalOpen} onClose={() => setIsInfoModalOpen(false)} />
