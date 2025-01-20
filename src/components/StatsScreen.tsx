@@ -69,7 +69,7 @@ const CircularProgress = ({
 						/>
 					</svg>
 				</div>
-				<span className='mt-2 text-woodsmoke-400 text-xs sm:text-sm'>{label}</span>
+				<span className='mt-2 text-woodsmoke-400 text-sm'>{label}</span>
 			</div>
 		)
 	}
@@ -79,7 +79,7 @@ const CircularProgress = ({
 
 	return (
 		<div
-			className={`flex flex-col items-center ${index === 4 ? 'max-xl:col-start-2' : index === 5 ? 'max-xl:col-start-3' : ''}`}>
+			className={`flex flex-col items-center ${index === 4 ? 'max-sm:col-start-auto max-xl:col-start-2' : index === 5 ? 'max-sm:col-start-auto max-xl:col-start-3' : ''}`}>
 			<div className='relative w-24 h-24'>
 				{/* Background circle */}
 				<svg className='w-full h-full -rotate-90'>
@@ -113,10 +113,10 @@ const CircularProgress = ({
 					<span className='font-pixel text-lg'>
 						{value.toFixed(label === 'Seed Count' ? 0 : 1)}
 					</span>
-					<span className='font-pixel text-xs text-woodsmoke-400'>{unit}</span>
+					<span className='font-pixel text-sm text-woodsmoke-400'>{unit}</span>
 				</div>
 			</div>
-			<span className='mt-2 text-woodsmoke-400 text-xs sm:text-sm'>{label}</span>
+			<span className='mt-2 text-woodsmoke-400 text-sm text-center'>{label}</span>
 		</div>
 	)
 }
@@ -143,7 +143,7 @@ const StatsView = ({ data, timeframe, produceItem }: StatsViewProps) => {
 	}
 
 	return (
-		<div className='grid grid-cols-4 xl:grid-cols-2 gap-4 sm:gap-8 p-4 sm:p-6'>
+		<div className='grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-2 gap-4 sm:gap-8 p-4 sm:p-6'>
 			{Object.entries(data)
 				.sort((a, b) => a[0].localeCompare(b[0]))
 				.map(([key, value], index) => {
@@ -209,7 +209,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 					</button>
 				</motion.div>
 
-				<div className='flex items-center justify-center flex-col'>
+				<div className='flex items-center justify-center flex-col text-center'>
 					<h1 className='h-fit font-pixel text-lg sm:text-xl md:text-2xl text-white text-center'>
 						{name}
 					</h1>
@@ -275,9 +275,8 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 
 					{/* Historical Context */}
 					<div className='bg-black/20 border border-woodsmoke-800 p-4 sm:p-6'>
-						<p className='text-woodsmoke-300 font-mono text-xs sm:text-sm leading-relaxed'>
-							{historicalContext ||
-								'Text about the change in nutrition in food as a result of industrial farming...'}
+						<p className='text-woodsmoke-300 font-mono text-sm leading-relaxed'>
+							{historicalContext}
 						</p>
 					</div>
 				</div>
