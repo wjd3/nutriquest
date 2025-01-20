@@ -210,10 +210,8 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 				</motion.div>
 
 				<div className='flex items-center justify-center flex-col text-center'>
-					<h1 className='h-fit font-pixel text-lg sm:text-xl md:text-2xl text-white text-center'>
-						{name}
-					</h1>
-					<h2 className='italic text-sm sm:text-base md:text-lg'>({latinName})</h2>
+					<h1 className='h-fit font-pixel text-2xl md:text-3xl text-white text-center'>{name}</h1>
+					<h2 className='italic text-xs sm:text-base md:text-lg'>({latinName})</h2>
 				</div>
 			</motion.div>
 
