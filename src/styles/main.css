@@ -10,3 +10,7 @@
 ::-moz-selection {
 	@apply bg-woodsmoke-900 text-white;
 }
+
+.canvas-container > div > div > canvas {
+	@apply !w-full !h-full;
+}

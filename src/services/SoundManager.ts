@@ -26,8 +26,6 @@ class SoundManager {
 		const soundEffects = [
 			{ name: 'start', file: 'start.mp3' },
 			{ name: 'select', file: 'select.mp3' },
-			{ name: 'hover', file: 'hover.mp3' },
-			{ name: 'back', file: 'back.mp3' },
 			{ name: 'toggle', file: 'toggle.mp3' }
 		]
 
@@ -43,7 +41,7 @@ class SoundManager {
 		}
 	}
 
-	async play(soundName: string) {
+	async play(soundName: string, onEnded?: () => Promise<void> | void) {
 		await this.initialize()
 		if (!this.context || !this.gainNode) return
 
@@ -53,6 +51,12 @@ class SoundManager {
 			source.buffer = sound
 			source.connect(this.gainNode)
 			source.start(0)
+
+			if (onEnded) {
+				source.onended = async () => {
+					await onEnded()
+				}
+			}
 		} else {
 			console.warn(`Sound ${soundName} not found`)
 		}

@@ -1,22 +1,23 @@
 ---
-import StatsScreen from '@/components/StatsScreen'
+import StatsScreen from '@/components/StatsScreen.tsx'
 import MainLayout from '@/layouts/MainLayout.astro'
 import { produce } from '@/data/produce'
 import type { ProduceItem } from '@/types'
 
 export async function getStaticPaths() {
-	return produce.map((item) => ({
-		params: { item: item.name.toLowerCase().replace(/\s+/g, '-') },
-		props: { item }
+	return produce.map((produceItem) => ({
+		params: { item: produceItem.name.toLowerCase().replace(/\s+/g, '-') },
+		props: { produceItem }
 	}))
 }
 
 interface Props {
-	item: ProduceItem
+	produceItem: ProduceItem
 }
-const { item } = Astro.props
+
+const { produceItem } = Astro.props
 ---
 
 <MainLayout class='bg-woodsmoke-950'>
-	<StatsScreen client:only item={item} />
+	<StatsScreen client:only {produceItem} />
 </MainLayout>
