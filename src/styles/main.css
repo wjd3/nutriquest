@@ -11,6 +11,10 @@
 	@apply bg-woodsmoke-900 text-white;
 }
 
+body {
+	@apply font-sans;
+}
+
 .canvas-container > div > div > canvas {
 	@apply !w-full !h-full;
 }
