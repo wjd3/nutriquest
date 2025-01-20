@@ -31,7 +31,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 		if (!toggleRef.current) return
 
 		const toggleRect = toggleRef.current.getBoundingClientRect()
-		setShowFloatingToggle(toggleRect.bottom < 0)
+		setShowFloatingToggle(toggleRect.top < 0)
 	})
 
 	return (
