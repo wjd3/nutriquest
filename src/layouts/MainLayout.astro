@@ -10,6 +10,11 @@ const { class: className, title } = Astro.props
 
 const fontUrl =
 	'https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap'
+
+const metaTitle = `${title ? `${title} | ` : ''}NUTRI•QUEST`
+const metaDescription =
+	'Interactive retro visualization comparing historical and modern produce varieties, showing how industrial farming practices have reduced nutrient density in fruits and vegetables.'
+const ogImagePath = '/og-image.png'
 ---
 
 <!doctype html>
@@ -34,7 +39,29 @@ const fontUrl =
 			<link rel='stylesheet' href={fontUrl} />
 		</noscript>
 
-		<title>{`${title ? `${title} | ` : ''}NUTRI•QUEST`}</title>
+		<title>{metaTitle}</title>
+		<meta name='description' content={metaDescription} />
+		<meta
+			name='keywords'
+			content='food history, food education, healthy eating, nutrition education, industrial agriculture, conventional agriculture, regenerative agriculture, permaculture'
+		/>
+
+		<!-- Open Graph / Facebook -->
+		<meta property='og:type' content='website' />
+		<meta property='og:title' content={metaTitle} />
+		<meta property='og:description' content={metaDescription} />
+		<meta property='og:image' content={ogImagePath} />
+
+		<!-- Twitter -->
+		<meta name='twitter:card' content='summary_large_image' />
+		<meta name='twitter:title' content={metaTitle} />
+		<meta name='twitter:description' content={metaDescription} />
+		<meta name='twitter:image' content={ogImagePath} />
+
+		<!-- Additional SEO -->
+		<meta name='robots' content='index, follow' />
+		<meta name='author' content='Davis Regenerative' />
+		<link rel='canonical' href={Astro.url} />
 	</head>
 
 	<body class:list={['crt', className]}>
