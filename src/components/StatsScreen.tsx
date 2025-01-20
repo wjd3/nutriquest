@@ -171,7 +171,7 @@ const StatsView = ({ data, timeframe, produceItem }: StatsViewProps) => {
 }
 
 const StatsScreen = ({ produceItem }: StatsScreenProps) => {
-	const { name, historicalContext } = produceItem
+	const { name, latinName, historicalContext } = produceItem
 
 	const [isNavigating, setIsNavigating] = useState(false)
 
@@ -206,8 +206,9 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 					</button>
 				</motion.div>
 
-				<div className='flex items-center justify-center'>
-					<h1 className='h-fit font-pixel text-3xl text-white text-center'>{name}</h1>
+				<div className='flex items-center justify-center flex-col'>
+					<h1 className='h-fit font-pixel text-2xl text-white text-center'>{name}</h1>
+					<h2 className='italic text-lg'>({latinName})</h2>
 				</div>
 			</motion.div>
 
@@ -223,9 +224,9 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 					initial={{ opacity: 0, x: -20 }}
 					animate={{ opacity: 1, x: 0 }}
 					transition={{ duration: 0.5, delay: 0.4 }}>
-					<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
+					<h3 className='font-pixel text-xl text-center p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
 						Superficial
-					</h2>
+					</h3>
 					<StatsView
 						data={produceItem[timeframe]['superficial']}
 						timeframe={timeframe}
@@ -284,9 +285,9 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 					initial={{ opacity: 0, x: 20 }}
 					animate={{ opacity: 1, x: 0 }}
 					transition={{ duration: 0.5, delay: 0.5 }}>
-					<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
+					<h3 className='font-pixel text-xl text-center p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
 						Essential
-					</h2>
+					</h3>
 					<StatsView
 						data={produceItem[timeframe]['essential']}
 						timeframe={timeframe}
