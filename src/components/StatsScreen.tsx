@@ -185,15 +185,15 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 		<Screen className='flex flex-col p-4 sm:p-6 md:p-8'>
 			{/* Header */}
 			<motion.div
-				className='mb-4 sm:mb-8 grid grid-cols-3'
-				initial={{ opacity: 0, y: -20 }}
-				animate={{ opacity: 1, y: 0 }}
+				className='mb-4 sm:mb-6 grid grid-cols-3'
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
 				transition={{ duration: 0.5 }}>
 				{/* Back Button */}
 				<motion.div
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
-					transition={{ duration: 0.5, delay: 0.7 }}>
+					transition={{ duration: 0.5, delay: 0.5 }}>
 					<button
 						disabled={isNavigating}
 						onClick={async () => {
@@ -224,8 +224,8 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 				{/* Superficial Stats */}
 				<motion.div
 					className='bg-black/20 border border-woodsmoke-800 md:col-span-3 xl:col-span-1'
-					initial={{ opacity: 0, x: -20 }}
-					animate={{ opacity: 1, x: 0 }}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
 					transition={{ duration: 0.5, delay: 0.4 }}>
 					<h3 className='font-pixel text-lg sm:text-xl text-center p-3 sm:p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
 						Superficial
@@ -237,7 +237,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 					/>
 				</motion.div>
 
-				<div className='md:col-span-3 flex flex-col gap-4 sm:gap-6 md:gap-8 max-xl:row-start-1'>
+				<div className='md:col-span-3 flex flex-col gap-4 sm:gap-6 max-xl:row-start-1'>
 					{/* 3D Model */}
 					<div className='bg-black/20 border border-woodsmoke-800 h-[300px] sm:h-[350px] md:h-[400px]'>
 						<ProduceItem variant='stats' produceItem={produceItem} timeframe={timeframe} />
@@ -272,7 +272,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 					</div>
 
 					{/* Historical Context */}
-					<div className='bg-black/20 border border-woodsmoke-800 p-4 sm:p-6'>
+					<div className='bg-black/20 border border-woodsmoke-800 p-4 sm:p-6 max-xl:hidden'>
 						<p className='text-woodsmoke-300 font-mono text-sm leading-relaxed'>
 							{historicalContext}
 						</p>
@@ -282,9 +282,9 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 				{/* Essential Stats */}
 				<motion.div
 					className='bg-black/20 border border-woodsmoke-800 md:col-span-3 xl:col-span-1'
-					initial={{ opacity: 0, x: 20 }}
-					animate={{ opacity: 1, x: 0 }}
-					transition={{ duration: 0.5, delay: 0.5 }}>
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.5, delay: 0.4 }}>
 					<h3 className='font-pixel text-lg sm:text-xl text-center p-3 sm:p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
 						Essential
 					</h3>
@@ -294,6 +294,13 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 						produceItem={produceItem}
 					/>
 				</motion.div>
+
+				{/* Historical Context */}
+				<div className='bg-black/20 border border-woodsmoke-800 p-4 sm:p-6 xl:hidden'>
+					<p className='text-woodsmoke-300 font-mono text-sm leading-relaxed'>
+						{historicalContext}
+					</p>
+				</div>
 			</motion.div>
 		</Screen>
 	)
