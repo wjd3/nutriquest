@@ -9,6 +9,7 @@ import type {
 	ProduceSuperficialStats,
 	ProduceEssentialStats
 } from '@/types'
+import InfoModal from '@/components/InfoModal'
 
 type Timeframe = 'historical' | 'modern'
 
@@ -178,17 +179,13 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 	const { name, latinName, historicalContext } = produceItem
 
 	const [isNavigating, setIsNavigating] = useState(false)
-
 	const [timeframe, setTimeframe] = useState<Timeframe>('historical')
+	const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
 
 	return (
-		<Screen className='flex flex-col p-4 sm:p-6 md:p-8'>
+		<Screen className='relative flex flex-col p-4 sm:p-6 md:p-8'>
 			{/* Header */}
-			<motion.div
-				className='mb-4 sm:mb-6 grid grid-cols-3'
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				transition={{ duration: 0.5 }}>
+			<div className='mb-4 sm:mb-6 grid grid-cols-3'>
 				{/* Back Button */}
 				<motion.div
 					initial={{ opacity: 0 }}
@@ -210,10 +207,35 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 				</motion.div>
 
 				<div className='flex items-center justify-center flex-col text-center'>
-					<h1 className='h-fit font-pixel text-2xl md:text-3xl text-white text-center'>{name}</h1>
-					<h2 className='italic text-xs sm:text-base md:text-lg'>({latinName})</h2>
+					<motion.h1
+						initial={{ opacity: 0, y: -20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.5, delay: 0.1 }}
+						className='h-fit font-pixel text-2xl md:text-3xl text-white text-center'>
+						{name}
+					</motion.h1>
+					<motion.h2
+						initial={{ opacity: 0, y: -20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.5, delay: 0.2 }}
+						className='italic text-xs sm:text-base md:text-lg'>
+						({latinName})
+					</motion.h2>
 				</div>
-			</motion.div>
+
+				{/* Info Button */}
+				<motion.div
+					className='flex justify-end xl:self-center'
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.5, delay: 0.5 }}>
+					<button
+						onClick={() => setIsInfoModalOpen(true)}
+						className='w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-woodsmoke-400 text-woodsmoke-400 flex items-center justify-center hover:bg-woodsmoke-400 hover:text-black transition-colors duration-300'>
+						?
+					</button>
+				</motion.div>
+			</div>
 
 			{/* Main content */}
 			<motion.div
@@ -302,6 +324,9 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 					</p>
 				</div>
 			</motion.div>
+
+			{/* Info Modal */}
+			<InfoModal isOpen={isInfoModalOpen} onClose={() => setIsInfoModalOpen(false)} />
 		</Screen>
 	)
 }

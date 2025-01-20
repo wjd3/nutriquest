@@ -5,11 +5,13 @@ import Screen from '@/components/Screen'
 import ProduceItem from '@/components/ProduceItem'
 import { produce } from '@/data/produce'
 import { soundManager } from '@/services/SoundManager'
+import InfoModal from '@/components/InfoModal'
 
 export default function SelectScreen() {
 	const [isNavigating, setIsNavigating] = useState(false)
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 	const [itemsPerRow, setItemsPerRow] = useState<number>(2)
+	const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
 
 	useEffect(() => {
 		const updateItemsPerRow = () => {
@@ -105,7 +107,7 @@ export default function SelectScreen() {
 	}, [selectedIndex, itemsPerRow])
 
 	return (
-		<Screen className='flex flex-col items-center justify-center p-4 sm:p-6 md:p-8'>
+		<Screen className='relative flex flex-col items-center justify-center p-4 sm:p-6 md:p-8'>
 			<motion.h1
 				className='font-pixel text-xl sm:text-2xl md:text-3xl mb-4 sm:mb-6 md:mb-8 text-white'
 				initial={{ opacity: 0, y: -20 }}
@@ -171,6 +173,19 @@ export default function SelectScreen() {
 					ACCEPT
 				</button>
 			</motion.div>
+
+			<div className='absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8'>
+				<motion.button
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.5, delay: 0.6 }}
+					onClick={() => setIsInfoModalOpen(true)}
+					className='w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-woodsmoke-400 text-woodsmoke-400 flex items-center justify-center hover:bg-woodsmoke-400 hover:text-black transition-colors duration-300'>
+					?
+				</motion.button>
+			</div>
+
+			<InfoModal isOpen={isInfoModalOpen} onClose={() => setIsInfoModalOpen(false)} />
 		</Screen>
 	)
 }
