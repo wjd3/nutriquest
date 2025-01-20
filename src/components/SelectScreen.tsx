@@ -5,27 +5,28 @@ import Screen from '@/components/Screen'
 import ProduceItem from '@/components/ProduceItem'
 import { produce } from '@/data/produce'
 import { soundManager } from '@/services/SoundManager'
+import InfoModal from '@/components/InfoModal'
 
 export default function SelectScreen() {
 	const [isNavigating, setIsNavigating] = useState(false)
-
-	const [selectedIndex, setSelectedIndex] = useState<number | null>(null) // Start with no items selected
-	const [itemsPerRow, setItemsPerRow] = useState<number>(2) // Default to 2 items per row (mobile)
+	const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+	const [itemsPerRow, setItemsPerRow] = useState<number>(2)
+	const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
 
 	useEffect(() => {
 		const updateItemsPerRow = () => {
 			if (window.innerWidth >= 1024) {
 				setItemsPerRow(4)
-			} else if (window.innerWidth >= 768) {
+			} else if (window.innerWidth >= 640) {
 				setItemsPerRow(3)
 			} else {
 				setItemsPerRow(2)
 			}
 		}
-		updateItemsPerRow() // Set initial value
+		updateItemsPerRow()
 
-		window.addEventListener('resize', updateItemsPerRow) // Update on resize
-		return () => window.removeEventListener('resize', updateItemsPerRow) // Cleanup listener
+		window.addEventListener('resize', updateItemsPerRow)
+		return () => window.removeEventListener('resize', updateItemsPerRow)
 	}, [])
 
 	const acceptButtonRef = useRef<HTMLButtonElement>(null)
@@ -86,12 +87,11 @@ export default function SelectScreen() {
 
 					break
 				case 'Enter':
-				case ' ': // Space key
+				case ' ':
 					if (acceptButtonRef?.current) {
 						acceptButtonRef.current.focus()
 						acceptButtonRef.current.click()
 					}
-
 					break
 				default:
 					return
@@ -102,23 +102,21 @@ export default function SelectScreen() {
 			}
 		}
 
-		// Add event listener
 		document.addEventListener('keydown', handleKeyDown)
-		// Cleanup
 		return () => document.removeEventListener('keydown', handleKeyDown)
 	}, [selectedIndex, itemsPerRow])
 
 	return (
-		<Screen className='flex flex-col items-center justify-center p-8'>
+		<Screen className='relative flex flex-col items-center justify-center p-4 sm:p-6 md:p-8'>
 			<motion.h1
-				className='font-pixel text-3xl mb-8 text-white'
+				className='font-pixel text-xl sm:text-2xl md:text-3xl mb-4 sm:mb-6 md:mb-8 text-white'
 				initial={{ opacity: 0, y: -20 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5, delay: 0.2 }}>
 				SELECT YOUR PRODUCE
 			</motion.h1>
 			<motion.div
-				className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8'
+				className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mb-4 sm:mb-6 md:mb-8'
 				initial={{ opacity: 0, scale: 0.95 }}
 				animate={{ opacity: 1, scale: 1 }}
 				transition={{ duration: 0.5, delay: 0.4 }}>
@@ -130,12 +128,11 @@ export default function SelectScreen() {
 							key={produceItem.name || index}
 							onClick={async () => {
 								await soundManager.play('toggle')
-
 								setSelectedIndex(index !== selectedIndex ? index : null)
 							}}
-							className={`focus:outline-none transform transition-transform ${!isNavigating ? 'hover:scale-105' : ''} ${
-								selectedIndex === index ? 'ring-2 ring-woodsmoke-400' : ''
-							}`}>
+							className={`focus:outline-none transform transition-transform ${
+								!isNavigating ? 'hover:scale-105' : ''
+							} ${selectedIndex === index ? 'ring-2 ring-woodsmoke-400' : ''}`}>
 							<ProduceItem
 								variant='select'
 								produceItem={produceItem}
@@ -145,7 +142,7 @@ export default function SelectScreen() {
 					))}
 			</motion.div>
 			<motion.div
-				className='flex justify-center gap-4'
+				className='flex justify-center'
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5, delay: 0.6 }}>
@@ -153,7 +150,6 @@ export default function SelectScreen() {
 					onClick={async () => {
 						if (selectedIndex != null) {
 							setIsNavigating(true)
-
 							await soundManager.play(
 								'select',
 								async () =>
@@ -164,7 +160,7 @@ export default function SelectScreen() {
 						}
 					}}
 					ref={acceptButtonRef}
-					className={`px-6 py-3 font-pixel border transition-colors duration-300 ${
+					className={`px-4 sm:px-6 py-2 sm:py-3 font-pixel text-sm sm:text-base border transition-colors duration-300 ${
 						selectedIndex == null
 							? 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'
 							: `border-woodsmoke-400 focus:outline-none ${
@@ -177,6 +173,19 @@ export default function SelectScreen() {
 					ACCEPT
 				</button>
 			</motion.div>
+
+			<div className='absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8'>
+				<motion.button
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.5, delay: 0.6 }}
+					onClick={() => setIsInfoModalOpen(true)}
+					className='w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-woodsmoke-400 text-woodsmoke-400 flex items-center justify-center hover:bg-woodsmoke-400 hover:text-black transition-colors duration-300'>
+					?
+				</motion.button>
+			</div>
+
+			<InfoModal isOpen={isInfoModalOpen} onClose={() => setIsInfoModalOpen(false)} />
 		</Screen>
 	)
 }

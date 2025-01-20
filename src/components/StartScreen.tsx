@@ -48,11 +48,13 @@ export default function StartScreen() {
 	return (
 		<Screen className='flex flex-col items-center justify-center'>
 			{/* Main content */}
-			<div ref={scope} className='relative flex flex-col items-center gap-8'>
+			<div ref={scope} className='relative flex flex-col items-center gap-4 sm:gap-8'>
 				{/* Title section */}
 				<div className='flex flex-col items-center'>
-					<h1 className='text-6xl md:text-8xl font-bold tracking-wider mb-2'>NUTRI•QUEST</h1>
-					<div className='text-zinc-400 text-sm tracking-[0.2em] font-mono'>
+					<h1 className='text-5xl sm:text-7xl lg:text-8xl font-bold tracking-wider mb-2'>
+						NUTRI•QUEST
+					</h1>
+					<div className='text-zinc-400 text-xs sm:text-sm lg:text-base tracking-[0.2em] font-mono'>
 						NUTRIENT DATABASE SYSTEM v1.0
 					</div>
 				</div>
@@ -72,7 +74,7 @@ export default function StartScreen() {
 						}}
 						disabled={isStarting}
 						ref={startButtonRef}
-						className={`focus:outline-none border-white/20 tracking-widest text-lg px-8 ${!isStarting ? 'focus:bg-white/10 hover:bg-white/10' : ''}`}
+						className={`focus:outline-none border-white/20 tracking-widest text-sm sm:text-base lg:text-lg px-8 ${isStarting ? 'bg-white/10' : 'focus:bg-white/10 hover:bg-white/10'}`}
 						onClick={handleStart}>
 						PRESS START
 					</motion.button>
@@ -84,8 +86,8 @@ export default function StartScreen() {
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ delay: 1, duration: 1 }}>
-					<div className='text-zinc-600 text-xs font-mono'>© {new Date().getFullYear()} WJD3</div>
-					<div className='text-zinc-600 text-xs font-mono'>LICENSED BY DAVIS REGENERATIVE</div>
+					<div className='text-zinc-600 text-xs'>© {new Date().getFullYear()} WJD3</div>
+					<div className='text-zinc-600 text-xs'>LICENSED BY DAVIS REGENERATIVE</div>
 				</motion.div>
 			</div>
 		</Screen>

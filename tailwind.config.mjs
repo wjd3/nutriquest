@@ -19,9 +19,8 @@ export default {
 				}
 			},
 			fontFamily: {
-				sans: ['Chakra Petch', 'sans-serif'],
-				title: ['Russo One', 'sans-serif'],
-				pixel: ['Press Start 2P', 'monospace']
+				sans: ['"Chakra Petch"', 'sans-serif'],
+				mono: ['"Space Mono"', 'monospace']
 			}
 		}
 	},
