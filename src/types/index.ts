@@ -41,6 +41,7 @@ export interface ProduceItem {
 	modelPath: string
 	name: string
 	latinName: string
+	historicalScale?: number
 	historicalColors: string[]
 	modernColors: string[]
 	bodyColorIndex: number

@@ -4,12 +4,12 @@ import Screen from '@/components/Screen'
 import ProduceItem from '@/components/ProduceItem'
 import { soundManager } from '@/services/SoundManager'
 import { navigateTo, toTitleCase } from '@/utils'
+import InfoModal from '@/components/InfoModal'
 import type {
 	ProduceItem as ProduceItemType,
 	ProduceSuperficialStats,
 	ProduceEssentialStats
 } from '@/types'
-import InfoModal from '@/components/InfoModal'
 
 type Timeframe = 'historical' | 'modern'
 
@@ -215,7 +215,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 						{name}
 					</motion.h1>
 					<motion.h2
-						initial={{ opacity: 0, y: -20 }}
+						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.2 }}
 						className='italic text-xs sm:text-base md:text-lg'>

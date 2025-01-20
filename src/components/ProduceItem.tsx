@@ -75,14 +75,24 @@ const ProduceItemModel = ({
 	timeframe = 'historical',
 	views
 }: ProduceItemModelProps) => {
-	const { modelPath, historicalColors, modernColors } = produceItem
+	const { modelPath, historicalColors, modernColors, historicalScale } = produceItem
 
 	const pivotRef = useRef<Group>(null)
 
 	const { nodes } = useGLTF(modelPath)
 
+	const defaultHistoricalScale = 0.75
 	const { scale } = useSpring({
-		scale: timeframe === 'modern' ? 1 : isSelected ? 0.9 : 0.75
+		scale:
+			timeframe === 'modern'
+				? 1
+				: isSelected
+					? 0.9
+					: variant === 'select'
+						? defaultHistoricalScale
+						: historicalScale
+							? historicalScale
+							: defaultHistoricalScale
 	})
 
 	// Rotate the model

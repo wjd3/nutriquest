@@ -6,6 +6,7 @@ export const produce: ProduceItem[] = [
 		latinName: 'Malus domestica',
 		modelPath: '/models/apple.glb',
 		bodyColorIndex: 0,
+		historicalScale: 0.5,
 		historicalColors: ['#C04A31', '#6B4C33', '#4B5D35'],
 		modernColors: ['#FF3B30', '#8B5E3C', '#2D8A3F'],
 		selectView: {
@@ -13,7 +14,7 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 6.8,
+				size: 7,
 				color: 60,
 				sugar: 10,
 				seedCount: 8
@@ -29,7 +30,7 @@ export const produce: ProduceItem[] = [
 		},
 		modern: {
 			superficial: {
-				size: 8.9,
+				size: 12,
 				color: 85,
 				sugar: 14,
 				seedCount: 8
@@ -51,7 +52,8 @@ export const produce: ProduceItem[] = [
 		latinName: 'Daucus carota',
 		modelPath: '/models/carrot.glb',
 		bodyColorIndex: 0,
-		historicalColors: ['#B86538', '#526B3A'],
+		historicalScale: 0.4,
+		historicalColors: ['#4B2940', '#526B3A'],
 		modernColors: ['#FF8427', '#2EA846'],
 		selectView: {
 			rotate: {
@@ -77,7 +79,7 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 4.2,
+				size: 2,
 				color: 60,
 				sugar: 3,
 				seedCount: 0
@@ -93,7 +95,7 @@ export const produce: ProduceItem[] = [
 		},
 		modern: {
 			superficial: {
-				size: 6.8,
+				size: 6,
 				color: 95,
 				sugar: 5,
 				seedCount: 0
@@ -115,6 +117,7 @@ export const produce: ProduceItem[] = [
 		latinName: 'Capsicum annuum',
 		modelPath: '/models/pepper.glb',
 		bodyColorIndex: 1,
+		historicalScale: 0.3,
 		historicalColors: ['#3D4A2F', '#5C4A4A'],
 		modernColors: ['#5B7A4D', '#8B2121'],
 		selectView: {
@@ -133,7 +136,7 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 3.2,
+				size: 1.5,
 				color: 75,
 				sugar: 1,
 				seedCount: 20
@@ -149,7 +152,7 @@ export const produce: ProduceItem[] = [
 		},
 		modern: {
 			superficial: {
-				size: 5.6,
+				size: 4,
 				color: 95,
 				sugar: 2,
 				seedCount: 15
@@ -170,6 +173,7 @@ export const produce: ProduceItem[] = [
 		name: 'Grapes',
 		latinName: 'Vitis vinifera',
 		modelPath: '/models/grapes.glb',
+		historicalScale: 0.7,
 		bodyColorIndex: 2,
 		historicalColors: ['#5D4331', '#445A34', '#6B365C'],
 		modernColors: ['#795640', '#39B52A', '#9E1B8C'],
@@ -189,10 +193,10 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 11.4,
+				size: 2,
 				color: 65,
 				sugar: 12,
-				seedCount: 4
+				seedCount: 20
 			},
 			essential: {
 				vitaminC: 6.8,
@@ -205,7 +209,7 @@ export const produce: ProduceItem[] = [
 		},
 		modern: {
 			superficial: {
-				size: 15.2,
+				size: 3.5,
 				color: 90,
 				sugar: 16,
 				seedCount: 0
@@ -227,11 +231,12 @@ export const produce: ProduceItem[] = [
 		latinName: 'Citrus sinensis',
 		modelPath: '/models/orange.glb',
 		bodyColorIndex: 2,
+		historicalScale: 0.6,
 		historicalColors: ['#6B4C33', '#3D4A2F', '#B85B24'],
 		modernColors: ['#8B5E3C', '#45B52F', '#FF8C1A'],
 		historical: {
 			superficial: {
-				size: 7.8,
+				size: 8,
 				color: 65,
 				sugar: 9,
 				seedCount: 12
@@ -247,7 +252,7 @@ export const produce: ProduceItem[] = [
 		},
 		modern: {
 			superficial: {
-				size: 10.6,
+				size: 12,
 				color: 90,
 				sugar: 12,
 				seedCount: 6
@@ -269,6 +274,7 @@ export const produce: ProduceItem[] = [
 		latinName: 'Pyrus communis',
 		modelPath: '/models/pear.glb',
 		bodyColorIndex: 1,
+		historicalScale: 0.4,
 		historicalColors: ['#4D5A34', '#A89A45', '#614935'],
 		modernColors: ['#39B52A', '#D4E225', '#7C5B3D'],
 		selectView: {
@@ -283,7 +289,7 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 8.6,
+				size: 7,
 				color: 65,
 				sugar: 9,
 				seedCount: 10
@@ -299,7 +305,7 @@ export const produce: ProduceItem[] = [
 		},
 		modern: {
 			superficial: {
-				size: 11.4,
+				size: 12,
 				color: 85,
 				sugar: 12,
 				seedCount: 8
@@ -320,6 +326,7 @@ export const produce: ProduceItem[] = [
 		name: 'Strawberry',
 		latinName: 'Fragaria × ananassa',
 		modelPath: '/models/strawberry.glb',
+		historicalScale: 0.3,
 		bodyColorIndex: 1,
 		historicalColors: ['#E8DCC7', '#982C2C', '#4A5D36'],
 		modernColors: ['#FFF2D6', '#FF1919', '#2D8A3F'],
@@ -331,7 +338,7 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 2.4,
+				size: 2,
 				color: 70,
 				sugar: 4,
 				seedCount: 200
@@ -347,7 +354,7 @@ export const produce: ProduceItem[] = [
 		},
 		modern: {
 			superficial: {
-				size: 4.2,
+				size: 4.5,
 				color: 90,
 				sugar: 7,
 				seedCount: 200
@@ -369,6 +376,7 @@ export const produce: ProduceItem[] = [
 		latinName: 'Solanum lycopersicum',
 		modelPath: '/models/tomato.glb',
 		bodyColorIndex: 1,
+		historicalScale: 0.3,
 		historicalColors: ['#4D5B35', '#A93F3F'],
 		modernColors: ['#34A843', '#FF3333'],
 		selectView: {
@@ -379,7 +387,7 @@ export const produce: ProduceItem[] = [
 		},
 		historical: {
 			superficial: {
-				size: 5.8,
+				size: 6,
 				color: 65,
 				sugar: 3,
 				seedCount: 150
@@ -395,7 +403,7 @@ export const produce: ProduceItem[] = [
 		},
 		modern: {
 			superficial: {
-				size: 8.9,
+				size: 13.5,
 				color: 90,
 				sugar: 5,
 				seedCount: 100
