@@ -2,6 +2,7 @@
 import StatsScreen from '@/components/StatsScreen.tsx'
 import MainLayout from '@/layouts/MainLayout.astro'
 import { produce } from '@/data/produce'
+import { toTitleCase } from '@/utils/text'
 import type { ProduceItem } from '@/types'
 
 export async function getStaticPaths() {
@@ -18,6 +19,6 @@ interface Props {
 const { produceItem } = Astro.props
 ---
 
-<MainLayout class='bg-woodsmoke-950'>
+<MainLayout title={toTitleCase(produceItem.name).toUpperCase()} class='bg-woodsmoke-950'>
 	<StatsScreen client:only {produceItem} />
 </MainLayout>
