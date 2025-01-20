@@ -43,6 +43,7 @@ export interface ProduceItem {
 	latinName: string
 	historicalColors: string[]
 	modernColors: string[]
+	bodyColorIndex: number
 	statsView?: ProduceView
 	selectView?: ProduceView
 	historical: ProduceStats

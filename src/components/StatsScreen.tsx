@@ -10,7 +10,15 @@ import type {
 	ProduceEssentialStats
 } from '@/types'
 
-interface Props {
+type Timeframe = 'historical' | 'modern'
+
+interface StatsScreenProps {
+	produceItem: ProduceItemType
+}
+
+interface StatsViewProps {
+	data: ProduceEssentialStats | ProduceSuperficialStats
+	timeframe: Timeframe
 	produceItem: ProduceItemType
 }
 
@@ -19,10 +27,51 @@ interface CircularProgressProps {
 	label: string
 	unit: string
 	maxValue: number
+	timeframe: Timeframe
+	isColor?: boolean
+	colors?: { historical: string; modern: string }
 }
 
-const CircularProgress = ({ value, label, unit, maxValue }: CircularProgressProps) => {
+const CircularProgress = ({
+	value,
+	label,
+	unit,
+	maxValue,
+	isColor,
+	colors,
+	timeframe
+}: CircularProgressProps) => {
 	const circumference = 2 * Math.PI * 40
+
+	if (isColor && colors) {
+		return (
+			<div className='flex flex-col items-center'>
+				<div className='relative w-24 h-24'>
+					<svg className='w-full h-full'>
+						{/* White circle border */}
+						<circle cx='48' cy='48' r='40' stroke='currentColor' strokeWidth='8' fill='none' />
+						{/* Colored circle for the produce color */}
+						<motion.circle
+							cx='48'
+							cy='48'
+							r='36'
+							animate={timeframe}
+							variants={{
+								historical: {
+									fill: colors.historical
+								},
+								modern: {
+									fill: colors.modern
+								}
+							}}
+						/>
+					</svg>
+				</div>
+				<span className='mt-2 text-woodsmoke-400 text-sm'>{label}</span>
+			</div>
+		)
+	}
+
 	const percentage = (value / maxValue) * 100
 	const strokeDashoffset = circumference - (percentage / 100) * circumference
 
@@ -59,7 +108,7 @@ const CircularProgress = ({ value, label, unit, maxValue }: CircularProgressProp
 				{/* Value with units */}
 				<div className='absolute inset-0 flex flex-col items-center justify-center'>
 					<span className='font-pixel text-lg'>
-						{value.toFixed(['Seed Count', 'Color'].includes(label) ? 0 : 1)}
+						{value.toFixed(label === 'Seed Count' ? 0 : 1)}
 					</span>
 					<span className='font-pixel text-xs text-woodsmoke-400'>{unit}</span>
 				</div>
@@ -69,7 +118,7 @@ const CircularProgress = ({ value, label, unit, maxValue }: CircularProgressProp
 	)
 }
 
-const StatsView = ({ data }: { data: ProduceEssentialStats | ProduceSuperficialStats }) => {
+const StatsView = ({ data, timeframe, produceItem }: StatsViewProps) => {
 	const getUnitAndMax = (key: string): { unit: string; max: number } => {
 		const units = {
 			// Superficial stats
@@ -96,6 +145,14 @@ const StatsView = ({ data }: { data: ProduceEssentialStats | ProduceSuperficialS
 				.sort((a, b) => a[0].localeCompare(b[0]))
 				.map(([key, value]) => {
 					const { unit, max } = getUnitAndMax(key)
+
+					const isColor = key === 'color'
+					const { historicalColors, modernColors, bodyColorIndex } = produceItem
+					const colors = {
+						historical: historicalColors[bodyColorIndex],
+						modern: modernColors[bodyColorIndex]
+					}
+
 					return (
 						<CircularProgress
 							key={key}
@@ -103,6 +160,9 @@ const StatsView = ({ data }: { data: ProduceEssentialStats | ProduceSuperficialS
 							label={toTitleCase(key)}
 							unit={unit}
 							maxValue={max}
+							timeframe={timeframe}
+							isColor={isColor}
+							colors={isColor ? colors : undefined}
 						/>
 					)
 				})}
@@ -110,12 +170,12 @@ const StatsView = ({ data }: { data: ProduceEssentialStats | ProduceSuperficialS
 	)
 }
 
-const StatsScreen = ({ produceItem }: Props) => {
+const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 	const { name, historicalContext } = produceItem
 
 	const [isNavigating, setIsNavigating] = useState(false)
 
-	const [timeframe, setTimeframe] = useState<'historical' | 'modern'>('historical')
+	const [timeframe, setTimeframe] = useState<Timeframe>('historical')
 
 	return (
 		<Screen className='flex flex-col p-8'>
@@ -166,7 +226,11 @@ const StatsScreen = ({ produceItem }: Props) => {
 					<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
 						Superficial
 					</h2>
-					<StatsView data={produceItem[timeframe]['superficial']} />
+					<StatsView
+						data={produceItem[timeframe]['superficial']}
+						timeframe={timeframe}
+						produceItem={produceItem}
+					/>
 				</motion.div>
 
 				<div className='col-span-3 flex flex-col gap-8'>
@@ -223,7 +287,11 @@ const StatsScreen = ({ produceItem }: Props) => {
 					<h2 className='font-pixel text-xl p-4 border-b border-woodsmoke-800 text-woodsmoke-400'>
 						Essential
 					</h2>
-					<StatsView data={produceItem[timeframe]['essential']} />
+					<StatsView
+						data={produceItem[timeframe]['essential']}
+						timeframe={timeframe}
+						produceItem={produceItem}
+					/>
 				</motion.div>
 			</motion.div>
 		</Screen>
