@@ -1,3 +1,5 @@
+export type Timeframe = 'historical' | 'modern'
+
 export interface ProduceSuperficialStats {
 	size: number // inches (circumference)
 	color: number // percentage
