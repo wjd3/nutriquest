@@ -25,6 +25,16 @@ export interface ProduceView {
 		y?: number
 		z?: number
 	}
+	position?: {
+		x?: number
+		y?: number
+		z?: number
+	}
+	camera?: {
+		x?: number
+		y?: number
+		z?: number
+	}
 }
 
 export interface ProduceItem {

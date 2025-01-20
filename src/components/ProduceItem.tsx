@@ -1,11 +1,16 @@
 import { useRef } from 'react'
-import { Canvas, useFrame, type Euler } from '@react-three/fiber'
+import { Canvas, useFrame, type Euler, type Vector3 } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 import { useSpring, animated } from '@react-spring/three'
 import { Mesh, DoubleSide, type Group } from 'three'
 import type { ProduceItem as ProduceItemType, ProduceView } from '@/types'
 
 type Variant = 'select' | 'stats'
+
+type Views = {
+	select: ProduceView | undefined
+	stats: ProduceView | undefined
+}
 
 interface ProduceItemProps {
 	produceItem: ProduceItemType
@@ -14,34 +19,44 @@ interface ProduceItemProps {
 	variant: Variant
 }
 
-const ProduceItemMesh = ({
-	node,
-	colors,
-	timeframe,
-	views,
-	variant
-}: {
+interface ProduceItemModelProps extends ProduceItemProps {
+	views: Views
+}
+
+interface ProduceItemMeshProps {
 	node: Mesh<any, any, any>
 	colors: { historical: string; modern: string }
 	timeframe: string
 	variant: Variant
-	views: {
-		select: ProduceView | undefined
-		stats: ProduceView | undefined
-	}
-}) => {
+	views: Views
+}
+
+const ProduceItemMesh = ({ node, colors, timeframe, views, variant }: ProduceItemMeshProps) => {
+	// Color
 	const { color } = useSpring({
 		color: timeframe === 'modern' ? colors.modern : colors.historical
 	})
 
+	// Rotation
+	const defaultRotation = variant === 'stats' ? [0, 0, 0] : [0, 0, 0]
+
 	const rotation = [
-		views[variant]?.rotate?.x || 0,
-		views[variant]?.rotate?.y || 0,
-		views[variant]?.rotate?.z || 0
+		views[variant]?.rotate?.x || defaultRotation[0],
+		views[variant]?.rotate?.y || defaultRotation[1],
+		views[variant]?.rotate?.z || defaultRotation[2]
 	] as Euler
 
+	// Position
+	const defaultPosition = variant === 'stats' ? [0, -0.25, 0] : [0, 0, 0]
+
+	const position = [
+		views[variant]?.position?.x || defaultPosition[0],
+		views[variant]?.position?.y || defaultPosition[1],
+		views[variant]?.position?.z || defaultPosition[2]
+	] as Vector3
+
 	return (
-		<animated.mesh geometry={node.geometry} rotation={rotation} position={[0, -0.25, 0]}>
+		<animated.mesh geometry={node.geometry} rotation={rotation} position={position}>
 			<animated.meshStandardMaterial
 				attach='material'
 				side={DoubleSide}
@@ -57,8 +72,9 @@ const ProduceItemModel = ({
 	produceItem,
 	variant,
 	isSelected = false,
-	timeframe = 'historical'
-}: ProduceItemProps) => {
+	timeframe = 'historical',
+	views
+}: ProduceItemModelProps) => {
 	const { modelPath, historicalColors, modernColors } = produceItem
 
 	const pivotRef = useRef<Group>(null)
@@ -66,7 +82,7 @@ const ProduceItemModel = ({
 	const { nodes } = useGLTF(modelPath)
 
 	const { scale } = useSpring({
-		scale: timeframe === 'modern' || isSelected ? 1 : 0.75
+		scale: timeframe === 'modern' ? 1 : isSelected ? 0.9 : 0.75
 	})
 
 	// Rotate the model
@@ -76,11 +92,6 @@ const ProduceItemModel = ({
 			pivotRef.current.rotation.y += delta * rotationSpeed
 		}
 	})
-
-	const views = {
-		select: produceItem.selectView,
-		stats: produceItem.statsView
-	}
 
 	return (
 		<animated.group ref={pivotRef} scale={scale} dispose={null}>
@@ -108,13 +119,27 @@ const ProduceItemModel = ({
 }
 
 const ProduceItemCanvas = ({ produceItem, isSelected, timeframe, variant }: ProduceItemProps) => {
+	const views = {
+		select: produceItem.selectView,
+		stats: produceItem.statsView
+	}
+
+	// Camera Position
+	const defaultCamera = variant === 'select' ? [0, 0.5, 4.5] : [0, 0.5, 4.5]
+
+	const cameraPosition = [
+		views[variant]?.camera?.x || defaultCamera[0],
+		views[variant]?.camera?.y || defaultCamera[1],
+		views[variant]?.camera?.z || defaultCamera[2]
+	] as Vector3
+
 	return (
 		<Canvas
 			camera={{
 				fov: 45,
 				near: 0.1,
 				far: 1000,
-				position: [0, 0.5, 4.5]
+				position: cameraPosition
 			}}>
 			{/* Ambient light */}
 			<ambientLight intensity={1} />
@@ -128,6 +153,7 @@ const ProduceItemCanvas = ({ produceItem, isSelected, timeframe, variant }: Prod
 			<directionalLight position={[-5, -5, -5]} intensity={0.5} />
 
 			<ProduceItemModel
+				views={views}
 				variant={variant}
 				produceItem={produceItem}
 				isSelected={isSelected}

@@ -7,6 +7,9 @@ export const produce: ProduceItem[] = [
 		modelPath: '/models/apple.glb',
 		historicalColors: ['#C04A31', '#6B4C33', '#4B5D35'],
 		modernColors: ['#FF3B30', '#8B5E3C', '#2D8A3F'],
+		selectView: {
+			position: { y: 0.1 }
+		},
 		historical: {
 			superficial: {
 				size: 6.8,
@@ -48,6 +51,28 @@ export const produce: ProduceItem[] = [
 		modelPath: '/models/carrot.glb',
 		historicalColors: ['#B86538', '#526B3A'],
 		modernColors: ['#FF8427', '#2EA846'],
+		selectView: {
+			rotate: {
+				x: Math.PI
+			},
+			position: {
+				y: 0.55
+			},
+			camera: {
+				z: 5.75
+			}
+		},
+		statsView: {
+			rotate: {
+				x: Math.PI
+			},
+			position: {
+				y: 0.25
+			},
+			camera: {
+				z: 5.5
+			}
+		},
 		historical: {
 			superficial: {
 				size: 4.2,
@@ -84,11 +109,25 @@ export const produce: ProduceItem[] = [
 			'Original carrots were purple or white, and much smaller than modern varieties. While less sweet, they contained higher levels of minerals and antioxidants. The familiar orange carrot was developed in the Netherlands during the 17th century.'
 	},
 	{
-		name: 'Chili',
+		name: 'Chili Pepper',
 		latinName: 'Capsicum annuum',
-		modelPath: '/models/chili.glb',
-		historicalColors: ['#3D4A2F', '#4A2F2F'],
-		modernColors: ['#45B52F', '#8B2121'],
+		modelPath: '/models/pepper.glb',
+		historicalColors: ['#3D4A2F', '#5C4A4A'],
+		modernColors: ['#5B7A4D', '#8B2121'],
+		selectView: {
+			rotate: { x: Math.PI },
+			position: { y: -0.5 },
+			camera: {
+				z: 11
+			}
+		},
+		statsView: {
+			rotate: { x: Math.PI },
+			position: { y: -1.25 },
+			camera: {
+				z: 10
+			}
+		},
 		historical: {
 			superficial: {
 				size: 3.2,
@@ -128,8 +167,22 @@ export const produce: ProduceItem[] = [
 		name: 'Grapes',
 		latinName: 'Vitis vinifera',
 		modelPath: '/models/grapes.glb',
-		historicalColors: ['#6B365C', '#445A34', '#5D4331'],
-		modernColors: ['#9E1B8C', '#39B52A', '#795640'],
+		historicalColors: ['#5D4331', '#445A34', '#6B365C'],
+		modernColors: ['#795640', '#39B52A', '#9E1B8C'],
+		selectView: {
+			rotate: { z: -Math.PI / 2 },
+			position: { y: 2, z: -0.25 },
+			camera: {
+				z: 20
+			}
+		},
+		statsView: {
+			rotate: { z: -Math.PI / 2 },
+			position: { y: 0.5, z: -0.25 },
+			camera: {
+				z: 18
+			}
+		},
 		historical: {
 			superficial: {
 				size: 11.4,
@@ -212,6 +265,16 @@ export const produce: ProduceItem[] = [
 		modelPath: '/models/pear.glb',
 		historicalColors: ['#4D5A34', '#A89A45', '#614935'],
 		modernColors: ['#39B52A', '#D4E225', '#7C5B3D'],
+		selectView: {
+			position: {
+				y: -0.15
+			}
+		},
+		statsView: {
+			position: {
+				y: -0.5
+			}
+		},
 		historical: {
 			superficial: {
 				size: 8.6,
@@ -253,6 +316,12 @@ export const produce: ProduceItem[] = [
 		modelPath: '/models/strawberry.glb',
 		historicalColors: ['#E8DCC7', '#982C2C', '#4A5D36'],
 		modernColors: ['#FFF2D6', '#FF1919', '#2D8A3F'],
+		selectView: {
+			position: { y: 0.65 }
+		},
+		statsView: {
+			position: { y: 0.45 }
+		},
 		historical: {
 			superficial: {
 				size: 2.4,
@@ -294,6 +363,12 @@ export const produce: ProduceItem[] = [
 		modelPath: '/models/tomato.glb',
 		historicalColors: ['#4D5B35', '#A93F3F'],
 		modernColors: ['#34A843', '#FF3333'],
+		selectView: {
+			position: { y: 0.1 }
+		},
+		statsView: {
+			position: { y: -0.1 }
+		},
 		historical: {
 			superficial: {
 				size: 5.8,

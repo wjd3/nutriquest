@@ -21,7 +21,7 @@ interface CircularProgressProps {
 	maxValue: number
 }
 
-function CircularProgress({ value, label, unit, maxValue }: CircularProgressProps) {
+const CircularProgress = ({ value, label, unit, maxValue }: CircularProgressProps) => {
 	const circumference = 2 * Math.PI * 40
 	const percentage = (value / maxValue) * 100
 	const strokeDashoffset = circumference - (percentage / 100) * circumference
@@ -69,7 +69,7 @@ function CircularProgress({ value, label, unit, maxValue }: CircularProgressProp
 	)
 }
 
-function StatsView({ data }: { data: ProduceEssentialStats | ProduceSuperficialStats }) {
+const StatsView = ({ data }: { data: ProduceEssentialStats | ProduceSuperficialStats }) => {
 	const getUnitAndMax = (key: string): { unit: string; max: number } => {
 		const units = {
 			// Superficial stats
@@ -110,7 +110,7 @@ function StatsView({ data }: { data: ProduceEssentialStats | ProduceSuperficialS
 	)
 }
 
-export default function StatsScreen({ produceItem }: Props) {
+const StatsScreen = ({ produceItem }: Props) => {
 	const { name, historicalContext } = produceItem
 
 	const [isNavigating, setIsNavigating] = useState(false)
@@ -185,7 +185,7 @@ export default function StatsScreen({ produceItem }: Props) {
 
 									setTimeframe('historical')
 								}}
-								className={`font-pixel px-4 py-2 ${
+								className={`transition-colors duration-300 font-pixel px-4 py-2 focus:outline-none border border-transparent focus:border-woodsmoke-400 ${
 									timeframe === 'historical' ? 'bg-woodsmoke-400 text-black' : 'text-woodsmoke-400'
 								}`}>
 								PRE-INDUSTRIAL
@@ -197,7 +197,7 @@ export default function StatsScreen({ produceItem }: Props) {
 
 									setTimeframe('modern')
 								}}
-								className={`font-pixel px-4 py-2 ${
+								className={`transition-colors duration-300 font-pixel px-4 py-2 focus:outline-none border border-transparent focus:border-woodsmoke-400 ${
 									timeframe === 'modern' ? 'bg-woodsmoke-400 text-black' : 'text-woodsmoke-400'
 								}`}>
 								POST-INDUSTRIAL
@@ -229,3 +229,5 @@ export default function StatsScreen({ produceItem }: Props) {
 		</Screen>
 	)
 }
+
+export default StatsScreen
