@@ -44,8 +44,10 @@ export const produce: ProduceItem[] = [
 				vitaminB6: 0.037
 			}
 		},
-		historicalContext:
-			'Apples have been cultivated for thousands of years. Historical varieties were often smaller and less sweet than modern cultivars, but contained higher levels of nutrients. Traditional varieties showed more diversity in taste, color, and texture.'
+		preIndustrialContext:
+			'Apples have been cultivated for thousands of years. Historical varieties were often smaller and less sweet than modern cultivars, but contained higher levels of nutrients. Traditional varieties showed more diversity in taste, color, and texture.',
+		postIndustrialContext:
+			"Modern apple production prioritizes visual appeal and storage longevity over nutrient density and taste. Today's varieties show significantly reduced levels of vitamin C, iron, and other key nutrients compared to heritage varieties. Industrial orchards rely heavily on synthetic fertilizers and pesticides, with conventional apples consistently ranking among the most pesticide-contaminated fruits. Most are picked prematurely and stored for months in controlled atmospheres, further compromising their nutritional value and flavor complexity."
 	},
 	{
 		name: 'Carrot',
@@ -109,8 +111,10 @@ export const produce: ProduceItem[] = [
 				vitaminB6: 0.096
 			}
 		},
-		historicalContext:
-			'Original carrots were purple or white, and much smaller than modern varieties. While less sweet, they contained higher levels of minerals and antioxidants. The familiar orange carrot was developed in the Netherlands during the 17th century.'
+		preIndustrialContext:
+			'Original carrots were purple or white, and much smaller than modern varieties. While less sweet, they contained higher levels of minerals and antioxidants. The familiar orange carrot was developed in the Netherlands during the 17th century.',
+		postIndustrialContext:
+			'Contemporary carrot cultivation emphasizes uniform shape and size over nutritional content. The shift to industrial monoculture farming has led to widespread use of synthetic fertilizers that boost size but dilute nutrient density. Modern varieties are bred for mechanical harvest compatibility, with focus on durability rather than nutrition or taste, while heavy pesticide use has compromised soil health in nearly every growing region.'
 	},
 	{
 		name: 'Chili Pepper',
@@ -166,8 +170,10 @@ export const produce: ProduceItem[] = [
 				vitaminB6: 0.156
 			}
 		},
-		historicalContext:
-			'Ancient chili varieties were smaller but significantly more potent in both heat and nutrient content. Traditional peppers showed greater diversity in shape and heat levels. Modern breeding has focused on size and visual appeal, sometimes reducing capsaicin content for wider market appeal.'
+		preIndustrialContext:
+			'Ancient chili varieties were smaller but significantly more potent in both heat and nutrient content. Traditional peppers showed greater diversity in shape and heat levels. Modern breeding has focused on size and visual appeal, sometimes reducing capsaicin content for wider market appeal.',
+		postIndustrialContext:
+			'Industrial pepper production has sacrificed nutrient density and heat/flavor complexity for uniformity and shelf life. Modern varieties rely heavily on synthetic fertilizers and pesticides. Most are harvested prematurely and artificially ripened, compromising on both flavor and nutritional value. The focus on standardized appearance has led to significant loss of genetic diversity and reduced amounts of beneficial compounds that are produced by the plant during times of stress.'
 	},
 	{
 		name: 'Grapes',
@@ -196,7 +202,7 @@ export const produce: ProduceItem[] = [
 				size: 2,
 				color: 65,
 				sugar: 12,
-				seedCount: 20
+				seedCount: 40
 			},
 			essential: {
 				vitaminC: 6.8,
@@ -223,8 +229,10 @@ export const produce: ProduceItem[] = [
 				vitaminB6: 0.074
 			}
 		},
-		historicalContext:
-			'Ancient grape varieties were smaller and often contained seeds. While less sweet than modern varieties, they were richer in minerals and antioxidants. Traditional cultivation methods produced more diverse varieties with complex flavor profiles.'
+		preIndustrialContext:
+			'Ancient grape varieties were smaller and often contained seeds. While less sweet than modern varieties, they were richer in minerals and antioxidants. Traditional cultivation methods produced more diverse varieties with complex flavor profiles.',
+		postIndustrialContext:
+			"Today's commercial grape varieties reflect industrial agriculture's focus on size and seedlessness over nutrition. Modern table grapes require intensive chemical inputs for disease management. Most are treated with multiple growth regulators and fungicides throughout the growing season. The emphasis on cosmetic perfection and shipping durability has led to varieties with lower levels of beneficial polyphenols and antioxidants."
 	},
 	{
 		name: 'Orange',
@@ -266,8 +274,10 @@ export const produce: ProduceItem[] = [
 				vitaminB6: 0.072
 			}
 		},
-		historicalContext:
-			'Historical oranges were smaller and often more tart, with higher seed counts. While less sweet, they contained significantly higher levels of vitamin C and other nutrients. Traditional varieties showed more variation in peel thickness and color.'
+		preIndustrialContext:
+			'Historical oranges were smaller and often more tart, with higher seed counts. While less sweet, they contained significantly higher levels of vitamin C and other nutrients. Traditional varieties showed more variation in peel thickness and color.',
+		postIndustrialContext:
+			'Modern orange production prioritizes external appearance and shipping durability over nutritional value. Industrial citrus operations rely heavily on synthetic fertilizers and pesticides, while early harvesting and artificial ripening practices compromise flavor development and nutrient integrity. Extended storage and transport further degrade nutritional quality.'
 	},
 	{
 		name: 'Pear',
@@ -319,8 +329,10 @@ export const produce: ProduceItem[] = [
 				vitaminB6: 0.028
 			}
 		},
-		historicalContext:
-			'Historical pear varieties were smaller and more diverse in shape and color. While containing more seeds and being less sweet, they had higher concentrations of minerals and fiber. Traditional varieties were known for their complex flavors and aromatic qualities.'
+		preIndustrialContext:
+			'Historical pear varieties were smaller and more diverse in shape and color. While containing more seeds and being less sweet, they had higher concentrations of minerals and fiber. Traditional varieties were known for their complex flavors and aromatic qualities.',
+		postIndustrialContext:
+			'Contemporary pear cultivation has favored size and storage longevity at the expense of nutrition and taste. Modern varieties depend heavily on synthetic inputs. Industrial operations harvest fruit prematurely to accommodate long-distance shipping, artificially ripening them later with ethylene gas. This practice, combined with extended cold storage, significantly impacts both nutrient levels and flavor development.'
 	},
 	{
 		name: 'Strawberry',
@@ -368,8 +380,10 @@ export const produce: ProduceItem[] = [
 				vitaminB6: 0.032
 			}
 		},
-		historicalContext:
-			'Wild strawberries were much smaller but more intensely flavored than modern varieties. They had higher concentrations of nutrients and aromatic compounds. Modern breeding has focused on size and visual appeal, often at the expense of flavor and nutrient content.'
+		preIndustrialContext:
+			'Wild strawberries were much smaller but more intensely flavored than modern varieties. They had higher concentrations of nutrients and aromatic compounds. Modern breeding has focused on size and visual appeal, often at the expense of flavor and nutrient content.',
+		postIndustrialContext:
+			"Industrial strawberry production exemplifies modern agriculture's trade-offs between appearance and nutrition. Today's varieties rank among the most pesticide-intensive crops grown. Most are harvested unripe to extend shelf life, sacrificing both nutrient density and flavor. Methyl bromide soil fumigation and heavy synthetic fertilizer use have severely impacted soil health in strawberry-growing operations."
 	},
 	{
 		name: 'Tomato',
@@ -417,7 +431,9 @@ export const produce: ProduceItem[] = [
 				vitaminB6: 0.084
 			}
 		},
-		historicalContext:
-			'Heritage tomato varieties were typically smaller but more flavorful, with higher nutrient content. They showed great diversity in color, from deep purple to yellow, and had more complex taste profiles. Modern breeding has focused on size, shelf life, and uniform ripening.'
+		preIndustrialContext:
+			'Heritage tomato varieties were typically smaller but more flavorful, with higher nutrient content. They showed great diversity in color, from deep purple to yellow, and had more complex taste profiles. Modern breeding has focused on size, shelf life, and uniform ripening.',
+		postIndustrialContext:
+			"Modern tomato varieties illustrate industrial agriculture's prioritization of shelf life and uniformity over nutrition and taste. Most are picked green and artificially ripened with ethylene gas, while genetic modification for uniform ripening has inadvertently disabled sugar production and flavor development."
 	}
 ]

@@ -108,7 +108,7 @@ export default function SelectScreen() {
 
 	return (
 		<Screen
-			className={`relative flex flex-col items-center justify-center sm:p-6 md:p-8 min-h-0 transition-all duration-300 ${
+			className={`relative flex flex-col items-center justify-center sm:p-6 md:p-8 transition-all duration-300 ${
 				selectedIndex != null ? 'pb-24 px-4 pt-6' : 'py-6 px-4'
 			}`}
 			onClick={async (e) => {

@@ -13,7 +13,7 @@ interface StatsScreenProps {
 }
 
 const StatsScreen = ({ produceItem }: StatsScreenProps) => {
-	const { name, latinName, historicalContext } = produceItem
+	const { name, latinName, preIndustrialContext, postIndustrialContext } = produceItem
 
 	const [isNavigating, setIsNavigating] = useState(false)
 	const [timeframe, setTimeframe] = useState<Timeframe>('historical')
@@ -35,7 +35,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 	})
 
 	return (
-		<Screen className='relative flex flex-col p-4 sm:p-6 md:p-8'>
+		<Screen className='min-h-[100lvh] relative flex flex-col p-4 sm:p-6 md:p-8'>
 			{/* Header */}
 			<div className='mb-4 sm:mb-6 grid grid-cols-3'>
 				{/* Back Button */}
@@ -148,7 +148,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 					{/* Historical Context */}
 					<div className='bg-black/20 border border-woodsmoke-800 p-4 sm:p-6 max-xl:hidden'>
 						<p className='text-woodsmoke-300 font-mono text-sm leading-relaxed'>
-							{historicalContext}
+							{timeframe === 'historical' ? preIndustrialContext : postIndustrialContext}
 						</p>
 					</div>
 				</div>
@@ -172,7 +172,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 				{/* Historical Context */}
 				<div className='bg-black/20 border border-woodsmoke-800 p-4 sm:p-6 xl:hidden sm:col-span-3 max-sm:mb-16'>
 					<p className='text-woodsmoke-300 font-mono text-sm leading-relaxed'>
-						{historicalContext}
+						{timeframe === 'historical' ? preIndustrialContext : postIndustrialContext}
 					</p>
 				</div>
 			</motion.div>

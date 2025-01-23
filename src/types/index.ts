@@ -51,5 +51,6 @@ export interface ProduceItem {
 	selectView?: ProduceView
 	historical: ProduceStats
 	modern: ProduceStats
-	historicalContext: string
+	preIndustrialContext: string
+	postIndustrialContext: string
 }
