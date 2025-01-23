@@ -81,19 +81,14 @@ const ProduceItemModel = ({
 
 	const { nodes } = useGLTF(modelPath)
 
-	const defaultHistoricalScale = 0.75
-	const { scale } = useSpring({
-		scale:
-			timeframe === 'modern'
-				? 1
-				: isSelected
-					? 0.9
-					: variant === 'select'
-						? defaultHistoricalScale
-						: historicalScale
-							? historicalScale
-							: defaultHistoricalScale
-	})
+	const getScale = () => {
+		const defaultHistoricalScale = 0.75
+		if (timeframe === 'modern') return 1
+		if (isSelected) return 0.9
+		if (variant === 'select') return defaultHistoricalScale
+		return historicalScale ?? defaultHistoricalScale
+	}
+	const { scale } = useSpring({ scale: getScale() })
 
 	// Rotate the model
 	useFrame((_, delta) => {
