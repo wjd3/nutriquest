@@ -1,30 +1,30 @@
 @keyframes flicker {
 	0% {
-		opacity: 0.27861;
+		opacity: 0.47861;
 	}
 	5% {
-		opacity: 0.34769;
+		opacity: 0.54769;
 	}
 	10% {
-		opacity: 0.23604;
+		opacity: 0.43604;
 	}
 	15% {
 		opacity: 0.90626;
 	}
 	20% {
-		opacity: 0.18128;
+		opacity: 0.38128;
 	}
 	25% {
 		opacity: 0.83891;
 	}
 	30% {
-		opacity: 0.65583;
+		opacity: 0.75583;
 	}
 	35% {
-		opacity: 0.67807;
+		opacity: 0.77807;
 	}
 	40% {
-		opacity: 0.26559;
+		opacity: 0.46559;
 	}
 	45% {
 		opacity: 0.84693;
@@ -33,19 +33,19 @@
 		opacity: 0.96019;
 	}
 	55% {
-		opacity: 0.08594;
+		opacity: 0.28594;
 	}
 	60% {
-		opacity: 0.20313;
+		opacity: 0.40313;
 	}
 	65% {
 		opacity: 0.71988;
 	}
 	70% {
-		opacity: 0.53455;
+		opacity: 0.63455;
 	}
 	75% {
-		opacity: 0.37288;
+		opacity: 0.57288;
 	}
 	80% {
 		opacity: 0.71428;
@@ -57,10 +57,10 @@
 		opacity: 0.7003;
 	}
 	95% {
-		opacity: 0.36108;
+		opacity: 0.56108;
 	}
 	100% {
-		opacity: 0.24387;
+		opacity: 0.44387;
 	}
 }
 @keyframes textShadow {
@@ -199,7 +199,7 @@
 	left: 0;
 	bottom: 0;
 	right: 0;
-	background: rgba(18, 16, 16, 0.1);
+	background: rgba(18, 16, 16, 0.05);
 	opacity: 0;
 	z-index: 2;
 	pointer-events: none;
@@ -213,7 +213,7 @@
 	left: 0;
 	bottom: 0;
 	right: 0;
-	background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+	background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%),
 		linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
 	z-index: 2;
 	background-size:
