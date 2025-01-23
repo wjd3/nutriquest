@@ -54,7 +54,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 								? 'hover:bg-woodsmoke-400 hover:text-black focus:bg-woodsmoke-400 focus:text-black'
 								: 'bg-woodsmoke-400 text-black'
 						}`}>
-						BACK
+						{isNavigating ? 'LOADING...' : 'BACK'}
 					</button>
 				</motion.div>
 

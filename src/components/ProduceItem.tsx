@@ -178,7 +178,7 @@ const ProduceItem = ({ produceItem, variant, isSelected, timeframe }: ProduceIte
 		return (
 			<div className='relative'>
 				<div
-					className={`w-40 h-40 md:w-48 md:h-48 canvas-container transition-colors duration-300 ${
+					className={`w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 canvas-container transition-colors duration-300 ${
 						isSelected
 							? 'border-2 border-woodsmoke-600 bg-black/25'
 							: 'border border-woodsmoke-700 bg-black/15'
