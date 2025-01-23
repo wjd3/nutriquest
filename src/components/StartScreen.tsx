@@ -46,7 +46,7 @@ export default function StartScreen() {
 	}
 
 	return (
-		<Screen className='flex flex-col items-center justify-center'>
+		<Screen className='min-h-[100lvh] flex flex-col items-center justify-center'>
 			{/* Main content */}
 			<div ref={scope} className='relative flex flex-col items-center gap-4 sm:gap-8'>
 				{/* Title section */}
