@@ -26,15 +26,24 @@ interface ProduceItemModelProps extends ProduceItemProps {
 interface ProduceItemMeshProps {
 	node: Mesh<any, any, any>
 	colors: { historical: string; modern: string }
+	isSelected: boolean
 	timeframe: string
 	variant: Variant
 	views: Views
 }
 
-const ProduceItemMesh = ({ node, colors, timeframe, views, variant }: ProduceItemMeshProps) => {
+const ProduceItemMesh = ({
+	node,
+	colors,
+	timeframe,
+	views,
+	variant,
+	isSelected
+}: ProduceItemMeshProps) => {
 	// Color
+	const isModernColor = timeframe === 'modern' || (variant === 'select' && isSelected)
 	const { color } = useSpring({
-		color: timeframe === 'modern' ? colors.modern : colors.historical
+		color: isModernColor ? colors.modern : colors.historical
 	})
 
 	// Rotation
@@ -112,6 +121,7 @@ const ProduceItemModel = ({
 						<ProduceItemMesh
 							node={node}
 							colors={colors}
+							isSelected={isSelected}
 							views={views}
 							timeframe={timeframe}
 							variant={variant}

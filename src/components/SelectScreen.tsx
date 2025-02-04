@@ -9,6 +9,8 @@ import InfoModal from '@/components/InfoModal'
 
 export default function SelectScreen() {
 	const [isNavigating, setIsNavigating] = useState(false)
+	useEffect(() => setIsNavigating(false), [])
+
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 	const [itemsPerRow, setItemsPerRow] = useState<number>(2)
 	const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
@@ -108,7 +110,7 @@ export default function SelectScreen() {
 
 	return (
 		<Screen
-			className={`relative flex flex-col items-center justify-center sm:p-6 md:p-8 transition-all duration-300 ${
+			className={`relative flex flex-col items-center justify-center sm:p-6 md:p-8 transition-[padding] duration-300 max-lg:min-h-[100lvh] lg:h-[100lvh] ${
 				selectedIndex != null ? 'pb-24 px-4 pt-6' : 'py-6 px-4'
 			}`}
 			onClick={async (e) => {
@@ -210,8 +212,7 @@ export default function SelectScreen() {
 						animate={{ y: 0 }}
 						exit={{ y: '100%' }}
 						transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-						className='sm:hidden fixed bottom-0 left-0 right-0 bg-woodsmoke-950 border-t border-woodsmoke-400 p-4 flex justify-center items-center'
-						style={{ zIndex: 50 }}>
+						className='sm:hidden fixed bottom-0 left-0 right-0 bg-woodsmoke-950 border-t border-woodsmoke-400 p-4 flex justify-center items-center z-10'>
 						<button
 							onClick={async () => {
 								if (selectedIndex != null) {

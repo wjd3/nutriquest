@@ -48,7 +48,7 @@ export default function StartScreen() {
 	return (
 		<Screen className='min-h-[100lvh] flex flex-col items-center justify-center'>
 			{/* Main content */}
-			<div ref={scope} className='relative flex flex-col items-center gap-4 sm:gap-8'>
+			<div ref={scope} className='relative flex flex-col items-center gap-4 sm:gap-6'>
 				{/* Title section */}
 				<div className='flex flex-col items-center'>
 					<h1 className='text-5xl sm:text-7xl lg:text-8xl font-bold tracking-wider mb-2'>
@@ -74,7 +74,9 @@ export default function StartScreen() {
 						}}
 						disabled={isStarting}
 						ref={startButtonRef}
-						className={`focus:outline-none border-white/20 tracking-widest text-sm sm:text-base lg:text-lg px-8 ${isStarting ? 'bg-white/10' : 'focus:bg-white/10 hover:bg-white/10'}`}
+						className={`focus:outline-none border-white/20 tracking-widest text-sm sm:text-base lg:text-lg px-8 py-2 ${
+							isStarting ? 'bg-white/10' : 'focus:bg-white/10 hover:bg-white/10'
+						}`}
 						onClick={handleStart}>
 						PRESS START
 					</motion.button>

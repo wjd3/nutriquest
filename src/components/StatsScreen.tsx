@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'motion/react'
 import Screen from '@/components/Screen'
 import ProduceItem from '@/components/ProduceItem'
@@ -16,6 +16,8 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 	const { name, latinName, preIndustrialContext, postIndustrialContext } = produceItem
 
 	const [isNavigating, setIsNavigating] = useState(false)
+	useEffect(() => setIsNavigating(false), [])
+
 	const [timeframe, setTimeframe] = useState<Timeframe>('historical')
 	const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
 	const [showFloatingToggle, setShowFloatingToggle] = useState(false)
@@ -63,7 +65,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 						initial={{ opacity: 0, y: -20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.1 }}
-						className='h-fit font-pixel text-2xl md:text-3xl text-white text-center'>
+						className='h-fit font-pixel text-xl sm:text-2xl lg:text-3xl text-white text-center'>
 						{name}
 					</motion.h1>
 					<motion.h2
@@ -185,7 +187,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 						animate={{ y: '0%', opacity: 1 }}
 						exit={{ y: '100%', opacity: 0 }}
 						transition={{ duration: 0.3 }}
-						className='fixed bottom-0 left-0 right-0 bg-black/70 backdrop-blur border-t border-woodsmoke-800 p-3 sm:p-4'>
+						className='fixed bottom-0 left-0 right-0 bg-black/70 backdrop-blur border-t border-woodsmoke-800 p-3 sm:p-4 z-10'>
 						<div className='container mx-auto flex justify-center gap-2 sm:gap-4'>
 							<button
 								disabled={timeframe === 'historical'}
