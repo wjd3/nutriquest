@@ -62,6 +62,13 @@ const ogImagePath = '/og-image.png'
 		<meta name='robots' content='index, follow' />
 		<meta name='author' content='Davis Regenerative' />
 		<link rel='canonical' href={Astro.url} />
+
+		<!-- Simple Analytics -->
+		{
+			!import.meta.env.DEV ? (
+				<script is:inline async src='https://scripts.simpleanalyticscdn.com/latest.js' />
+			) : null
+		}
 	</head>
 
 	<body class:list={['crt', className]}>
