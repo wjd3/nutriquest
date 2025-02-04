@@ -185,7 +185,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 						animate={{ y: '0%', opacity: 1 }}
 						exit={{ y: '100%', opacity: 0 }}
 						transition={{ duration: 0.3 }}
-						className='fixed bottom-0 left-0 right-0 bg-black/70 backdrop-blur border-t border-woodsmoke-800 p-3 sm:p-4'>
+						className='fixed bottom-0 left-0 right-0 bg-black/70 backdrop-blur border-t border-woodsmoke-800 p-3 sm:p-4 z-10'>
 						<div className='container mx-auto flex justify-center gap-2 sm:gap-4'>
 							<button
 								disabled={timeframe === 'historical'}

@@ -16,7 +16,7 @@ const InfoModal = ({ isOpen, onClose }: InfoModalProps) => {
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
 						onClick={onClose}
-						className='fixed inset-0 bg-black/60 z-50'
+						className='fixed inset-0 bg-black/60 z-10'
 					/>
 
 					{/* Modal */}
@@ -24,7 +24,7 @@ const InfoModal = ({ isOpen, onClose }: InfoModalProps) => {
 						initial={{ opacity: 0, scale: 0.95, y: '-50%', x: '-50%' }}
 						animate={{ opacity: 1, scale: 1, y: '-50%', x: '-50%' }}
 						exit={{ opacity: 0, scale: 0.95, y: '-50%', x: '-50%' }}
-						className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-lg bg-woodsmoke-950 border border-woodsmoke-800 p-6 z-50'>
+						className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-lg bg-woodsmoke-950 border border-woodsmoke-800 p-6 z-10'>
 						<h2 className='font-pixel text-xl mb-4 text-woodsmoke-400'>About This Project</h2>
 						<div className='font-mono text-sm space-y-4 text-woodsmoke-300'>
 							<p>
