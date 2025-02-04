@@ -121,7 +121,7 @@ export const produce: ProduceItem[] = [
 		latinName: 'Capsicum annuum',
 		modelPath: '/models/pepper.glb',
 		bodyColorIndex: 1,
-		historicalScale: 0.3,
+		historicalScale: 0.5,
 		historicalColors: ['#3D4A2F', '#5C4A4A'],
 		modernColors: ['#5B7A4D', '#8B2121'],
 		selectView: {
@@ -135,7 +135,7 @@ export const produce: ProduceItem[] = [
 			rotate: { x: Math.PI },
 			position: { y: -1.25 },
 			camera: {
-				z: 10
+				z: 15
 			}
 		},
 		historical: {
@@ -143,7 +143,7 @@ export const produce: ProduceItem[] = [
 				size: 1.5,
 				color: 75,
 				sugar: 1,
-				seedCount: 20
+				seedCount: 15
 			},
 			essential: {
 				vitaminC: 76.4,
@@ -159,7 +159,7 @@ export const produce: ProduceItem[] = [
 				size: 4,
 				color: 95,
 				sugar: 2,
-				seedCount: 15
+				seedCount: 35
 			},
 			essential: {
 				vitaminC: 48.2,
@@ -202,7 +202,7 @@ export const produce: ProduceItem[] = [
 				size: 2,
 				color: 65,
 				sugar: 12,
-				seedCount: 40
+				seedCount: 75
 			},
 			essential: {
 				vitaminC: 6.8,
@@ -247,7 +247,7 @@ export const produce: ProduceItem[] = [
 				size: 8,
 				color: 65,
 				sugar: 9,
-				seedCount: 12
+				seedCount: 16
 			},
 			essential: {
 				vitaminC: 82.4,
@@ -263,7 +263,7 @@ export const produce: ProduceItem[] = [
 				size: 12,
 				color: 90,
 				sugar: 12,
-				seedCount: 6
+				seedCount: 0
 			},
 			essential: {
 				vitaminC: 48.6,
@@ -302,7 +302,7 @@ export const produce: ProduceItem[] = [
 				size: 7,
 				color: 65,
 				sugar: 9,
-				seedCount: 10
+				seedCount: 8
 			},
 			essential: {
 				vitaminC: 8.4,
@@ -404,7 +404,7 @@ export const produce: ProduceItem[] = [
 				size: 6,
 				color: 65,
 				sugar: 3,
-				seedCount: 150
+				seedCount: 75
 			},
 			essential: {
 				vitaminC: 28.4,
@@ -420,7 +420,7 @@ export const produce: ProduceItem[] = [
 				size: 13.5,
 				color: 90,
 				sugar: 5,
-				seedCount: 100
+				seedCount: 150
 			},
 			essential: {
 				vitaminC: 16.2,

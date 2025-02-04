@@ -65,7 +65,7 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 						initial={{ opacity: 0, y: -20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.1 }}
-						className='h-fit font-pixel text-2xl md:text-3xl text-white text-center'>
+						className='h-fit font-pixel text-xl sm:text-2xl lg:text-3xl text-white text-center'>
 						{name}
 					</motion.h1>
 					<motion.h2
