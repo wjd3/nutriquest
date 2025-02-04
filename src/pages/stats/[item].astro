@@ -20,5 +20,5 @@ const { produceItem } = Astro.props
 ---
 
 <MainLayout title={toTitleCase(produceItem.name).toUpperCase()} class='bg-woodsmoke-950'>
-	<StatsScreen client:only {produceItem} />
+	<StatsScreen client:only='react' {produceItem} />
 </MainLayout>

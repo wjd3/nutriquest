@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'motion/react'
 import Screen from '@/components/Screen'
 import ProduceItem from '@/components/ProduceItem'
@@ -16,6 +16,8 @@ const StatsScreen = ({ produceItem }: StatsScreenProps) => {
 	const { name, latinName, preIndustrialContext, postIndustrialContext } = produceItem
 
 	const [isNavigating, setIsNavigating] = useState(false)
+	useEffect(() => setIsNavigating(false), [])
+
 	const [timeframe, setTimeframe] = useState<Timeframe>('historical')
 	const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
 	const [showFloatingToggle, setShowFloatingToggle] = useState(false)

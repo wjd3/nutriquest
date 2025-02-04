@@ -9,6 +9,8 @@ import InfoModal from '@/components/InfoModal'
 
 export default function SelectScreen() {
 	const [isNavigating, setIsNavigating] = useState(false)
+	useEffect(() => setIsNavigating(false), [])
+
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 	const [itemsPerRow, setItemsPerRow] = useState<number>(2)
 	const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
